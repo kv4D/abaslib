@@ -1,4 +1,4 @@
-<!-- Base for html files in "main" app -->
+<!-- Base for html files in "users" app -->
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -6,33 +6,24 @@
     <meta charset="UTF-8">
     <meta name='author' content='withered'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>
         {% block title %}
             ABASlib
         {% endblock title %}
     </title>
-    
+
     <link rel="stylesheet" href="{% static "css/base_styles.css" %}" />
 </head>
 
 <body>
     <header>
         {% block header %}
-            <p>
-                {% if user.is_authenticated %}
-                    Хай, {{ user.name }} | <a href="{% url 'users:logout' %}">Выход</a>
-                {% else %}
-                    <a href="{% url 'users:login' %}">Вход | Регистрация</a>
-                {% endif %}
-            </p>
         {% endblock header %}
     </header>
 
     {% block content %}
     {% endblock content %}
 
-    
     <footer>
         {% block footer %}
         {% endblock footer %}
