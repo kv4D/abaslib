@@ -21,8 +21,8 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
-    path('login/', views.login_user, name='login'),
-    path('logout/', views.logout_user, name='logout'),
-    path('register/', views.register_user, name='register'),
-    path('user_profile/<int:user_id>', views.show_user_profile, name='profile')
+    path('login/', views.login_user_view, name='login'),
+    path('logout/', views.logout_user_view, name='logout'),
+    path('register/', views.register_user_view, name='register'),
+    path('user_profile/<int:pk>/', views.user_profile_view, name='profile')
 ]

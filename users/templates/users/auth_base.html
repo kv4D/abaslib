@@ -1,0 +1,13 @@
+<!-- Base for html files in "users" app -->
+{% extends "main/base.html" %}
+{% load static %}
+{% block styles %}<link rel="stylesheet" href="{% static "css/users/auth_styles.css" %}">{% endblock styles %}
+
+{% block header %}
+    <p>
+        <a href="{% url 'main:home' %}">Вернуться на главную</a>
+    </p>
+{% endblock header %}
+
+{% block content %}
+{% endblock content %}

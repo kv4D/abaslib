@@ -1,0 +1,40 @@
+h1, h2, h3, h4, h5 {
+    text-align: center;
+}
+
+.auth_buttons {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+}
+
+input {
+    width: 50%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+input:focus {
+    border: 0.2rem solid #74145f;
+    align-items: center;
+}
+
+.input_block {
+    display: block;
+}
+
+input::placeholder {
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+h1 {
+    display: inline;
+}
+
+form {
+    
+}

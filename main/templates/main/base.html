@@ -1,6 +1,6 @@
 <!-- Base for html files in "main" app -->
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,13 +21,6 @@
 <body>
     <header id='base_header'>
         {% block header %}
-            <p>
-                {% if user.is_authenticated %}
-                    Хай, {{ user.username }} | <a href="{% url 'users:logout' %}">Выход</a>
-                {% else %}
-                    <a href="{% url 'users:login' %}">Вход | Регистрация</a>
-                {% endif %}
-            </p>
         {% endblock header %}
     </header>
 
@@ -36,7 +29,6 @@
 
     <footer id='base_footer'>
         {% block footer %}
-            <p>fuck</p>
         {% endblock footer %}
     </footer>
 </body>
