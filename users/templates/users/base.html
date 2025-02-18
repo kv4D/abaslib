@@ -1,32 +1,13 @@
 <!-- Base for html files in "users" app -->
-<!DOCTYPE html>
+{% extends "main/base.html" %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name='author' content='withered'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}
-            ABASlib
-        {% endblock title %}
-    </title>
+{% block styles %}<link rel="stylesheet" href="{% static "css/users/login_styles.css" %}">{% endblock styles %}
 
-    <link rel="stylesheet" href="{% static "css/base_styles.css" %}" />
-</head>
+{% block header %}
+{% endblock header %}
 
-<body>
-    <header>
-        {% block header %}
-        {% endblock header %}
-    </header>
+{% block content %}
+{% endblock content %}
 
-    {% block content %}
-    {% endblock content %}
-
-    <footer>
-        {% block footer %}
-        {% endblock footer %}
-    </footer>
-</body>
-</html>
+{% block footer %}
+{% endblock footer %}

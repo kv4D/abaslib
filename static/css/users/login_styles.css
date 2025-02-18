@@ -1,0 +1,28 @@
+h1, h2, h3, h4, h5 {
+    text-align: center;
+}
+
+input {
+    border-radius: 0.6rem;
+}
+
+input:focus {
+    border: 0.2rem solid #eb3f3f;
+    align-items: center;
+}
+
+input {
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+}
+
+h1 {
+    display: inline;
+}
+
+div.auth_buttons {
+    border-radius: 0.6rem;
+    text-align: center;
+}

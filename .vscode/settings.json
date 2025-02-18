@@ -1,0 +1,5 @@
+{
+    "pylint.args": [
+        "\"pylint.args\": [\"--disable=all --enable=E1101\"]"
+    ]
+}

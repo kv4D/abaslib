@@ -7,4 +7,10 @@
         <h1>Хай, ABASlib</h1>
         <p>Я основная страница</p>
     </div>
+
+    <div id='main_sidebar'>
+        {% block sidebar %}
+            <p>Здесь будет сайдбар</p>
+        {% endblock sidebar %}
+    </div>
 {% endblock content %}

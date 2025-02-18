@@ -1,11 +1,20 @@
-<!-- Homepage of ABASlib -->
+<!-- Log in page -->
 {% extends "users/base.html" %}
 {% block title %}ABASlib - Вход{% endblock title %}
 
 {% block content %}
-    <div>
-        <h1>здесь будет вход</h1>
+    <div class='auth_buttons'>
+        <h1>Вход</h1>
+        <h1><a href="{% url 'users:register' %}">Регистрация</a></h1>
     </div>
+    <form action="{% url 'users:login' %}" method='post'>
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button name='submit'>Войти</button>
+        <input type="hidden" name="next" value="{% url 'main:home' %}" />
+   </form>
 {% endblock content %}
 
 {% block footer %}

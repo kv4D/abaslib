@@ -14,14 +14,16 @@
     </title>
     
     <link rel="stylesheet" href="{% static "css/base_styles.css" %}" />
+    {% block styles %}
+    {% endblock styles %}
 </head>
 
 <body>
-    <header>
+    <header id='base_header'>
         {% block header %}
             <p>
                 {% if user.is_authenticated %}
-                    Хай, {{ user.name }} | <a href="{% url 'users:logout' %}">Выход</a>
+                    Хай, {{ user.username }} | <a href="{% url 'users:logout' %}">Выход</a>
                 {% else %}
                     <a href="{% url 'users:login' %}">Вход | Регистрация</a>
                 {% endif %}
@@ -32,9 +34,9 @@
     {% block content %}
     {% endblock content %}
 
-    
-    <footer>
+    <footer id='base_footer'>
         {% block footer %}
+            <p>fuck</p>
         {% endblock footer %}
     </footer>
 </body>
