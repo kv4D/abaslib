@@ -10,7 +10,13 @@ from . models import UserProfile
 @login_required
 def user_profile_view(request):
     """Shows user profile page and it's info"""
-    return render(request, 'users/profile.html')
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    context = {
+        'user_profile': user_profile
+    }
+
+    return render(request, 'users/profile.html', context)
 
 
 def register_user_view(request):

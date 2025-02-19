@@ -1,4 +1,4 @@
-#container {
+.container {
     max-width: 1200px;  
     margin: 0 auto;  
     padding: 15px;
@@ -6,14 +6,14 @@
     gap: 20px;
 }
 
-#main_content {
+.main_content {
     flex: 3; 
     background-color: #252525;
     padding: 20px;
     border-radius: 10px;
 }
 
-#sidebar {
+.sidebar {
     flex: 1; 
     background-color: #252525;
     padding: 20px;

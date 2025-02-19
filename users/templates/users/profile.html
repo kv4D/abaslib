@@ -1,9 +1,26 @@
 <!-- User profile page -->
-{% extends "users/auth_base.html" %}
+{% extends "main/home.html" %}
 {% block title %}ABASlib - Профиль {{ user.name }}{% endblock title %}
+{% load static %}
+{% block styles %}<link rel="stylesheet" href="{% static "css/users/profile_styles.css" %}">{% endblock styles %}
+
+{% block header %}
+    <p>
+        <a href="{% url 'main:home' %}">Вернуться на главную</a>
+    </p>
+{% endblock header %}
+
+
 
 {% block content %}
-    <div id='info'>
-        {{ user.username }}
+    <div class='container'>
+        <div class='main_content'>
+            <img src="{{ user_profile.user_avatar.url }}" alt="Здесь был аватар">
+            <h1>Профиль пользователя {{ user.username }}</h1>
+            <p>{{ user.email }}</p>
+            
+            
+        </div>
     </div>
+
 {% endblock content %}
