@@ -1,5 +1,5 @@
 <!-- User profile page -->
-{% extends "users/base.html" %}
+{% extends "users/auth_base.html" %}
 {% block title %}ABASlib - Профиль {{ user.name }}{% endblock title %}
 
 {% block content %}
@@ -7,6 +7,3 @@
         {{ user.username }}
     </div>
 {% endblock content %}
-
-{% block footer %}
-{% endblock footer %}

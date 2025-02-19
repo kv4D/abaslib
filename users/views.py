@@ -8,9 +8,8 @@ from . models import UserProfile
 
 # Create your views here.
 @login_required
-def user_profile_view(request, user_id):
+def user_profile_view(request):
     """Shows user profile page and it's info"""
-    user = UserProfile.objects.get(i)
     return render(request, 'users/profile.html')
 
 

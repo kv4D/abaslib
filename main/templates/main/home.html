@@ -7,7 +7,7 @@
 {% block header %}
     <p>
         {% if user.is_authenticated %}
-            Хай, {{ user.username }} | <a href="{% url 'users:logout' %}">Выход</a> | <a href="{% url 'users:profile' user.id %}"></a>
+            Хай, {{ user.username }} | <a href="{% url 'users:logout' %}">Выход</a> | <a href="{% url 'users:profile' %}">Профиль</a>
         {% else %}
             <a href="{% url 'users:login' %}">Вход | Регистрация</a>
         {% endif %}
@@ -23,7 +23,7 @@
     
         <aside id='sidebar'>
             <h1>Хало, френдс</h1>
-            <p>Я сайдбар под разделы</p>
+            <p>Я сайдбар под разделы и, быть может, еще для чего</p>
         </aside>
     </div>
 {% endblock content %}
