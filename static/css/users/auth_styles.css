@@ -6,35 +6,41 @@ h1, h2, h3, h4, h5 {
     text-align: center;
     margin: auto;
     width: 50%;
-    padding: 20px;
+    background-color: #252422;
+    padding: 15px;
+    gap: 20px;
+    border-radius: 10px;
 }
 
 input {
     width: 50%;
     padding: 10px 10px;
-    margin: 8px 0;
+    margin: 8px;
     box-sizing: border-box;
     border-radius: 10px;
+    border: 0.3rem solid;
+    min-width: 300px;
 }
 
 input:focus {
-    border: 0.2rem solid #74145f;
-    align-items: center;
-}
-
-.input_block {
-    display: block;
+    border: 0.3rem solid #00A1E4;
 }
 
 input::placeholder {
     font-weight: bold;
-    opacity: 0.8;
 }
 
 h1 {
-    display: inline;
+    display:flow-root;
 }
 
-form {
-    
+.container {
+    justify-content: center; 
+  }
+
+.main_content {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    padding: 20px;
 }
