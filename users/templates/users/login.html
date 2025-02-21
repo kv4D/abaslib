@@ -14,6 +14,8 @@
             <form action="{% url 'users:login' %}" method='post'>
                 {% csrf_token %}
                 <div class='input_block'>
+                    <label for="username">Никнейм</label>
+                    <br>
                     <input placeholder="Никнейм" 
                     type="text" name="username" 
                     autofocus autocapitalize="none" 
@@ -23,6 +25,8 @@
                 </div>
               
                 <div class='input_block'>
+                    <label for="password">Пароль</label>
+                    <br>
                     <input placeholder="Пароль" 
                     type="password" name="password" 
                     autocomplete="current-password" 

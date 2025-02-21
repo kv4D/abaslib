@@ -83,7 +83,7 @@ button:hover {
     transform: translateY(4px);
 }
 
-.error {
+.warning {
     color: #F93943;
 }
 

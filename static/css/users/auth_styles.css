@@ -30,8 +30,16 @@ input::placeholder {
     font-weight: bold;
 }
 
+.input_block {
+    margin: 30px;
+}
+
 h1 {
     display:flow-root;
+}
+
+ul {
+    list-style-type: none;
 }
 
 .container {
