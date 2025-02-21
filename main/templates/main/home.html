@@ -2,16 +2,20 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block title %}ABASlib - Главная{% endblock title %}
-{% block styles %}<link rel="stylesheet" href="{% static "css/main/main_styles.css" %}">{% endblock styles %}
+
+{% block styles %}
+    <link rel="stylesheet" href={% static "css\main\main_styles.css" %}>
+{% endblock styles %}
 
 {% block header %}
-    <p>
-        {% if user.is_authenticated %}
-            Хай, {{ user.username }} | <a href="{% url 'users:logout' %}">Выход</a> | <a href="{% url 'users:profile' %}">Профиль</a>
-        {% else %}
-            <a href="{% url 'users:login' %}">Вход | Регистрация</a>
-        {% endif %}
-    </p>
+    {% if user.is_authenticated %}
+        <a id='profile_link' href="{% url 'users:profile' %}">Хай, {{ user.username }} 
+            <img style="width:20px;height:20px;" src="{{ user_profile.user_avatar.url }}" ></a>
+        <a id='logout_link' href="{% url 'users:logout' %}">Выход</a>
+        
+    {% else %}
+        <a id='login_link' href="{% url 'users:login' %}">Вход | Регистрация</a>
+    {% endif %}
 {% endblock header %}
 
 {% block content %}

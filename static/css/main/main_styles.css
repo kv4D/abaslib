@@ -1,0 +1,15 @@
+#base_header a {
+    padding: 14px 16px;
+}
+
+#profile_link {
+    float: left;
+}
+
+#logout_link {
+    float: right;
+}
+
+#profile_link {
+    float: left;
+}

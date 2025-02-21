@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 body {
     display: flex;
     flex-direction: column;
@@ -5,10 +7,10 @@ body {
     height: 100%;
     margin: 0;
     padding: 0px;
-    
-    font-family: monospace;
+
     background-color: #363330;
     color: #EFEFEF;
+    font-family: Roboto mono;
 
     overflow-x: hidden;
 }
@@ -27,11 +29,13 @@ a {
     background-color: #252422;
 }
 
+#base_header {
+    box-sizing: border-box;
+}
+
 #base_header, #base_footer {
-    text-align: center;
     padding: 10px;
     width: 100%;
-    background-color: #252422;
 }
 
 #base_header {
@@ -52,7 +56,7 @@ a {
 }
 
 .main_content, .sidebar {
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
 }
 
