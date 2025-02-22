@@ -21,5 +21,6 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.home, name='home')
+    path('', views.home_view, name='home'),
+    path('title/<int:title_id>---<str:title_name>/', views.title_page_view, name='title')
 ]
