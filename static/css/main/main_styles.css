@@ -1,16 +1,5 @@
-#base_header a {
-    padding: 14px 16px;
-
-}
-
-#profile_link {
-    overflow: hidden;
-}
-
-#logout_link {
-    float: right;
-}
-
-#login_link {
-    float: right;
+#user_ref {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
 }

@@ -2,69 +2,74 @@
 
 body {
     display: flex;
+    flex-wrap: nowrap;
     flex-direction: column;
     min-height: 100vh; 
     height: 100%;
     margin: 0;
     padding: 0px;
-
-    background-color: #363330;
+    background-color: #0B090A;
     color: #EFEFEF;
-    font-family: Roboto mono;
-
+    font-family: Roboto mono, monospace;
     overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, a:hover {
-    color: #00A1E4;
+    color: #BA181B;
+}
+
+footer, header, #main_content, #sidebar {
+    background-color: #161A1D;
 }
 
 a {
-    color: #CCC5B9;
+    color: #EFEFEF;
     text-decoration: none;
     font-size: 1rem;
 }
 
-#base_footer, #base_header, .main_content, .sidebar {
-    background-color: #252422;
-}
-
-#base_header {
+header {
     box-sizing: border-box;
-}
-
-#base_header, #base_footer {
-    padding: 10px;
-    width: 100%;
-}
-
-#base_header {
+    padding: 10px;    
     position: fixed;
     top: 0;
     left: 0;
 }
 
+header, footer {
+    width: 100%;
+}
+
+#header_container, #footer_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
 .container {
+    display: flex;
     flex: 1; 
     width: 70%;  
     max-width: 1600px;
-    min-width: 800px;
-    margin: 75px auto 30px auto;
+    margin: 100px auto 30px auto;
     padding: 15px;
-    display: flex;
     gap: 20px;
 }
 
-.main_content, .sidebar {
+#main_content, #sidebar {
     padding: 40px;
     border-radius: 10px;
 }
 
-.main_content {
+#main_content {
     flex: 3; 
 }
 
-.sidebar {
+#sidebar {
     flex: 1; 
 }
 
@@ -80,19 +85,19 @@ button {
 }
 
 button:hover {
-    background-color: #00A1E4; 
+    background-color: #BA181B; 
 }
 
-.button:active {
-    transform: translateY(4px);
+button:active {
+    color: #EFEFEF;
 }
 
 .warning {
-    color: #F93943;
+    color: #BA181B;
 }
 
 hr {
-    border-color: #363330;
+    border-color: #EFEFEF;
     border-radius: 10px;
-    height: 2px;
+    box-shadow: #161A1D;
 }

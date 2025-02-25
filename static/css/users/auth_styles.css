@@ -3,13 +3,22 @@ h1, h2, h3, h4, h5 {
 }
 
 .auth_buttons {
+    flex: 2;
     text-align: center;
     margin: auto;
     width: 50%;
-    background-color: #252422;
+    background-color: #161A1D;
     padding: 15px;
     gap: 20px;
     border-radius: 10px;
+}
+
+.input_block {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 30px;
 }
 
 input {
@@ -19,19 +28,15 @@ input {
     box-sizing: border-box;
     border-radius: 10px;
     border: 0.3rem solid;
-    min-width: 300px;
+    min-width: 200px;
 }
 
 input:focus {
-    border: 0.3rem solid #00A1E4;
+    border: 0.3rem solid #BA181B;
 }
 
 input::placeholder {
     font-weight: bold;
-}
-
-.input_block {
-    margin: 30px;
 }
 
 h1 {
@@ -43,12 +48,18 @@ ul {
 }
 
 .container {
-    justify-content: center; 
-  }
+    max-width: 60%;
+}
 
-.main_content {
+#main_content {
+    flex: 4;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
     text-align: center;
+    justify-content: center;
     margin: auto;
     width: 50%;
     padding: 20px;
+    min-width: 200px;
 }

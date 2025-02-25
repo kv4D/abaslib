@@ -12,13 +12,11 @@
 
 {% block content %}
     <div class='container'>
-        <div class='main_content'>
-            <img src="{{ user_profile.user_avatar.url }}" alt="Здесь был аватар">
+        <div id='main_content'>
+            <img id='profile_image' src="{{ user_profile.user_avatar.url }}" alt="Здесь был аватар">
             <h1>Профиль пользователя {{ user.username }}</h1>
             <hr>
             <p>{{ user.email }}</p>
-            
-            
         </div>
     </div>
 

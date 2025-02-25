@@ -9,10 +9,11 @@
             <hr>
             <h1><a href="{% url 'users:register' %}">Регистрация</a></h1>
         </div>
-        <div class='main_content'>
-            <h2>Введите данные</h2>
+        <div id='main_content'>
             <form action="{% url 'users:login' %}" method='post'>
                 {% csrf_token %}
+                <h2>Введите данные</h2>
+                <hr>
                 <div class='input_block'>
                     <label for="username">Никнейм</label>
                     <br>
@@ -32,8 +33,9 @@
                     autocomplete="current-password" 
                     required id="id_password">
                 </div>
-              <button name='submit'>Войти</button>
-              <input type="hidden" name="next" value="/" />
+                <br>
+                <button name='submit'>Войти</button>
+                <input type="hidden" name="next" value="{% url 'main:home' %}"/>
            </form>
         </div>
     </div>

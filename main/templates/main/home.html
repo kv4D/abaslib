@@ -9,11 +9,12 @@
 
 {% block header %}
     {% if user.is_authenticated %}
-        <a id='site_icon' href="{% url 'main:home' %}">
-            <img style="width:50px;height:50px;" src="static\images\favicon\android-chrome-192x192.png">
-        </a>
-        <a id='profile_link' href="{% url 'users:profile' %}">Хай, {{ user.username }} 
-            <img style="width:20px;height:20px;" src="{{ user_profile.user_avatar.url }}" ></a>
+        <div id='user_ref'>        
+            <a id='profile_link' href="{% url 'users:profile' %}">Хай, {{ user.username }}</a>
+            <a id='profile_link' href="{% url 'users:profile' %}">
+                <img style="width:30px;height:30px;" src="{{ user_profile.user_avatar.url }}">
+            </a>
+        </div>
         <a id='logout_link' href="{% url 'users:logout' %}">Выход</a>
         
     {% else %}
@@ -25,7 +26,7 @@
 
 {% block content %}
     <div class='container'>
-        <div class='main_content'>
+        <div id='main_content'>
             <h1>Каталог</h1>
             <p>Я основная страница</p>
             <p>Я основная страница</p>
@@ -66,7 +67,7 @@
             <p>Я основная страница</p>
         </div>
     
-        <aside class='sidebar'>
+        <aside id='sidebar'>
             <h1>Хало, френдс</h1>
             <p>Я сайдбар под разделы и, быть может, еще для чего</p>
         </aside>

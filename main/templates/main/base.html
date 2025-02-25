@@ -23,18 +23,26 @@
 </head>
 
 <body>
-    <header id='base_header'>
-        {% block header %}
-        {% endblock header %}
+    <header>
+        <div id="header_container">
+            <a id='site_icon' href="{% url 'main:home' %}">
+                <img style="width:50px;height:50px;" src="{% static "images/favicon/android-chrome-192x192.png" %}">
+            </a>
+            {% block header %}
+            {% endblock header %}
+        </div>
     </header>
 
     {% block content %}
     {% endblock content %}
 
-    <footer id='base_footer'>
-        {% block footer %}
+    <footer>
+        <div id="footer_container">
             <p>2025 - {% now "Y" %}</p>
-        {% endblock footer %}
+            <a href="">Для правообладателей</a>
+            {% block footer %}
+            {% endblock footer %}
+        </div>
     </footer>
 </body>
 </html>
