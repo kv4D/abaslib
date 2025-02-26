@@ -14,8 +14,10 @@
     <div class='container'>
         <div id='main_content'>
             <img id='profile_image' src="{{ user_profile.user_avatar.url }}" alt="Здесь был аватар">
-            <h1>Профиль пользователя {{ user.username }}</h1>
+            <h1>Пользователь {{ user.username }}</h1>
             <hr>
+            <h2>Сведения</h2>
+            <p><b>Статус:</b> здесь будет статус</p>
             <p>{{ user.email }}</p>
         </div>
     </div>

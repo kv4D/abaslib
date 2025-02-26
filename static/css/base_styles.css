@@ -25,7 +25,7 @@ footer, header, #main_content, #sidebar {
 a {
     color: #EFEFEF;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 header {
@@ -38,6 +38,7 @@ header {
 
 header, footer {
     width: 100%;
+    font-size: 1.1rem;
 }
 
 #header_container, #footer_container{
@@ -48,6 +49,16 @@ header, footer {
     justify-content: space-between;
     margin-right: 40px;
     margin-left: 40px;
+}
+
+#site_icon {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+}
+
+#site_icon a:hover {
+    text-decoration: none;
 }
 
 .container {

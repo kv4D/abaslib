@@ -25,9 +25,14 @@
 <body>
     <header>
         <div id="header_container">
-            <a id='site_icon' href="{% url 'main:home' %}">
-                <img style="width:50px;height:50px;" src="{% static "images/favicon/android-chrome-192x192.png" %}">
-            </a>
+            <div id='site_icon'>
+                <a href="{% url 'main:home' %}">
+                    <img style="width:50px;height:50px;" src="{% static "images/favicon/android-chrome-192x192.png" %}">
+                </a>
+                <a id='profile_link' href="{% url 'main:home' %}">
+                    ABASlib
+                </a>
+            </div>
             {% block header %}
             {% endblock header %}
         </div>
@@ -39,7 +44,9 @@
     <footer>
         <div id="footer_container">
             <p>2025 - {% now "Y" %}</p>
-            <a href="">Для правообладателей</a>
+            <p><a href=''>Добавить текстовый тайтл</a></p>
+            <p><a href=''>Добавить графический тайтл</a></p>
+            <a href=''>Для правообладателей</a>
             {% block footer %}
             {% endblock footer %}
         </div>

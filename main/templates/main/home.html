@@ -10,7 +10,7 @@
 {% block header %}
     {% if user.is_authenticated %}
         <div id='user_ref'>        
-            <a id='profile_link' href="{% url 'users:profile' %}">Хай, {{ user.username }}</a>
+            <a id='profile_link' href="{% url 'users:profile' %}">Профиль {{ user.username }}</a>
             <a id='profile_link' href="{% url 'users:profile' %}">
                 <img style="width:30px;height:30px;" src="{{ user_profile.user_avatar.url }}">
             </a>

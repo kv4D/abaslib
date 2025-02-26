@@ -5,8 +5,7 @@ some functions for convenience.
 import os
 from django.db import models
 
-
-
+# TODO: switch from names to ids or their combo
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
     # if there is no title in eng, use russian
@@ -21,7 +20,7 @@ def get_graphic_chapter_path(instance, filename):
 def get_text_chapter_path(instance, filename):
     """Creates the path to the chapter of a text title"""
     # if there is no title in eng, use russian
-    title_name = instance.title.title_name_eng
+    title_name = instance.title.title_id
     if not title_name:
         title_name = instance.title.title_name_rus
     # formatting title to some_title_name
@@ -100,7 +99,8 @@ class GraphicTitlePage(models.Model):
         # we should sort by page number
         ordering = ['page_number']
         # one page №(some number) for a chapter
-        unique_together = ['chapter', 'page_number']
+        constraints = [
+        models.UniqueConstraint(fields=['chapter', 'page_number'], name='unique_page_per_chapter')]
 
     def __str__(self):
         return f'{self.page_number}/{str(self.chapter)}'

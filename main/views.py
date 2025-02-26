@@ -1,7 +1,8 @@
 """Views for 'main' app, pages with content"""
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from users.models import UserProfile
 from . models import Title
+from . forms import TextTitleForm, GraphicTitleForm
 
 # Create your views here.
 def home_view(request):
@@ -28,3 +29,33 @@ def title_page_view(request, title_id: int, title_name: str):
     else:
         context = {}
     return render(request, 'main/title_page.html', context)
+
+
+def upload_title(request):
+    # there can be 'graphic' or 'text' content type
+    title_type = request.GET.get('title_type')
+    if title_type == 'graphic':
+        form = GraphicTitleForm(request.POST)
+    elif title_type == 'text':
+        form = TextTitleForm(request.POST)
+    else:
+        pass # add response here
+
+    if request.method == 'POST':
+        if form.is_valid():
+            title = form.save()
+            # TODO: create title and go for chapter creation
+            return redirect('for later', title_id=title.id)
+    else:
+        form = TextTitleForm()
+
+    context = {
+        'form': form
+    }
+    
+    return render(request, 'main/upload_title.html', context)
+
+
+def upload_chapter(request, title_id):
+    pass
+
