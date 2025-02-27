@@ -15,9 +15,10 @@
 {% block content %}
     <div class='container'>
         <div id="main_content">
-            <form action="{% url 'main:upload_title' %}" method='post'>
+            <form action="{% url 'main:upload_title' %}?title_type={{ title_type }}" method='post'>
                 {% csrf_token %}
                 <div id='title_input'>
+                    {{ title_type }}
                     <label for="title_name_rus">Название тайтла (Русский):</label>
                     <input type="text" name="title_name_rus" maxlength="255" required id="title_name_rus">
     
@@ -31,16 +32,8 @@
                     <textarea name="title_description" cols="40" rows="10" required id="title_description"></textarea>       
                     <br>
                     <button name='submit'>Добавить тайтл</button>
-                    <input type="hidden" name="next" value="{% url 'main:home' %}" />
-                    <input type="file" accept=".png, .jpg, .jpeg" name='title_cover' id="title_cover">
                 </div>
             </form>
-
-            {% if image %}
-                <span>Height: {{height}}</span>
-                <span>Width: {{width}}</span>
-                <img src="{{ image }}" alt="img" style="top:10em; width: {{width}}px; height: {{height}}px; max-width: 700px; max-height: 1000px;">
-            {% endif %}
         </div>
     </div>
 {% endblock content %}

@@ -21,16 +21,6 @@ h1, h2, h3, h4, h5 {
     margin: 30px;
 }
 
-input {
-    width: 50%;
-    padding: 10px 10px;
-    margin: 8px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 0.3rem solid;
-    min-width: 200px;
-}
-
 input:focus {
     border: 0.3rem solid #BA181B;
 }

@@ -88,11 +88,20 @@ button {
     transition-duration: 0.2s;
     padding: 10px 10px;
     margin: 8px;
-    width: 50%;
+    max-width: 30%;
     align-self: center;
     text-align: center;
     border-radius: 10px;
     border: 0.3rem solid;
+}
+
+input {
+    padding: 10px 10px;
+    margin: 8px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 0.3rem solid;
+    min-width: 200px;
 }
 
 button:hover {

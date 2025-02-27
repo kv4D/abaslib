@@ -37,26 +37,28 @@ def title_page_view(request, title_id: int, title_name: str):
 def upload_title(request):
     # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
-    if title_type == 'graphic':
-        print('1')
-        form = GraphicTitleForm()
-    elif title_type == 'text':
-        print('2')
-        form = TextTitleForm()
-    else:
-        print('3')
-        pass # add response here
 
     if request.method == 'POST':
-        print('4')
-        form.data = request.POST
+        if title_type == 'graphic':
+            form = GraphicTitleForm(request.POST)
+        elif title_type == 'text':
+            form = TextTitleForm(request.POST)
+        else:
+            pass # TODO: add response here
         if form.is_valid():
-            title = form.save()
-            # TODO: create title and go for chapter creation or to title page
-            return redirect('for later', title_id=title.id)
-
+            form.save()
+            return redirect('main:home')
+    else:
+        if title_type == 'graphic':
+            form = GraphicTitleForm()
+        elif title_type == 'text':
+            form = TextTitleForm()
+        else:
+            pass # TODO: add response here
+    print(title_type)
     context = {
-        'form': form
+        'form': form,
+        'title_type': title_type
     }
     
     return render(request, 'main/upload_title.html', context)

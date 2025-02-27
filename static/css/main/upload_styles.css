@@ -1,10 +1,15 @@
 #title_input {
     display: flex;
     flex-direction: column;
+    align-items: safe;
     gap: 15px;
-    max-width: 50%;
+    max-width: 100%;
 }
 
 textarea {
     resize: none;
+}
+
+.demo_img {
+
 }

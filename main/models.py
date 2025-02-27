@@ -34,8 +34,8 @@ class Title(models.Model):
     Represents a basic title model and its common attributes both
     for graphic and text content
     """
-    title_name_rus = models.CharField(max_length=255)
-    title_name_eng = models.CharField(max_length=255)
+    title_name_rus = models.CharField(max_length=255, unique=True)
+    title_name_eng = models.CharField(max_length=255, unique=True)
     title_author = models.CharField(max_length=255)
     title_description = models.TextField()
 
