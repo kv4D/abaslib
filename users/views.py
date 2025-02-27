@@ -2,18 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from . models import User
 from . forms import RegisterForm
-from . models import UserProfile
 
 
 # Create your views here.
 @login_required
 def user_profile_view(request):
     """Shows user profile page and it's info"""
-    user_profile = UserProfile.objects.get(user=request.user)
+    user = User.objects.get(id=request.user.id)
 
     context = {
-        'user_profile': user_profile
+        'user': user
     }
 
     return render(request, 'users/profile.html', context)

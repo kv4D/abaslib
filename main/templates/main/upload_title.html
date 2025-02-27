@@ -1,1 +1,46 @@
 {% extends "main/base.html" %}
+{% load static %}
+{% block title %}ABASlib - Добавление тайтла{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" href={% static "css\main\upload_styles.css" %}>
+{% endblock styles %}
+
+{% block header %}
+    <a href="{% url 'main:home' %}">Вернуться на главную страницу</a>
+{% endblock header %}
+
+
+
+{% block content %}
+    <div class='container'>
+        <div id="main_content">
+            <form action="{% url 'main:upload_title' %}" method='post'>
+                {% csrf_token %}
+                <div id='title_input'>
+                    <label for="title_name_rus">Название тайтла (Русский):</label>
+                    <input type="text" name="title_name_rus" maxlength="255" required id="title_name_rus">
+    
+                    <label for="title_name_eng">Название тайтла (Английский, опционально):</label>
+                    <input autocomplete="off" type="text" name="title_name_eng" maxlength="255" id="title_name_eng">
+     
+                    <label for="title_author">Автор тайтла:</label>
+                    <input autocomplete="off" type="text" name="title_author" maxlength="255" required id="title_author">
+    
+                    <label for="title_description">Описание тайтла:</label>
+                    <textarea name="title_description" cols="40" rows="10" required id="title_description"></textarea>       
+                    <br>
+                    <button name='submit'>Добавить тайтл</button>
+                    <input type="hidden" name="next" value="{% url 'main:home' %}" />
+                    <input type="file" accept=".png, .jpg, .jpeg" name='title_cover' id="title_cover">
+                </div>
+            </form>
+
+            {% if image %}
+                <span>Height: {{height}}</span>
+                <span>Width: {{width}}</span>
+                <img src="{{ image }}" alt="img" style="top:10em; width: {{width}}px; height: {{height}}px; max-width: 700px; max-height: 1000px;">
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

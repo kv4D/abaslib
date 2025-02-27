@@ -4,7 +4,7 @@
 {% block title %}ABASlib — Главная{% endblock title %}
 
 {% block styles %}
-    <link rel="stylesheet" href={% static "css\main\main_styles.css" %}>
+    <link rel="stylesheet" href={% static "css\main\home_styles.css" %}>
 {% endblock styles %}
 
 {% block header %}
@@ -12,7 +12,7 @@
         <div id='user_ref'>        
             <a id='profile_link' href="{% url 'users:profile' %}">Профиль {{ user.username }}</a>
             <a id='profile_link' href="{% url 'users:profile' %}">
-                <img style="width:30px;height:30px;" src="{{ user_profile.user_avatar.url }}">
+                <img style="width:30px;height:30px;" src="{{ user.user_avatar.url }}">
             </a>
         </div>
         <a id='logout_link' href="{% url 'users:logout' %}">Выход</a>
@@ -73,3 +73,14 @@
         </aside>
     </div>
 {% endblock content %}
+
+{% block footer %}
+    {% if user.is_authenticated %}
+        <p>
+            <a href="{% url "main:upload_title" %}?title_type=text">Добавить текстовый тайтл</a>
+        </p>
+        <p>
+            <a href="{% url "main:upload_title" %}?title_type=graphic">Добавить графический тайтл</a>
+        </p>
+    {% endif %}
+{% endblock footer %}
