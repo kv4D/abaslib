@@ -1,25 +1,30 @@
 <!-- User profile page -->
-{% extends "main/home.html" %}
+{% extends 'main/home.html' %}
 {% load static %}
-{% block title %}ABASlib — Профиль {{ user.name }}{% endblock title %}
-{% block styles %}<link rel="stylesheet" href="{% static "css/users/profile_styles.css" %}">{% endblock styles %}
+{% block title %}
+  ABASlib — Профиль {{ user.name }}
+{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/users/profile_styles.css' %}" />
+{% endblock %}
 
 {% block header %}
-    <p>
-        <a href="{% url 'main:home' %}">Вернуться на главную</a>
-    </p>
-{% endblock header %}
+  <p>
+    <a href="{% url 'main:home' %}">Вернуться на главную</a>
+  </p>
+{% endblock %}
 
 {% block content %}
-    <div class='container'>
-        <div id='main_content'>
-            <img id='profile_image' src="{{ user.user_avatar.url }}" alt="Здесь был аватар">
-            <h1>Пользователь {{ user.username }}</h1>
-            <hr>
-            <h2>Сведения</h2>
-            <p><b>Статус:</b> здесь будет статус</p>
-            <p>{{ user.email }}</p>
-        </div>
+  <div class="container">
+    <div id="main_content">
+      <img id="profile_image" src="{{ user.user_avatar.url }}" alt="Здесь был аватар" />
+      <h1>Пользователь {{ user.username }}</h1>
+      <hr />
+      <h2>Сведения</h2>
+      <p>
+        <b>Статус:</b> здесь будет статус
+      </p>
+      <p>{{ user.email }}</p>
     </div>
-
-{% endblock content %}
+  </div>
+{% endblock %}

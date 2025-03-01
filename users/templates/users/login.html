@@ -1,45 +1,43 @@
 <!-- Log in page -->
-{% extends "users/auth_base.html" %}
-{% block title %}ABASlib — Вход{% endblock title %}
+{% extends 'users/auth_base.html' %}
+{% block title %}
+  ABASlib — Вход
+{% endblock %}
 
 {% block content %}
-    <div class='container'>
-        <div class='auth_buttons'>
-            <h1>Вход</h1>
-            <hr>
-            <h1><a href="{% url 'users:register' %}">Регистрация</a></h1>
-        </div>
-        <div id='main_content'>
-            <form action="{% url 'users:login' %}" method='post'>
-                {% csrf_token %}
-                <h2>Введите данные</h2>
-                <hr>
-                <div class='input_block'>
-                    <label for="username">Никнейм</label>
-                    <br>
-                    <input placeholder="Никнейм" 
-                    type="text" name="username" 
-                    autofocus autocapitalize="none" 
-                    autocomplete="username" 
-                    maxlength="150" 
-                    required id="id_username">
-                </div>
-              
-                <div class='input_block'>
-                    <label for="password">Пароль</label>
-                    <br>
-                    <input placeholder="Пароль" 
-                    type="password" name="password" 
-                    autocomplete="current-password" 
-                    required id="id_password">
-                </div>
-                <br>
-                <button name='submit'>Войти</button>
-                <input type="hidden" name="next" value="{% url 'main:home' %}"/>
-           </form>
-        </div>
+  <div class="container">
+    <div class="auth_buttons">
+      <h1>Вход</h1>
+      <hr />
+      <h1><a href="{% url 'users:register' %}">Регистрация</a></h1>
     </div>
-{% endblock content %}
+    <div id="main_content">
+      <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+        <h2>Введите данные</h2>
+        <hr />
+        <div class="input_block">
+          <label for="username">Никнейм</label>
+          <br />
+          <input placeholder="Никнейм" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" />
+        </div>
+
+        <div class="input_block">
+          <label for="password">Пароль</label>
+          <br />
+          <input placeholder="Пароль" type="password" name="password" autocomplete="current-password" required id="id_password" />
+        </div>
+
+        <div>
+          <br />
+          <button name="submit">Войти</button>
+          <input type="hidden" name="next" value="{% url 'main:home' %}" />
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
 
 {% block footer %}
-{% endblock footer %}
+
+{% endblock %}

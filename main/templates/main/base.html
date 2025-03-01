@@ -2,52 +2,54 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name='author' content='withered'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="withered" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href={% static "images/favicon/apple-touch-icon.png" %}>
-    <link rel="icon" type="image/png" sizes="32x32" href={% static "images/favicon/favicon-32x32.png" %}>
-    <link rel="icon" type="image/png" sizes="16x16" href={% static "images/favicon/favicon-16x16.png" %}>
-    <link rel="manifest" href={% static "images/favicon/site.webmanifest" %}>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}" />
+    <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}" />
     <title>
-        {% block title %}
-            ABASlib
-        {% endblock title %}
+      {% block title %}
+        ABASlib
+      {% endblock %}
     </title>
-    
-    <link rel="stylesheet" href="{% static "css/base_styles.css" %}" />
-    {% block styles %}
-    {% endblock styles %}
-</head>
 
-<body>
+    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}" />
+    {% block styles %}
+
+    {% endblock %}
+  </head>
+
+  <body>
     <header>
-        <div id="header_container">
-            <div id='site_icon'>
-                <a href="{% url 'main:home' %}">
-                    <img style="width:50px;height:50px;" src="{% static "images/favicon/android-chrome-192x192.png" %}">
-                </a>
-                <a id='profile_link' href="{% url 'main:home' %}">
-                    ABASlib
-                </a>
-            </div>
-            {% block header %}
-            {% endblock header %}
+      <div id="header_container">
+        <div id="site_icon">
+          <a href="{% url 'main:home' %}"><img style="width:50px;height:50px;" src="{% static 'images/favicon/android-chrome-192x192.png' %}" /></a>
+          <a id="profile_link" href="{% url 'main:home' %}">ABASlib</a>
         </div>
+        {% block header %}
+
+        {% endblock %}
+      </div>
     </header>
 
     {% block content %}
-    {% endblock content %}
+
+    {% endblock %}
 
     <footer>
-        <div id="footer_container">
-            <p>2025 - {% now "Y" %}</p>
-            {% block footer %}
-            {% endblock footer %}
-            <a href=''>Для правообладателей</a>
-        </div>
+      <div id="footer_container">
+        <p>
+          2025 -{% now 'Y' %}
+        </p>
+        {% block footer %}
+
+        {% endblock %}
+        <a href="">Для правообладателей</a>
+      </div>
     </footer>
-</body>
+  </body>
 </html>

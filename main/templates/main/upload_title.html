@@ -1,39 +1,38 @@
-{% extends "main/base.html" %}
+{% extends 'main/base.html' %}
 {% load static %}
-{% block title %}ABASlib - Добавление тайтла{% endblock title %}
+{% block title %}
+  ABASlib - Добавление тайтла
+{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href={% static "css\main\upload_styles.css" %}>
-{% endblock styles %}
+  <link rel="stylesheet" href="{% static 'css\main\upload_styles.css' %}" />
+{% endblock %}
 
 {% block header %}
-    <a href="{% url 'main:home' %}">Вернуться на главную страницу</a>
-{% endblock header %}
-
-
+  <a href="{% url 'main:home' %}">Вернуться на главную страницу</a>
+{% endblock %}
 
 {% block content %}
-    <div class='container'>
-        <div id="main_content">
-            <form action="{% url 'main:upload_title' %}?title_type={{ title_type }}" method='post'>
-                {% csrf_token %}
-                <div id='title_input'>
-                    {{ title_type }}
-                    <label for="title_name_rus">Название тайтла (Русский):</label>
-                    <input type="text" name="title_name_rus" maxlength="255" required id="title_name_rus">
-    
-                    <label for="title_name_eng">Название тайтла (Английский, опционально):</label>
-                    <input autocomplete="off" type="text" name="title_name_eng" maxlength="255" id="title_name_eng">
-     
-                    <label for="title_author">Автор тайтла:</label>
-                    <input autocomplete="off" type="text" name="title_author" maxlength="255" required id="title_author">
-    
-                    <label for="title_description">Описание тайтла:</label>
-                    <textarea name="title_description" cols="40" rows="10" required id="title_description"></textarea>       
-                    <br>
-                    <button name='submit'>Добавить тайтл</button>
-                </div>
-            </form>
+  <div class="container">
+    <div id="main_content">
+      <form action="{% url 'main:upload_title' %}?title_type={{ title_type }}" method="post">
+        {% csrf_token %}
+        <div id="title_input">
+          <label for="title_name_rus">Название тайтла (Русский):</label>
+          <input type="text" name="title_name_rus" maxlength="255" required id="title_name_rus" />
+
+          <label for="title_name_eng">Название тайтла (Английский, опционально):</label>
+          <input autocomplete="off" type="text" name="title_name_eng" maxlength="255" id="title_name_eng" />
+
+          <label for="title_author">Автор тайтла:</label>
+          <input autocomplete="off" type="text" name="title_author" maxlength="255" required id="title_author" />
+
+          <label for="title_description">Описание тайтла:</label>
+          <textarea name="title_description" cols="40" rows="10" required id="title_description"></textarea>
+          <br />
+          <button name="submit">Добавить тайтл</button>
         </div>
+      </form>
     </div>
-{% endblock content %}
+  </div>
+{% endblock %}

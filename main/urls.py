@@ -23,4 +23,5 @@ app_name = 'main'
 urlpatterns = [
     path('', views.home_view, name='home'),
     path('upload_title/', views.upload_title, name='upload_title'),
+    path('title_page/<int:title_id>/', views.title_page_view, name='title_page'),
 ]
