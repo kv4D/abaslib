@@ -27,12 +27,13 @@ class Title(models.Model):
     Represents a basic title model and its common attributes both
     for graphic and text content
     """
-    title_name_rus = models.CharField(max_length=255, unique=True)
-    title_name_eng = models.CharField(max_length=255, unique=True)
-    title_author = models.CharField(max_length=255)
-    title_status = models.CharField(max_length=40, default='ongoing')
+    title_name_rus = models.CharField(max_length=100, unique=True)
+    title_name_eng = models.CharField(max_length=100, unique=True)
+    title_author = models.CharField(max_length=100)
+    title_is_ongoing = models.BooleanField(default=True)
     title_description = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
+    publication_year = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
         abstract = True

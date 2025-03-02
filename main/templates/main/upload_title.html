@@ -19,7 +19,7 @@
         {% csrf_token %}
         <div id="title_input">
           <label for="title_name_rus">Название тайтла (Русский):</label>
-          <input type="text" name="title_name_rus" maxlength="255" required id="title_name_rus" />
+          <input autocomplete="off" type="text" name="title_name_rus" maxlength="255" required id="title_name_rus" />
 
           <label for="title_name_eng">Название тайтла (Английский, опционально):</label>
           <input autocomplete="off" type="text" name="title_name_eng" maxlength="255" id="title_name_eng" />

@@ -11,6 +11,7 @@ h1, h2, h3, h4, h5 {
     padding: 15px;
     gap: 20px;
     border-radius: 10px;
+    min-width: fit-content;
 }
 
 .input_block {

@@ -9,9 +9,7 @@
 {% endblock %}
 
 {% block header %}
-  <p>
     <a href="{% url 'main:home' %}">Вернуться на главную</a>
-  </p>
 {% endblock %}
 
 {% block content %}
@@ -22,7 +20,6 @@
       <hr />
       <h2>Сведения</h2>
       <p>
-        <b>Статус:</b> здесь будет статус
       </p>
       <p>{{ user.email }}</p>
     </div>

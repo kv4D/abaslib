@@ -10,22 +10,42 @@ body {
     padding: 0px;
     background-color: #0B090A;
     color: #EFEFEF;
+    font-size: 16px;
     font-family: Roboto mono, monospace;
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, a:hover {
+h1, h2, h3, h4, h5 {
     color: #BA181B;
 }
 
-footer, header, #main_content, #sidebar {
+h1 {
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 25px;
+} 
+
+h4, h5 {
+    font-size: 20px;
+}
+
+a:hover {
+    color: #ff090d;
+}
+
+footer, header, #main_content, #side {
     background-color: #161A1D;
 }
 
 a {
     color: #EFEFEF;
     text-decoration: none;
-    font-size: 1.1rem;
 }
 
 header {
@@ -38,7 +58,7 @@ header {
 
 header, footer {
     width: 100%;
-    font-size: 1.1rem;
+    font-size: 1.1em;
 }
 
 #header_container, #footer_container{
@@ -71,7 +91,7 @@ header, footer {
     gap: 20px;
 }
 
-#main_content, #sidebar {
+#main_content, #side {
     padding: 40px;
     border-radius: 10px;
 }
@@ -80,7 +100,7 @@ header, footer {
     flex: 3; 
 }
 
-#sidebar {
+#side {
     flex: 1; 
 }
 
@@ -92,15 +112,14 @@ button {
     align-self: center;
     text-align: center;
     border-radius: 10px;
-    border: 0.3rem solid;
+    min-width: fit-content;
 }
 
-input {
+input, textarea  {
     padding: 10px 10px;
     margin: 8px;
     box-sizing: border-box;
     border-radius: 10px;
-    border: 0.3rem solid;
     min-width: 200px;
 }
 
@@ -120,4 +139,15 @@ hr {
     border-color: #EFEFEF;
     border-radius: 10px;
     box-shadow: #161A1D;
+}
+
+.info {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+textarea {
+    resize: none;
 }

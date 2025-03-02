@@ -3,11 +3,7 @@
     flex-direction: column;
     align-items: safe;
     gap: 15px;
-    max-width: 100%;
-}
-
-textarea {
-    resize: none;
+    max-width: 50%;
 }
 
 .demo_img {
