@@ -24,24 +24,19 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <h1>Каталог</h1>
+      <h1>ABASlib</h1>
+      <h2>Тихо и стандартно</h2>
       <hr />
+      <h4>Новые тайтлы</h4>
       {% for title in titles %}
         <p>
           <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}">{{ title.title_name_rus }}</a>
         </p>
       {% endfor %}
-      <p>Я основная страница</p>
-      <p>Я основная страница</p>
-      <p>Я основная страница</p>
-      <p>Я основная страница</p>
-      <p>Я основная страница</p>
-      <p>Я основная страница</p>
     </div>
 
     <div id="side">
       <h1>Сайд</h1>
-      <hr />
       <p>Я сайд под разделы и, быть может, еще для чего</p>
     </div>
   </div>

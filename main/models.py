@@ -39,7 +39,7 @@ class Title(models.Model):
         abstract = True
 
     def __str__(self):
-        return f'{self.title_name_eng} / {self.title_name_rus}'
+        return f'{self.title_name_rus} ({self.title_name_eng})'
 
 
 class TextTitle(Title):
@@ -55,37 +55,44 @@ class GraphicTitle(Title):
     @property
     def title_type(self):
         return 'graphic'
+    
 
-class TextTitleChapter(models.Model):
-    """Represents a chapter from a certain text title"""
+class TitleChapter(models.Model):
+    """
+    Represents a basic title chapter model and its common attributes both
+    for graphic and text content
+    """    
     # access title's chapters with obj.chapters.all()
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='chapters')     
     chapter_name = models.CharField(max_length=255)
+    chapter_number = models.PositiveIntegerField()
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # chapters are ordered by their ids
+        ordering = ["id"]
+
+    def __str__(self):
+        return f'Глава {self.chapter_number} - {self.chapter_name} / {str(self.title)}'
+    
+
+class TextTitleChapter(TitleChapter):
+    """Represents a chapter from a certain text title"""
     # a file with the chapter's content
     text_content = models.FileField(upload_to=get_text_chapter_path)
-    added_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        # chapters are ordered by their ids
-        ordering = ["id"]
-        
-    def __str__(self):
-        return f'{self.chapter_name} / {str(self.title)}'
+    
+    # for specification purposes
+    @property
+    def title_type(self):
+        return 'text'
 
 
-class GraphicTitleChapter(models.Model):
+class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
-    # access title's chapters with obj.chapters.all()
-    title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE, related_name='chapters')
-    chapter_name = models.CharField(max_length=255)
-    added_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        # chapters are ordered by their ids
-        ordering = ["id"]
-
-    def __str__(self):
-        return f'{self.chapter_name} / {str(self.title)}'
+    # for specification purposes
+    @property
+    def title_type(self):
+        return 'graphic'
 
 
 class GraphicTitlePage(models.Model):

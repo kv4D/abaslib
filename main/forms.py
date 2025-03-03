@@ -6,13 +6,13 @@ from . models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChap
 class TextTitleForm(forms.ModelForm):
     class Meta:
         model = TextTitle
-        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description']
+        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description', 'publication_year']
 
 
 class GraphicTitleForm(forms.ModelForm):
     class Meta:
         model = GraphicTitle
-        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description']
+        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description', 'publication_year']
 
 class TextTitleChapterForm(forms.ModelForm):
     class Meta:

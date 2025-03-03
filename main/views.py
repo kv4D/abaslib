@@ -28,7 +28,7 @@ def home_view(request):
         reverse=True
     )
 
-    context['titles'] = titles
+    context['titles'] = titles[:5]
 
     return render(request, 'main/home.html', context)
 
@@ -83,17 +83,20 @@ def upload_title_view(request):
 def upload_chapter_view(request, title_id=None):
     # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
-
+    
     if title_type == 'text':
+        print(1)
         form = TextTitleChapterForm
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         form = GraphicTitleChapterForm
         title = get_object_or_404(GraphicTitle, id=title_id)
-    
+        
     if request.method == 'POST':
+        print(2)
         form = form(request.POST, title=title)
         if form.is_valid():
+            print(3)
             chapter = form.save(commit=False)
             chapter.title = title
             chapter.save()
@@ -109,7 +112,8 @@ def upload_chapter_view(request, title_id=None):
 
     context = {
         'form': form,
-        'title': title
+        'title': title,
+        'title_type': title_type
     }
     
     return render(request, 'main/upload_chapter.html', context)
