@@ -12,21 +12,20 @@
       <hr />
       {% if title.title_is_ongoing %}
         <div class="info">
-          <h4>Статус:</h4> 
+          <h4>Статус:</h4>
           <p>продолжается</p>
         </div>
       {% else %}
         <div class="info">
-          <h4>Статус:</h4> 
+          <h4>Статус:</h4>
           <p>закончено</p>
         </div>
       {% endif %}
       <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
     </div>
-    
+
     <div id="side">
       <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</a>
     </div>
   </div>
-{% endblock content %}
-
+{% endblock %}

@@ -17,14 +17,12 @@
     <div id="main_content">
       <form action="{% url 'main:upload_title' %}?title_type={{ title_type }}" method="post">
         {% csrf_token %}
-          <div id="input">
-            <h1>Заполните поля</h1>
-              {{ form.as_table }}
-              <br />
-              <button name="submit">Добавить тайтл</button>
-            <div id="title_cover">
-              здесь будет обложка (не здесь, справа)
-            </div>
+        <div id="input">
+          <h1>Заполните поля</h1>
+          {{ form.as_table }}
+          <br />
+          <button name="submit">Добавить тайтл</button>
+          <div id="title_cover">здесь будет обложка (не здесь, справа)</div>
         </div>
       </form>
     </div>

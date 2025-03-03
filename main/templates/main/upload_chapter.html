@@ -6,7 +6,7 @@
 
 {% block styles %}
   <link rel="stylesheet" href="{% static 'css\main\upload_styles.css' %}" />
-{% endblock  %}
+{% endblock %}
 
 {% block header %}
   <a href="{% url 'main:home' %}">Вернуться на главную страницу</a>
@@ -20,7 +20,7 @@
         {{ form.errors }}
         <div id="input">
           <h1>Заполните поля</h1>
-            {{ form.as_table }}
+          {{ form.as_table }}
           <br />
           <button name="submit">Добавить главу</button>
         </div>
