@@ -28,7 +28,7 @@ class Title(models.Model):
     for graphic and text content
     """
     title_name_rus = models.CharField(max_length=100, unique=True)
-    title_name_eng = models.CharField(max_length=100, unique=True)
+    title_name_eng = models.CharField(max_length=100, unique=True, blank=True)
     title_author = models.CharField(max_length=100)
     title_is_ongoing = models.BooleanField(default=True)
     title_description = models.TextField()

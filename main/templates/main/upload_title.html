@@ -19,23 +19,9 @@
         {% csrf_token %}
           <div id="input">
             <h1>Заполните поля</h1>
-            <label for="title_name_rus">Название тайтла (Русский):</label>
-            <input autocomplete="off" type="text" name="title_name_rus" maxlength="255" required id="title_name_rus" />
-
-            <label for="title_name_eng">Название тайтла (Английский, опционально):</label>
-            <input autocomplete="off" type="text" name="title_name_eng" maxlength="255" id="title_name_eng" />
-
-            <label for="title_author">Автор тайтла:</label>
-            <input autocomplete="off" type="text" name="title_author" maxlength="255" required id="title_author" />
-
-            <label for="publication_year">Год выпуска:</label>
-            <input autocomplete="off" type="number" name="publication_year" min="0" required id="publication_year" />
-            
-            <label for="title_description">Описание тайтла:</label>
-            <textarea spellcheck="true" name="title_description" cols="40" rows="10" required id="title_description"></textarea>
-            <br />
-            <button name="submit">Добавить тайтл</button>
-
+              {{ form.as_table }}
+              <br />
+              <button name="submit">Добавить тайтл</button>
             <div id="title_cover">
               здесь будет обложка (не здесь, справа)
             </div>

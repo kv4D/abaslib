@@ -85,7 +85,6 @@ def upload_chapter_view(request, title_id=None):
     title_type = request.GET.get('title_type')
     
     if title_type == 'text':
-        print(1)
         form = TextTitleChapterForm
         title = get_object_or_404(TextTitle, id=title_id)
     else:
@@ -93,10 +92,8 @@ def upload_chapter_view(request, title_id=None):
         title = get_object_or_404(GraphicTitle, id=title_id)
         
     if request.method == 'POST':
-        print(2)
         form = form(request.POST, request.FILES, title=title)
         if form.is_valid():
-            print(3)
             chapter = form.save(commit=False)
             chapter.title = title
             chapter.save()
