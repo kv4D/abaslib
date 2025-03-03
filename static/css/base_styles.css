@@ -121,8 +121,8 @@ button {
 input, textarea  {
     padding: 10px 10px;
     margin: 8px;
-    box-sizing: border-box;
-    border-radius: 5px;;
+    box-sizing: content-box;
+    border-radius: 5px;
     min-width: 200px;
 }
 

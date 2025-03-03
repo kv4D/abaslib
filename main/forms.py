@@ -6,18 +6,31 @@ from . models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChap
 class TextTitleForm(forms.ModelForm):
     class Meta:
         model = TextTitle
-        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description', 'publication_year']
+        fields = ['title_name_rus', 
+                  'title_name_eng', 
+                  'title_author', 
+                  'title_is_ongoing',
+                  'title_description', 
+                  'publication_year']
 
 
 class GraphicTitleForm(forms.ModelForm):
     class Meta:
         model = GraphicTitle
-        fields = ['title_name_rus', 'title_name_eng', 'title_author', 'title_description', 'publication_year']
+        fields = ['title_name_rus', 
+                  'title_name_eng', 
+                  'title_author', 
+                  'title_is_ongoing',
+                  'title_description', 
+                  'publication_year']
 
 class TextTitleChapterForm(forms.ModelForm):
     class Meta:
         model = TextTitleChapter
-        fields = ['title', 'chapter_name', 'text_content']
+        fields = ['title', 
+                  'chapter_name', 
+                  'chapter_number',
+                  'text_content']
     
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,7 +42,9 @@ class TextTitleChapterForm(forms.ModelForm):
 class GraphicTitleChapterForm(forms.ModelForm):
     class Meta:
         model = GraphicTitleChapter
-        fields = ['title', 'chapter_name']
+        fields = ['title', 
+                  'chapter_name', 
+                  'chapter_number']
     
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,13 +76,19 @@ class GraphicTitlePageForm(forms.ModelForm):
     
     class Meta:
         model = GraphicTitlePage
-        fields = ['page_number', 'image']
+        fields = ['chapter', 'page_number', 'image']
+        
+    def __init__(self, *args, chapter=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if title:
+            self.fields['chapter'].initial = chapter
+            self.fields['chapter'].widget = forms.HiddenInput()
 
 
 # allows uploading multiple pages
 GraphicTitlePageFormSet = forms.modelformset_factory(
     GraphicTitlePage,
     form=GraphicTitlePageForm,
-    extra=10,
+    extra=3,
     can_delete=True
 )

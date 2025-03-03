@@ -71,6 +71,9 @@ class TitleChapter(models.Model):
     class Meta:
         # chapters are ordered by their ids
         ordering = ["id"]
+        # one chapter for a title
+        constraints = [
+        models.UniqueConstraint(fields=['chapter_name', 'chapter_number'], name='unique_chapter_per_title')]
 
     def __str__(self):
         return f'Глава {self.chapter_number} - {self.chapter_name} / {str(self.title)}'

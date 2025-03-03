@@ -17,17 +17,24 @@
     <div id="main_content">
       <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.errors }}
         <div id="input">
-          {{ form.errors }}
+          <input type="hidden" name="title" value="{{ title.id }}">
+
           <label for="id_chapter_name">Название главы:</label>
           <input type="text" name="chapter_name" required id="id_chapter_name">
+
+          <label for="id_chapter_number">Номер главы:</label>
+          <input type="number" name="chapter_number" min="1" required id="id_chapter_number">
+          
           {% if title_type == 'graphic' %}
-            <label for="pages">Страницы:</label>
-            <input type="file" name="pages" required multiple />
+            <label for="image">Страницы:</label>
+            <input type="file" name="image" required multiple />
           {% endif %}
+          
           {% if title_type == 'text' %}
-            <label for="chapter_content">Файл с текстом:</label>
-            <input type="file" name="chapter_content" required />
+            <label for="text_content">Файл с текстом:</label>
+            <input type="file" name="text_content" required />
           {% endif %}
           <br />
           <button name="submit">Добавить главу</button>

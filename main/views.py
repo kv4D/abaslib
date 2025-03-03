@@ -41,7 +41,7 @@ def title_page_view(request, title_id=None):
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
     else:
-        pass # TODO: add response here
+        pass
 
     if title:
         context = {
@@ -94,7 +94,7 @@ def upload_chapter_view(request, title_id=None):
         
     if request.method == 'POST':
         print(2)
-        form = form(request.POST, title=title)
+        form = form(request.POST, request.FILES, title=title)
         if form.is_valid():
             print(3)
             chapter = form.save(commit=False)
@@ -106,7 +106,9 @@ def upload_chapter_view(request, title_id=None):
                 for image in images:
                     GraphicTitlePage.objects.create(chapter=chapter, image=image)
             
-            return redirect('main:title_page', title_id=title_id)
+            response = redirect('main:title_page', title_id=title_id)
+            response['Location'] += f'?title_type={title_type}'
+            return response
     else:
         form = form(title=title)
 
