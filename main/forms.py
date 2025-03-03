@@ -1,6 +1,7 @@
 """Contains forms for 'main' app"""
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from . models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
 
 class TextTitleForm(forms.ModelForm):
@@ -12,6 +13,23 @@ class TextTitleForm(forms.ModelForm):
                   'title_is_ongoing',
                   'title_description', 
                   'publication_year']
+        labels = {
+            'title_name_rus': _('Название тайтла'),
+            'title_name_eng': _('Название тайтла (английский, опционально)'), 
+            'title_author': _('Автор'), 
+            'title_is_ongoing': _('Статус'),
+            'title_description': _('Описание'), 
+            'publication_year': _('Год выпуска')
+        }
+        widgets = {
+            'title_name_rus': forms.TextInput(attrs={'placeholder': 'Введите название', 'class': 'form-control'}),
+            'title_name_eng': forms.TextInput(attrs={'placeholder': 'Введите название (если есть)', 'class': 'form-control'}),
+            'title_author': forms.TextInput(attrs={'placeholder': 'Автор', 'class': 'form-control'}),
+            'title_is_ongoing': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form-control', 'rows': 4}),
+            'publication_year': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+        
 
 
 class GraphicTitleForm(forms.ModelForm):
@@ -23,6 +41,22 @@ class GraphicTitleForm(forms.ModelForm):
                   'title_is_ongoing',
                   'title_description', 
                   'publication_year']
+        labels = {
+            'title_name_rus': _('Название тайтла'),
+            'title_name_eng': _('Название тайтла (английский, опционально)'), 
+            'title_author': _('Автор'), 
+            'title_is_ongoing': _('Статус'),
+            'title_description': _('Описание'), 
+            'publication_year': _('Год выпуска')
+        }        
+        widgets = {
+            'title_name_rus': forms.TextInput(attrs={'placeholder': 'Введите название', 'class': 'form-control'}),
+            'title_name_eng': forms.TextInput(attrs={'placeholder': 'Введите название (если есть)', 'class': 'form-control'}),
+            'title_author': forms.TextInput(attrs={'placeholder': 'Автор', 'class': 'form-control'}),
+            'title_is_ongoing': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form-control', 'rows': 4}),
+            'publication_year': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
 class TextTitleChapterForm(forms.ModelForm):
     class Meta:
@@ -31,6 +65,12 @@ class TextTitleChapterForm(forms.ModelForm):
                   'chapter_name', 
                   'chapter_number',
                   'text_content']
+        labels = {
+            'title': _('Тайтл'), 
+            'chapter_name': _('Название главы'), 
+            'chapter_number': _('Номер главы'),
+            'text_content': _('Содержание главы')
+        }
     
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,6 +85,11 @@ class GraphicTitleChapterForm(forms.ModelForm):
         fields = ['title', 
                   'chapter_name', 
                   'chapter_number']
+        labels = {
+            'title': _('Тайтл'), 
+            'chapter_name': _('Название главы'), 
+            'chapter_number': _('Номер главы')
+        }
     
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -76,7 +121,14 @@ class GraphicTitlePageForm(forms.ModelForm):
     
     class Meta:
         model = GraphicTitlePage
-        fields = ['chapter', 'page_number', 'image']
+        fields = ['chapter', 
+                  'page_number', 
+                  'image']
+        labels = {
+            'chapter': _('Глава'), 
+            'page_number': _('Номер страницы'), 
+            'image': _('Страница (изображение)')
+        }
         
     def __init__(self, *args, chapter=None, **kwargs):
         super().__init__(*args, **kwargs)
