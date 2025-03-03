@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -10,7 +10,7 @@ from . forms import RegisterForm
 @login_required
 def user_profile_view(request):
     """Shows user profile page and it's info"""
-    user = User.objects.get(id=request.user.id)
+    user = get_object_or_404(User, id=request.user.id)
 
     context = {
         'user': user

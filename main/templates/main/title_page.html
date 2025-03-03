@@ -7,9 +7,9 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <hr />
       <h2>{{ title.title_name_rus }}</h2>
       <h3>{{ title.title_name_eng }}</h3>
+      <hr />
       {% if title.title_is_ongoing %}
         <div class="info">
           <h4>Статус:</h4> 
@@ -21,13 +21,11 @@
           <p>закончено</p>
         </div>
       {% endif %}
-      
-      <hr />
       <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
     </div>
     
     <div id="side">
-      <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}">Добавить главу</a>
+      <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</a>
     </div>
   </div>
 {% endblock content %}

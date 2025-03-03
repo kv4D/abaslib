@@ -77,6 +77,10 @@ header, footer {
     gap: 10px;
 }
 
+#site_icon a {
+    align-items: center;
+}
+
 #site_icon a:hover {
     text-decoration: none;
 }
@@ -84,7 +88,7 @@ header, footer {
 .container {
     display: flex;
     flex: 1; 
-    width: 70%;  
+    width: 80%;  
     max-width: 1600px;
     margin: 100px auto 30px auto;
     padding: 15px;
@@ -133,6 +137,7 @@ button:active {
 
 .warning {
     color: #BA181B;
+    font-size: 14px;
 }
 
 hr {

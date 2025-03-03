@@ -1,55 +1,17 @@
 """Views for 'main' app, pages with content"""
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from itertools import chain
 from users.models import User
-from . models import TextTitle, GraphicTitle
-from . forms import TextTitleForm, GraphicTitleForm, GraphicTitleChapterForm, TextTitleChapterForm
-
-
-def select_title_form(title_type, post_data=None):
-    """Selects proper title form according to title's type"""
-    if title_type == 'graphic':
-        if postdata:
-            return GraphicTitleForm(request.POST)
-        return GraphicTitleForm()
-    
-    elif title_type == 'text':
-        if postdata:
-            return TextTitleForm(request.POST)
-        return TextTitleForm()
-    
-    else:
-        return # TODO: add response here
-    
-
-def select_chapter_form(title_type, title_id, post_data=None):
-    """Selects proper chapter form according to title's type"""
-    if title_type == 'graphic':
-        title = GraphicTitle.objects.get(id=title_id)
-        if post_data:
-            form = GraphicTitleChapterForm(request.POST)
-        else:
-            form = GraphicTitleChapterForm()
-        return form, title
-            
-    elif title_type == 'text':
-        title = TextTitle.objects.get(id=title_id)
-        if post_data:
-            form = TextTitleChapterForm(request.POST)
-        else:
-            form = TextTitleChapterForm()
-        return form, title
-    
-    else:
-        return # TODO: add response here
+from . models import Title, TextTitle, GraphicTitle, GraphicTitlePage
+from . forms import TextTitleForm, GraphicTitleForm, GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePageFormSet
 
 
 # create views here.
 def home_view(request):
     """Renders website's home page with optional user info"""
     if request.user.is_authenticated:
-        user = User.objects.get(id=request.user.id)
+        user = get_object_or_404(User, id=request.user.id)
         context = {
             'user': user
         }
@@ -71,19 +33,20 @@ def home_view(request):
     return render(request, 'main/home.html', context)
 
 
-def title_page_view(request, title_id):
+def title_page_view(request, title_id=None):
     """Renders title's page, provides title's info"""
     title_type = request.GET.get('title_type')
     if title_type == 'graphic':
-        title = GraphicTitle.objects.get(id=title_id)
+        title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
-        title = TextTitle.objects.get(id=title_id)
+        title = get_object_or_404(TextTitle, id=title_id)
     else:
         pass # TODO: add response here
 
     if title:
         context = {
-            'title': title
+            'title': title,
+            'title_type': title_type
         }
     else:
         context = {}
@@ -95,13 +58,18 @@ def upload_title_view(request):
     # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
 
+    if title_type == 'text':
+        form = TextTitleForm
+    else:
+        form = GraphicTitleForm
+
     if request.method == 'POST':
-        form = select_title_form(title_type, request.POST)
+        form = form(request.POST)
         if form.is_valid():
             form.save()
             return redirect('main:home')
     else:
-        form = select_title_form(title_type)
+        form = form()
         
     context = {
         'form': form,
@@ -111,23 +79,37 @@ def upload_title_view(request):
     return render(request, 'main/upload_title.html', context)
 
 
-def upload_chapter_view(request, title_id):
+@login_required
+def upload_chapter_view(request, title_id=None):
     # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
 
-    if request.method == 'POST':
-        form, title = select_chapter_form(title_type, title_id, request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('main/title_page.html')
+    if title_type == 'text':
+        form = TextTitleChapterForm
+        title = get_object_or_404(TextTitle, id=title_id)
     else:
-        form, title = select_chapter_form(title_type, title_id)
+        form = GraphicTitleChapterForm
+        title = get_object_or_404(GraphicTitle, id=title_id)
+    
+    if request.method == 'POST':
+        form = form(request.POST, title=title)
+        if form.is_valid():
+            chapter = form.save(commit=False)
+            chapter.title = title
+            chapter.save()
+            
+            if isinstance(title, GraphicTitle):
+                images = request.FILES.getlist('image')
+                for image in images:
+                    GraphicTitlePage.objects.create(chapter=chapter, image=image)
+            
+            return redirect('main:title_page', title_id=title_id)
+    else:
+        form = form(title=title)
 
     context = {
         'form': form,
-        'title': title,
-        'title_type': title_type
+        'title': title
     }
     
     return render(request, 'main/upload_chapter.html', context)
-
