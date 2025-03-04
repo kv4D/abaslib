@@ -70,10 +70,11 @@ header, footer {
     margin-left: 80px;
 }
 
-#site_icon {
+#site_icon button {
     display: flex;
     align-items: center; 
     gap: 10px;
+    background-color: #161A1D;
 }
 
 #site_icon a {

@@ -27,7 +27,11 @@
     <header>
       <div id="header_container">
         <div id="site_icon">
-          <a href="{% url 'main:home' %}"><button class="ref_button"><img style="width:50px;height:50px;" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib</button></a>
+          <a href="{% url 'main:home' %}">
+            <button class="ref_button">
+              <img style="width:50px;height:50px;" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib
+            </button>
+          </a>
         </div>
         {% block header %}
 
