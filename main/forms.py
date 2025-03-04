@@ -25,7 +25,7 @@ class TextTitleForm(forms.ModelForm):
             'title_name_eng': forms.TextInput(attrs={'placeholder': 'Введите название (если есть)', 'class': 'form_input'}),
             'title_author': forms.TextInput(attrs={'placeholder': 'Автор', 'class': 'form_input'}),
             'title_is_ongoing': forms.CheckboxInput(attrs={'class': 'form_checkbox_input'}),
-            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form_input', 'rows': 4}),
+            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form_input', 'rows': 10}),
             'publication_year': forms.NumberInput(attrs={'class': 'form_input'}),
         }
         
@@ -53,7 +53,7 @@ class GraphicTitleForm(forms.ModelForm):
             'title_name_eng': forms.TextInput(attrs={'placeholder': 'Введите название (если есть)', 'class': 'form_input'}),
             'title_author': forms.TextInput(attrs={'placeholder': 'Автор', 'class': 'form_input'}),
             'title_is_ongoing': forms.CheckboxInput(attrs={'class': 'form_checkbox_input'}),
-            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form_input', 'rows': 6}),
+            'title_description': forms.Textarea(attrs={'placeholder': 'Введите описание...', 'class': 'form_input', 'rows': 10}),
             'publication_year': forms.NumberInput(attrs={'class': 'form_input'}),
         }
 

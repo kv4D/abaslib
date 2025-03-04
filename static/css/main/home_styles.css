@@ -1,9 +1,5 @@
-#user_ref {
-    display: flex;
-    align-items: center; 
-    gap: 10px;
-}
-
-#user_ref a {
-    align-items: center;
+.ref_button img {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
 }

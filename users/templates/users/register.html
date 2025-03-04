@@ -23,26 +23,26 @@
           <br />
           <span class="warning" id="id_username_helptext"><p>Только буквы, цифры и символы @/./+/-/_!</p></span>
         </div>
-
+    
         <div class="input_block">
           <label for="email">Электронная почта</label>
           <br />
           <input placeholder="e-mail" type="email" name="email" maxlength="320" required id="id_email" />
         </div>
-
+    
         <div class="input_block">
           <label for="password1">Пароль</label>
           <br />
           <input placeholder="password" type="password" name="password1" autocomplete="new-password" required aria-describedby="id_password1_helptext" id="id_password1" />
           <br />
           <span class="warning" id="id_password1_helptext">
-            <ul>
-              <li>Пароль должен содержать не менее 8 символов</li>
-              <li>Пароль должен содержать хотя бы одну букву или символ</li>
-            </ul>
+              <p>Пароль должен содержать не менее 8 символов</p>
+          </span>
+          <span class="warning" id="id_password1_helptext">
+            <p>Пароль должен содержать хотя бы одну букву или символ</p>
           </span>
         </div>
-
+    
         <div class="input_block">
           <label for="password2">Подтверждение пароля</label>
           <br />
@@ -50,9 +50,8 @@
           <br />
           <span class="warning" id="id_password2_helptext"><p>Пароли должны совпадать</p></span>
         </div>
-
-        <div>
-          <br />
+    
+        <div class='button_group'>
           <button name="submit">Зарегистрироваться</button>
           <input type="hidden" name="next" value="{% url 'main:home' %}" />
         </div>

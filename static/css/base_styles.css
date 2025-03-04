@@ -112,9 +112,15 @@ button {
     padding: 10px 20px;
     border: 1px solid;
     max-width: 30%;
-    align-self: center;
+    display: flex;
     text-align: center;
-    border-radius: 5px;;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit; 
+    font-size: inherit; 
+    border-radius: 5px;
+    white-space: nowrap;
     min-width: fit-content;
     cursor: pointer;
     color: #0B090A;
@@ -136,17 +142,22 @@ button:active {
     gap: 0;
 }
 
-.grouped_button {
+.ref_button {
     flex: 1;
     border-radius: 0;
-    background-color: #161A1D;
+    background-color: #21262b;
     color: #EFEFEF;
-    border-right: none;
-    border-left: none;
+    border: none;
+    height: 50px;
 }
 
-.grouped_button:hover {
+.ref_button:hover {
     color: #ff090d;
+    background-color: #161A1D;
+}
+
+.ref_button img {
+    margin: 5px;
 }
 
 input, textarea  {
@@ -154,7 +165,8 @@ input, textarea  {
     margin: 8px;
     box-sizing: content-box;
     border-radius: 5px;
-    min-width: 200px;
+    font-family: inherit; 
+    font-size: inherit; 
 }
 
 .warning {

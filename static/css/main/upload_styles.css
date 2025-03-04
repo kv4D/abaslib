@@ -3,20 +3,22 @@
     flex-direction: column;
     align-items: safe;
     gap: 15px;
-    max-width: 50%;
+    max-width: 40%;
 }
 
 #side {
     background-color: transparent;
 }
 
-/* Chrome, Safari, Edge, Opera */
+label {
+  font-size: larger;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }

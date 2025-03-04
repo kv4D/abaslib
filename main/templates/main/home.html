@@ -11,14 +11,12 @@
 
 {% block header %}
   {% if user.is_authenticated %}
-    <div id="user_ref">
-      <a id="profile_link" href="{% url 'users:profile' %}">Профиль {{ user.username }}</a>
-      <a id="profile_link" href="{% url 'users:profile' %}"><img style="width:30px;height:30px;" src="{{ user.user_avatar.url }}" /></a>
-      /
-      <a id="logout_link" href="{% url 'users:logout' %}">Выход</a>
+    <div class="button_group">
+      <a id="profile_link" href="{% url 'users:profile' %}"><button class="ref_button">Профиль {{ user.username }}<img src="{{ user.user_avatar.url }}" /></button></a>
+      <a id="logout_link" href="{% url 'users:logout' %}"><button class="ref_button">Выход</button></a>
     </div>
   {% else %}
-    <a id="login_link" href="{% url 'users:login' %}">Вход | Регистрация</a>
+    <a id="login_link" href="{% url 'users:login' %}"><button class="ref_button">Вход | Регистрация</button></a>
   {% endif %}
 {% endblock %}
 
