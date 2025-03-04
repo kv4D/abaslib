@@ -1,0 +1,18 @@
+#title_head {
+    padding: 5px;
+    align-items: center;
+    text-align: center;
+    align-items: center;
+}
+
+.container {
+    width: 60%;
+}
+
+#main_content {
+    flex: 3;
+}
+
+#side {
+    flex: 2;
+}

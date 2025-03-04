@@ -13,3 +13,4 @@ class User(AbstractUser):
     titles_read_amount = models.IntegerField(default=0)
     favorite_text_titles = models.ManyToManyField(TextTitle, blank=True)
     favorite_graphic_titles = models.ManyToManyField(GraphicTitle, blank=True)
+    

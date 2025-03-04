@@ -1,5 +1,9 @@
 {
     "pylint.args": [
         "\"pylint.args\": [\"--disable=all --enable=E1101\"]"
+    ],
+    "cSpell.words": [
+        "Тайтл",
+        "тайтла"
     ]
 }

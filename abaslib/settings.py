@@ -120,6 +120,8 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+DATE_FORMAT = 'D d M Y'
+
 USE_I18N = True
 
 USE_TZ = True

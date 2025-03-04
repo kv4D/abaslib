@@ -14,8 +14,9 @@
     <div id="user_ref">
       <a id="profile_link" href="{% url 'users:profile' %}">Профиль {{ user.username }}</a>
       <a id="profile_link" href="{% url 'users:profile' %}"><img style="width:30px;height:30px;" src="{{ user.user_avatar.url }}" /></a>
+      /
+      <a id="logout_link" href="{% url 'users:logout' %}">Выход</a>
     </div>
-    <a id="logout_link" href="{% url 'users:logout' %}">Выход</a>
   {% else %}
     <a id="login_link" href="{% url 'users:login' %}">Вход | Регистрация</a>
   {% endif %}
@@ -36,7 +37,7 @@
     </div>
 
     <div id="side">
-      <h1>Сайд</h1>
+      <h1>Разделы</h1>
       <p>Я сайд под разделы и, быть может, еще для чего</p>
     </div>
   </div>

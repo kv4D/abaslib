@@ -10,7 +10,6 @@ h1, h2, h3, h4, h5 {
     background-color: #161A1D;
     padding: 15px;
     gap: 20px;
-    border-radius: 10px;
     min-width: fit-content;
 }
 
@@ -23,7 +22,7 @@ h1, h2, h3, h4, h5 {
 }
 
 input:focus {
-    border: 0.3rem solid #BA181B;
+    border: 1px solid;
 }
 
 input::placeholder {

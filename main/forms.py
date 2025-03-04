@@ -1,6 +1,5 @@
 """Contains forms for 'main' app"""
 from django import forms
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from . models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
 
@@ -140,7 +139,7 @@ class GraphicTitlePageForm(forms.ModelForm):
         
     def __init__(self, *args, chapter=None, **kwargs):
         super().__init__(*args, **kwargs)
-        if title:
+        if chapter:
             self.fields['chapter'].initial = chapter
             self.fields['chapter'].widget = forms.HiddenInput()
 

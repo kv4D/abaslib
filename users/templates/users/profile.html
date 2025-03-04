@@ -20,6 +20,10 @@
       <hr />
       <h2>Сведения</h2>
       <p>
+        Прочитанные тайтлы: {{ user.titles_read_amount }}
+      </p>
+      <p>
+        Ты с нами с {{ user.date_joined|date:"d/m/Y" }}
       </p>
       <p>{{ user.email }}</p>
     </div>

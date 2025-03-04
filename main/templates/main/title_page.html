@@ -4,12 +4,23 @@
   {{ title.title_name_rus }} — ABASlib
 {% endblock %}
 
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css\main\title_styles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css\main\home_styles.css' %}" />
+{% endblock %}
+
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <h2>{{ title.title_name_rus }}</h2>
-      <h3>{{ title.title_name_eng }}</h3>
-      <hr />
+      <div id="title_head">
+        <h2>{{ title.title_name_rus }}</h2>
+        <h3>{{ title.title_name_eng }}</h3>
+      </div>
+      <div class="button_group">
+        <a href=""><button class="grouped_button">О тайтле</button></a>
+        <a href=""><button class="grouped_button">Главы</button></a>
+        <a href=""><button class="grouped_button">Комментарии</button></a>
+      </div>
       {% if title.title_is_ongoing %}
         <div class="info">
           <h4>Статус:</h4>
@@ -21,11 +32,19 @@
           <p>закончено</p>
         </div>
       {% endif %}
+      <div class="info">
+        <h4>Автор:</h4>
+        <p>кто-то</p>
+      </div>
+      <div class="info">
+        <h4>Описание:</h4>
+        <p>какое-то</p>
+      </div>
       <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
     </div>
-
-    <div id="side">
-      <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</a>
-    </div>
   </div>
+{% endblock %}
+
+{% block footer %}
+  <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</a>
 {% endblock %}
