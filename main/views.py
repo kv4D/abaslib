@@ -36,6 +36,7 @@ def home_view(request):
 def title_page_view(request, title_id=None):
     """Renders title's page, provides title's info"""
     title_type = request.GET.get('title_type')
+    print(title_type)
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':

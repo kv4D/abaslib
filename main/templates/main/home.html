@@ -29,7 +29,7 @@
       <h4>Новые тайтлы</h4>
       {% for title in titles %}
         <p>
-          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}">{{ title.title_name_rus }}</a>
+          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">{{ title.title_name_rus }}</a>
         </p>
       {% endfor %}
     </div>

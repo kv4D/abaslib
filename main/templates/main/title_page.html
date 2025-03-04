@@ -17,30 +17,37 @@
         <h3>{{ title.title_name_eng }}</h3>
       </div>
       <div class="button_group">
-        <a href=""><button class="ref_button">О тайтле</button></a>
-        <a href=""><button class="ref_button">Главы</button></a>
-        <a href=""><button class="ref_button">Комментарии</button></a>
+        <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">О тайтле</button></a>
+        <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters"><button class="ref_button">Главы</button></a>
+        <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=comments"><button class="ref_button">Комментарии</button></a>
       </div>
-      {% if title.title_is_ongoing %}
+
+      {% if section == 'about' %}
+        {% if title.title_is_ongoing %}
+          <div class="info">
+            <h4>Статус:</h4>
+            <p>продолжается</p>
+          </div>
+        {% else %}
+          <div class="info">
+            <h4>Статус:</h4>
+            <p>закончено</p>
+          </div>
+        {% endif %}
         <div class="info">
-          <h4>Статус:</h4>
-          <p>продолжается</p>
+          <h4>Автор:</h4>
+          <p>кто-то</p>
         </div>
-      {% else %}
         <div class="info">
-          <h4>Статус:</h4>
-          <p>закончено</p>
+          <h4>Описание:</h4>
+          <p>какое-то</p>
         </div>
+        <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
+      {% elif section == 'chapters' %}
+
+      {% elif section == 'comments' %}
+
       {% endif %}
-      <div class="info">
-        <h4>Автор:</h4>
-        <p>кто-то</p>
-      </div>
-      <div class="info">
-        <h4>Описание:</h4>
-        <p>какое-то</p>
-      </div>
-      <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
     </div>
   </div>
 {% endblock %}
