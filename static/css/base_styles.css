@@ -97,7 +97,10 @@ header, footer {
 
 #main_content, #side {
     padding: 40px;
-    border-radius: 5px;;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 #main_content {
@@ -170,6 +173,10 @@ input, textarea  {
     font-size: inherit; 
 }
 
+textarea {
+    resize: none;
+}
+
 .warning {
     color: #BA181B;
     font-size: 14px;
@@ -179,15 +186,15 @@ hr {
     border-color: #EFEFEF;
     border-radius: 5px;;
     box-shadow: #161A1D;
+    border-style: inset; 
+    border-width: 1px; 
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .info {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
     gap: 10px;
-    align-items: center;
-    text-align: center;
-}
-
-textarea {
-    resize: none;
 }

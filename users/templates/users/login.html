@@ -1,7 +1,16 @@
 <!-- Log in page -->
-{% extends 'users/auth_base.html' %}
+{% extends 'main/base.html' %}
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/users/auth_styles.css' %}" />
+{% endblock %}
+
 {% block title %}
-  ABASlib — Вход
+  ABASlib -  Вход
+{% endblock %}
+
+{% block header %}
+  <a href="{% url 'main:home' %}"><button class="ref_button">Вернуться назад</button></a>
 {% endblock %}
 
 {% block content %}

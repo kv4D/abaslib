@@ -1,10 +1,12 @@
 """Views for 'main' app, pages with content"""
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from itertools import chain
 from users.models import User
-from . models import Title, TextTitle, GraphicTitle, GraphicTitlePage
-from . forms import TextTitleForm, GraphicTitleForm, GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePageFormSet
+from . models import TextTitle, GraphicTitle, GraphicTitlePage, \
+    GraphicTitleChapter, TextTitleChapter
+from . forms import TextTitleForm, GraphicTitleForm, \
+    GraphicTitleChapterForm, TextTitleChapterForm
 
 
 # create views here.
@@ -27,27 +29,45 @@ def home_view(request):
         key=lambda title: title.added_at,
         reverse=True
     )
+    
+    # select only titles with chapters
+    titles = [title for title in titles if title.text_chapters.all() or title.graphic_chapters.all()]
 
-    context['titles'] = titles[:5]
+    context['titles'] = titles[:10]
 
     return render(request, 'main/home.html', context)
 
 
+def render_about_section():
+    pass
+
+
+def render_chapter_section():
+    pass
+
+
+def render_comment_section():
+    pass
+
+
 def title_page_view(request, title_id=None):
-    """Renders title's page, provides title's info"""
+    """Decides which section of title page to load"""
     title_type = request.GET.get('title_type')
-    print(title_type)
+    section = request.GET.get('section')
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        print(title.graphic_chapters.all())
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
+        print(title.text_chapters.all())
     else:
         pass
 
     if title:
         context = {
             'title': title,
-            'title_type': title_type
+            'title_type': title_type,
+            'section': section
         }
     else:
         context = {}

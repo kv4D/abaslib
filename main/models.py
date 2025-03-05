@@ -63,7 +63,6 @@ class TitleChapter(models.Model):
     for graphic and text content
     """    
     # access title's chapters with obj.chapters.all()
-    title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='chapters')     
     chapter_name = models.CharField(max_length=255)
     chapter_number = models.PositiveIntegerField()
     added_at = models.DateTimeField(auto_now_add=True)
@@ -82,6 +81,7 @@ class TitleChapter(models.Model):
 class TextTitleChapter(TitleChapter):
     """Represents a chapter from a certain text title"""
     # a file with the chapter's content
+    title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='text_chapters')     
     text_content = models.FileField(upload_to=get_text_chapter_path)
     
     # for specification purposes
@@ -93,6 +93,8 @@ class TextTitleChapter(TitleChapter):
 class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
     # for specification purposes
+    title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE, related_name='graphic_chapters')     
+    
     @property
     def title_type(self):
         return 'graphic'

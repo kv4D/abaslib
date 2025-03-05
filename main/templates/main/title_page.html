@@ -13,6 +13,7 @@
   <div class="container">
     <div id="main_content">
       <div id="title_head">
+        Здесь будет обложка
         <h2>{{ title.title_name_rus }}</h2>
         <h3>{{ title.title_name_eng }}</h3>
       </div>
@@ -21,7 +22,6 @@
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters"><button class="ref_button">Главы</button></a>
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=comments"><button class="ref_button">Комментарии</button></a>
       </div>
-
       {% if section == 'about' %}
         {% if title.title_is_ongoing %}
           <div class="info">
@@ -44,7 +44,7 @@
         </div>
         <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
       {% elif section == 'chapters' %}
-
+        
       {% elif section == 'comments' %}
 
       {% endif %}

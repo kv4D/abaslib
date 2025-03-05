@@ -6,11 +6,21 @@ from . models import TextTitle, GraphicTitle, \
 
 
 # modifying admin site fields to show
+class TextTitleChapterInline(admin.TabularInline):
+    model = TextTitleChapter
+    extra = 1
+
 class TextTitleAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
+    inlines = [TextTitleChapterInline]
+
+class GraphicTitleChapterInline(admin.TabularInline):
+    model = GraphicTitleChapter
+    extra = 1
 
 class GraphicTitleAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
+    inlines = [GraphicTitleChapterInline]
 
 class TextTitleChapterAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
