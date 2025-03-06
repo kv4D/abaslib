@@ -23,23 +23,21 @@
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=comments"><button class="ref_button">Комментарии</button></a>
       </div>
       {% if section == 'about' %}
-        {% if title.title_is_ongoing %}
-          <div class="info">
-            <h4>Статус:</h4>
-            <p>продолжается</p>
-          </div>
-        {% else %}
-          <div class="info">
-            <h4>Статус:</h4>
-            <p>закончено</p>
-          </div>
-        {% endif %}
+      
         <div class="info">
-          <h4>Автор:</h4>
+          <p class="highlighted_text">Статус:</p>
+          {% if title.title_is_ongoing %}
+              <p>продолжается</p>
+          {% else %}
+            <p>закончено</p>
+          {% endif %}
+        </div>
+        <div class="info">
+          <p class="highlighted_text">Автор:</p>
           <p>кто-то</p>
         </div>
         <div class="info">
-          <h4>Описание:</h4>
+          <p class="highlighted_text">Описание:</p>
           <p>какое-то</p>
         </div>
         <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>

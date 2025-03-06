@@ -15,7 +15,7 @@
       {% if user.is_authenticated %}
         <div class="custom_select">      
           <select onchange="location = this.value" class="ref_button">      
-            <option selected class="ref_button">Редакция</option>
+            <option selected hidden disabled class="ref_button">Редакция</option>
             <option value="{% url 'main:upload_title' %}?title_type=graphic">Добавить графический тайтл</option>
             <option value="{% url 'main:upload_title' %}?title_type=text">Добавить текстовый тайтл</option>
             <option value="add_chapter">Добавить главу</option>

@@ -9,13 +9,8 @@
     min-width: fit-content;
 }
 
-ul {
-    text-align: center;
-    list-style-type: none;
-}
-
 .container {
-    max-width: 60%;
+    max-width: 50%;
 }
 
 #main_content {
@@ -29,13 +24,6 @@ ul {
     width: 50%;
     padding: 20px;
     min-width: 200px;
-}
-
-button {
-    align-self: center; /* Центрирование кнопки по горизонтали */
-    width: 50%; /* Ширина кнопки */
-    max-width: 200px; /* Максимальная ширина кнопки */
-    margin-top: 20px; /* Отступ сверху */
 }
 
 input {
