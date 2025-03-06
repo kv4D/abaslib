@@ -47,6 +47,9 @@
         {% endif %}
         {% for chapter in chapters %}
           <a href=""><button class="ref_button">{{ chapter }}</button></a>
+          {% for image in chapter.pages.all %}
+            <img src="{{ image.image.url }}" width="300">
+          {% endfor %}
         {% endfor %}
       {% elif section == 'comments' %}
         <p>Здесь будут комментарии</p>

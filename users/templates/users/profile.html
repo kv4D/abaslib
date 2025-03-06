@@ -19,13 +19,17 @@
       <h1>Пользователь {{ user.username }}</h1>
       <hr />
       <h2>Сведения</h2>
-      <p>
-        Прочитанные тайтлы: {{ user.titles_read_amount }}
-      </p>
-      <p>
-        Ты с нами с {{ user.date_joined|date:"d/m/Y" }}
-      </p>
+      <div class="info">
+        <p class="highlighted_text">Прочитанных тайтлов:</p>
+        <p>{{ user.titles_read_amount }}</p>
+      </div>
+      <div class="info">
+        <p class="highlighted_text">Ты с нами с:</p>
+        <p>{{ user.date_joined|date:"d/m/Y" }}</p>
+      </div>
       <p>{{ user.email }}</p>
+      <hr />
+      <h2>Избранное</h2>
     </div>
   </div>
 {% endblock %}
