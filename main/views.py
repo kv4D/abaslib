@@ -29,9 +29,6 @@ def home_view(request):
         key=lambda title: title.added_at,
         reverse=True
     )
-    
-    # select only titles with chapters
-    titles = [title for title in titles if title.text_chapters.all() or title.graphic_chapters.all()]
 
     context['titles'] = titles[:10]
 

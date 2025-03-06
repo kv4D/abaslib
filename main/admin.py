@@ -24,9 +24,14 @@ class GraphicTitleAdmin(admin.ModelAdmin):
 
 class TextTitleChapterAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
+    
+class GraphicTitlePageInline(admin.TabularInline):
+    model = GraphicTitlePage
+    extra = 1
 
 class GraphicTitleChapterAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
+    inlines = [GraphicTitlePageInline]
 
 # Register your models here.
 admin.site.register(TextTitle, TextTitleAdmin)

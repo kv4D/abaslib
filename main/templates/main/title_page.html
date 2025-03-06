@@ -44,11 +44,14 @@
         </div>
         <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
       {% elif section == 'chapters' %}
+        {% if not chapters %}
+          <p>Пока что здесь нет ничего</p>
+        {% endif %}
         {% for chapter in chapters %}
           <a href=""><button class="ref_button">{{ chapter }}</button></a>
         {% endfor %}
       {% elif section == 'comments' %}
-
+        <p>Здесь будут комментарии</p>
       {% endif %}
     </div>
   </div>
