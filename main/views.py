@@ -38,28 +38,11 @@ def home_view(request):
     return render(request, 'main/home.html', context)
 
 
-def render_about_section():
-    pass
-
-
-def render_chapter_section():
-    pass
-
-
-def render_comment_section():
-    pass
-
-
-def title_page_view(request, title_id=None):
-    """Decides which section of title page to load"""
-    title_type = request.GET.get('title_type')
-    section = request.GET.get('section')
+def render_about_section(title_type, title_id):
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
-        print(title.graphic_chapters.all())
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-        print(title.text_chapters.all())
     else:
         pass
 
@@ -67,12 +50,73 @@ def title_page_view(request, title_id=None):
         context = {
             'title': title,
             'title_type': title_type,
-            'section': section
+            'section': 'about'
         }
     else:
         context = {}
-    return render(request, 'main/title_page.html', context)
+        
+    return context
 
+
+def render_chapter_section(title_type, title_id):
+    if title_type == 'graphic':
+        title = get_object_or_404(GraphicTitle, id=title_id)
+        chapters = title.graphic_chapters.all()
+    elif title_type == 'text':
+        title = get_object_or_404(TextTitle, id=title_id)
+        chapters = title.text_chapters.all()
+    else:
+        pass
+
+    if title:
+        context = {
+            'title': title,
+            'chapters': chapters,
+            'title_type': title_type,
+            'section': 'chapters'
+        }
+    else:
+        context = {}
+        
+    return context
+
+
+def render_comment_section(title_type, title_id):
+    if title_type == 'graphic':
+        title = get_object_or_404(GraphicTitle, id=title_id)
+    elif title_type == 'text':
+        title = get_object_or_404(TextTitle, id=title_id)
+    else:
+        pass
+    
+    if title:
+        context = {
+            'title': title,
+            'title_type': title_type,
+            'section': 'comments'
+        }
+    else:
+        context = {}
+        
+    return context
+
+
+def title_page_view(request, title_id=None):
+    """Decides which section of title page to load"""
+    section = request.GET.get('section')
+    title_type = request.GET.get('title_type')
+    
+    if section == 'about':
+        context = render_about_section(title_type, title_id)
+    elif section == 'chapters':
+        context = render_chapter_section(title_type, title_id)
+    elif section == 'comments':
+        context = render_comment_section(title_type, title_id)
+    else:
+        pass # TODO: add response here
+    
+    return render(request, 'main/title_page.html', context)    
+    
 
 @login_required
 def upload_title_view(request):

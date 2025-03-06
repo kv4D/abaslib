@@ -74,6 +74,9 @@ class TitleChapter(models.Model):
         constraints = [
         models.UniqueConstraint(fields=['chapter_name', 'chapter_number'], name='unique_chapter_per_title')]
 
+    def get_chapter_name(self):
+        return f'Глава {self.chapter_number} - {self.chapter_name}'
+    
     def __str__(self):
         return f'Глава {self.chapter_number} - {self.chapter_name} / {str(self.title)}'
     
