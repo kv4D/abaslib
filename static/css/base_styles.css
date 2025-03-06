@@ -140,6 +140,17 @@ button:active {
     color: #EFEFEF;
 }
 
+select {
+    font-family: inherit;
+    border: none;
+    appearance: none;
+}
+
+option {
+    font-size: inherit;
+    font-family: inherit;
+}
+
 .button_group {
     display: flex;
     justify-content: center;
