@@ -121,7 +121,6 @@ button {
     transition-duration: 0.2s;
     padding: 10px 20px;
     border: 1px solid;
-    max-width: 30%;
     display: flex;
     text-align: center;
     align-self: center;
