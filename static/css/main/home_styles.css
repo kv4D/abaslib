@@ -3,3 +3,8 @@
     width: 30px;
     height: 30px;
 }
+
+#titles .ref_button {
+    border: none;
+    width: 100%;
+}

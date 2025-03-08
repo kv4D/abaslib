@@ -37,11 +37,11 @@
       <h2>Тихо и стандартно</h2>
       <hr />
       <h4>Новые тайтлы</h4>
-      {% for title in titles %}
-        <p>
-          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">{{ title.title_name_rus }}</a>
-        </p>
-      {% endfor %}
+      <div id="titles">
+        {% for title in titles %}
+          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
+        {% endfor %}
+      </div>
     </div>
 
     <div id="side">

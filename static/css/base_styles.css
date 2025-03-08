@@ -64,6 +64,7 @@ header {
 
 header, footer {
     width: 100%;
+    padding: 5px;
 }
 
 #header_container, #footer_container{
@@ -81,6 +82,7 @@ header, footer {
     align-items: center; 
     gap: 10px;
     background-color: #161A1D;
+    color: #EFEFEF;
 }
 
 #site_icon a {
@@ -118,7 +120,7 @@ header, footer {
 }
 
 button {
-    transition-duration: 0.2s;
+    transition-duration: 0.1s;
     padding: 10px 20px;
     border: 1px solid;
     display: flex;
@@ -165,15 +167,15 @@ option {
 .ref_button {
     flex: 1;
     border-radius: 0;
-    background-color: #21262b;
+    background-color: #161A1D;
     color: #EFEFEF;
     border: none;
-    height: 50px;
+    height: 60px;
 }
 
 .ref_button:hover {
-    color: #ff090d;
-    background-color: #161A1D;
+    color: #EFEFEF;
+    background-color: #21262b;
 }
 
 .ref_button img {
