@@ -6,7 +6,7 @@ from users.models import User
 from . models import TextTitle, GraphicTitle, GraphicTitlePage, \
     GraphicTitleChapter, TextTitleChapter
 from . forms import TextTitleForm, GraphicTitleForm, \
-    GraphicTitleChapterForm, TextTitleChapterForm
+    GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePageForm
 
 
 # create views here.
@@ -33,6 +33,10 @@ def home_view(request):
     context['titles'] = titles[:10]
 
     return render(request, 'main/home.html', context)
+
+
+def about_rights_view(request):
+    return render(request, 'main/about_rights.html')
 
 
 def render_about_section(title_type, title_id):
@@ -141,6 +145,15 @@ def upload_title_view(request):
     return render(request, 'main/upload_title.html', context)
 
 
+def upload_text_chapter():
+    pass
+
+
+@login_required
+def upload_graphic_chapter():
+    pass
+
+
 @login_required
 def upload_chapter_view(request, title_id=None):
     # there can be 'graphic' or 'text' content type
@@ -151,19 +164,16 @@ def upload_chapter_view(request, title_id=None):
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         form = GraphicTitleChapterForm
+        pages_form = GraphicTitlePageForm
         title = get_object_or_404(GraphicTitle, id=title_id)
         
     if request.method == 'POST':
-        form = form(request.POST, request.FILES, title=title)
+        form = form(request.POST, request.FILES, chapter=title)
+        
         if form.is_valid():
             chapter = form.save(commit=False)
             chapter.title = title
             chapter.save()
-            
-            if isinstance(title, GraphicTitle):
-                images = request.FILES.getlist('image')
-                for image in images:
-                    GraphicTitlePage.objects.create(chapter=chapter, image=image)
             
             response = redirect('main:title_page', title_id=title_id)
             response['Location'] += f'?title_type={title_type}'

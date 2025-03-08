@@ -48,7 +48,7 @@
         {% endif %}
         <div id="chapters">
           {% for chapter in chapters %}
-            <a href=""><button class="ref_button">{{ chapter }}</button></a>
+            <a href=""><button class="ref_button">{{ chapter.get_chapter_name }}</button></a>
           {% endfor %}
         </div>
       {% elif section == 'comments' %}

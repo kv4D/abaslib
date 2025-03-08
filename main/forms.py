@@ -124,30 +124,13 @@ class MultipleFileField(forms.FileField):
 
 
 class GraphicTitlePageForm(forms.ModelForm):
-    image = MultipleFileField(label='Select files', required=False)
+    images = MultipleFileField(label='Выберите страницы главы (ВНИМАНИЕ: ПРЕДВАРИТЕЛЬНО ПРОНУМЕРУЙТЕ ИХ)', required=True)
     
     class Meta:
         model = GraphicTitlePage
-        fields = ['chapter', 
-                  'page_number', 
-                  'image']
-        labels = {
-            'chapter': _('Глава'), 
-            'page_number': _('Номер страницы'), 
-            'image': _('Страница (изображение)')
-        }
+        fields = ['images']
         
     def __init__(self, *args, chapter=None, **kwargs):
         super().__init__(*args, **kwargs)
         if chapter:
-            self.fields['chapter'].initial = chapter
-            self.fields['chapter'].widget = forms.HiddenInput()
-
-
-# allows uploading multiple pages
-GraphicTitlePageFormSet = forms.modelformset_factory(
-    GraphicTitlePage,
-    form=GraphicTitlePageForm,
-    extra=3,
-    can_delete=True
-)
+            self.chapter = chapter

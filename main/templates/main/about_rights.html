@@ -1,0 +1,20 @@
+<!-- Homepage of ABASlib -->
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+  ABASlib — Для правообладателей
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css\main\about_rights_styles.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div id="main_content">
+      <h1>ABASlib</h1>
+      <p>Данный сайт создан в образовательных целях.</p>
+      <p>По вопросам о размещенном на сайте контенте обращаться по электронной почте: <b>withered0abandoned@gmail.com</b></p>
+    </div>
+  </div>
+{% endblock %}
