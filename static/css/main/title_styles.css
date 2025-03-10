@@ -1,8 +1,5 @@
 #title_head {
-    padding: 5px;
-    align-items: center;
     text-align: center;
-    align-items: center;
 }
 
 .container {
@@ -31,4 +28,10 @@
 #chapters .ref_button {
     border: none;
     width: 100%;
+}
+
+.like_button {
+    color: #BA181B;
+    width: 100%;
+    border: 2px solid;
 }

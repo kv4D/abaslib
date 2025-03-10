@@ -15,8 +15,13 @@
       <div id="title_head">
         Здесь будет обложка
         <h2>{{ title.title_name_rus }}</h2>
-        <h3>{{ title.title_name_eng }}</h3>
+        <h2>{{ title.title_name_eng }}</h2>
       </div>
+      <div class="button_group">
+        <!-- add some logic to check if the title in favorites -->
+        <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=comments"><button class="like_button ref_button">Добавить в любимое</button></a>
+      </div>
+      <br>
       <div class="button_group">
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">О тайтле</button></a>
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters"><button class="ref_button">Главы</button></a>
@@ -24,7 +29,7 @@
       </div>
       <br />
       {% if section == 'about' %}
-      
+        
         <div class="info">
           <p class="highlighted_text">Статус:</p>
           {% if title.title_is_ongoing %}
