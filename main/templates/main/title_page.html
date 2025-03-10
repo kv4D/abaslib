@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="{% static 'css\main\home_styles.css' %}" />
 {% endblock %}
 
+{% block redact_options %}
+  <option value="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</option>
+{% endblock %}
+
 {% block content %}
   <div class="container">
     <div id="main_content">
@@ -19,7 +23,7 @@
       </div>
       <div class="button_group">
         <!-- add some logic to check if the title in favorites -->
-        <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=comments"><button class="like_button ref_button">Добавить в любимое</button></a>
+        <a href=""><button class="like_button ref_button">Добавить в любимое</button></a>
       </div>
       <br>
       <div class="button_group">
@@ -61,8 +65,4 @@
       {% endif %}
     </div>
   </div>
-{% endblock %}
-
-{% block footer %}
-  <a href="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</a>
 {% endblock %}

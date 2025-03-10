@@ -145,13 +145,52 @@ def upload_title_view(request):
     return render(request, 'main/upload_title.html', context)
 
 
-def upload_text_chapter():
-    pass
-
+@login_required
+def upload_text_chapter(request, title_id):
+    title = get_object_or_404(GraphicTitle, id=title_id)
+    
+    if request.method == 'POST':
+        form = TextTitleChapterForm(request.POST, title=title)
+        if form.is_valid():
+            form.save()
+            
+            response = redirect('main:title_page', title_id=title_id)
+            response['Location'] += f'?title_type=text'
+            return response
+    else:
+        form = TextTitleChapterForm(title=title)
+        
+    context = {
+        'form': form,
+        'title': title,
+        'title_type': 'text'
+    }
+    
+    return render(request, 'main/upload_chapter.html', context)
+            
 
 @login_required
-def upload_graphic_chapter():
-    pass
+def upload_graphic_chapter(request, title_id):
+    title = get_object_or_404(GraphicTitle, id=title_id)
+    
+    if request.method == 'POST':
+        form = GraphicTitleChapterForm(request.POST, title=title)
+        if form.is_valid():
+            form.save()
+            
+            response = redirect('main:title_page', title_id=title_id)
+            response['Location'] += f'?title_type=graphic'
+            return response
+    else:
+        form = GraphicTitleChapterForm(title=title)
+        
+    context = {
+        'form': form,
+        'title': title,
+        'title_type': 'text'
+    }
+    
+    return render(request, 'main/upload_chapter.html', context)
 
 
 @login_required
@@ -160,31 +199,8 @@ def upload_chapter_view(request, title_id=None):
     title_type = request.GET.get('title_type')
     
     if title_type == 'text':
-        form = TextTitleChapterForm
-        title = get_object_or_404(TextTitle, id=title_id)
+        response = upload_text_chapter(request, title_id)
     else:
-        form = GraphicTitleChapterForm
-        pages_form = GraphicTitlePageForm
-        title = get_object_or_404(GraphicTitle, id=title_id)
-        
-    if request.method == 'POST':
-        form = form(request.POST, request.FILES, chapter=title)
-        
-        if form.is_valid():
-            chapter = form.save(commit=False)
-            chapter.title = title
-            chapter.save()
-            
-            response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += f'?title_type={title_type}'
-            return response
-    else:
-        form = form(title=title)
+        response = upload_graphic_chapter(request, title_id)
 
-    context = {
-        'form': form,
-        'title': title,
-        'title_type': title_type
-    }
-    
-    return render(request, 'main/upload_chapter.html', context)
+    return response
