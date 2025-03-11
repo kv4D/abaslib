@@ -9,20 +9,26 @@
 {% endblock %}
 
 {% block header %}
-  <a href="{% url 'main:home' %}"><button class="ref_button">Вернуться назад</button></a>
+  <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">Вернуться назад</button></a>
 {% endblock %}
 
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
+      <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}" enctype="multipart/form-data" method="post" >
         {% csrf_token %}
         {{ form.errors }}
         <div id="input">
           <h1>Заполните поля</h1>
-          {{ form.as_table }}
+          {% if title_type == 'text' %}
+            {{ form.as_table }}
+
+          {% elif title_type == 'graphic' %}
+            {{ chapter_form.as_table }}
+            {{ pages_form.as_table }}
+          {% endif %}
           <br />
-          <button name="create_chapter">Добавить главу</button>
+          <button name="submit">Добавить главу</button>
         </div>
       </form>
     </div>

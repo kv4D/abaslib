@@ -2,11 +2,11 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from itertools import chain
+from re import search
 from users.models import User
-from . models import TextTitle, GraphicTitle, GraphicTitlePage, \
-    GraphicTitleChapter, TextTitleChapter
+from . models import TextTitle, GraphicTitle, GraphicTitlePage
 from . forms import TextTitleForm, GraphicTitleForm, \
-    GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePageForm
+    GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
 
 
 # create views here.
@@ -46,7 +46,7 @@ def render_about_section(title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         pass
-
+    print(title_type)
     if title:
         context = {
             'title': title,
@@ -155,7 +155,7 @@ def upload_text_chapter(request, title_id):
             form.save()
             
             response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += f'?title_type=text'
+            response['Location'] += '?title_type=graphic&section=about'
             return response
     else:
         form = TextTitleChapterForm(title=title)
@@ -172,22 +172,42 @@ def upload_text_chapter(request, title_id):
 @login_required
 def upload_graphic_chapter(request, title_id):
     title = get_object_or_404(GraphicTitle, id=title_id)
-    
+
     if request.method == 'POST':
-        form = GraphicTitleChapterForm(request.POST, title=title)
-        if form.is_valid():
-            form.save()
+        print(request.FILES.getlist('images'))
+        chapter_form = GraphicTitleChapterForm(request.POST, title=title)
+        pages_form = GraphicTitlePagesForm(request.POST, request.FILES)
+        
+        if chapter_form.is_valid() and pages_form.is_valid():
+            print('passed')
+            chapter = chapter_form.save(commit=False)
+            chapter.title = title
+            chapter.save()
             
+            # collect all of the images for pages
+            images = request.FILES.getlist('images')
+            for image in images:
+                match = search(r'(\d+)', image.name)
+                page_number = int(match.group()) if match else 10_000
+
+                GraphicTitlePage.objects.create(
+                    chapter = chapter,
+                    image=image,
+                    page_number=page_number
+                )
+                
             response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += f'?title_type=graphic'
+            response['Location'] += '?title_type=graphic&section=about'
             return response
     else:
-        form = GraphicTitleChapterForm(title=title)
+        chapter_form = GraphicTitleChapterForm(title=title)
+        pages_form = GraphicTitlePagesForm()
         
     context = {
-        'form': form,
+        'chapter_form': chapter_form,
+        'pages_form': pages_form,
         'title': title,
-        'title_type': 'text'
+        'title_type': 'graphic'
     }
     
     return render(request, 'main/upload_chapter.html', context)
@@ -200,7 +220,7 @@ def upload_chapter_view(request, title_id=None):
     
     if title_type == 'text':
         response = upload_text_chapter(request, title_id)
-    else:
+    elif title_type == 'graphic':
         response = upload_graphic_chapter(request, title_id)
 
     return response

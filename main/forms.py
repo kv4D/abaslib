@@ -194,21 +194,10 @@ class MultipleFileField(forms.FileField):
         if isinstance(data, (list, tuple)):
             result = [single_file_clean(d, initial) for d in data]
         else:
-            result = single_file_clean(data, initial)
+            result = [single_file_clean(data, initial)]
         return result
 
 
-class GraphicTitlePageForm(forms.ModelForm):
-    images = MultipleFileField(
-        label='Выберите страницы главы (ВНИМАНИЕ: ПРЕДВАРИТЕЛЬНО ПРОНУМЕРУЙТЕ ИХ)', 
-        required=True
-        )
-    
-    class Meta:
-        model = GraphicTitlePage
-        fields = ['images']
-        
-    def __init__(self, *args, chapter=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        if chapter:
-            self.chapter = chapter
+class GraphicTitlePagesForm(forms.Form):
+    """Форма для загрузки страниц"""
+    images = MultipleFileField(label="Выберите страницы (пронумерованные файлы)", required=True)

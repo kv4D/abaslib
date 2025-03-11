@@ -16,15 +16,15 @@
         <div class="custom_select">      
           <select onchange="location = this.value" class="ref_button">                  
             <option selected hidden disabled class="ref_button">Редакция</option>
-            <option value="{% url 'main:upload_title' %}?title_type=graphic">Добавить графический тайтл</option>
-            <option value="{% url 'main:upload_title' %}?title_type=text">Добавить текстовый тайтл</option>
+            <option value="{% url 'main:upload_title' %}?title_type=graphic">Добавить тайтл (текст)</option>
+            <option value="{% url 'main:upload_title' %}?title_type=text">Добавить тайтл (графика)</option>
             {% block redact_options %}
           
             {% endblock %}
           </select>
         </div>
       {% endif %}
-      <a id="profile_link" href="{% url 'users:profile' %}"><button class="ref_button">Профиль {{ user.username }}<img src="{{ user.user_avatar.url }}" /></button></a>
+      <a id="profile_link" href="{% url 'users:profile' %}"><button class="ref_button">{{ user.username }}<img src="{{ user.user_avatar.url }}" /></button></a>
       <a id="logout_link" href="{% url 'users:logout' %}"><button class="ref_button">Выход</button></a>
     </div>
   {% else %}
