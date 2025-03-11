@@ -22,8 +22,12 @@
         <h2>{{ title.title_name_eng }}</h2>
       </div>
       <div class="button_group">
+        {% if user_favorite %}
+          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section={{ section }}"><button class="like_button ref_button">В любимом</button></a>
+        {% else %}
+          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section={{ section }}"><button class="like_button ref_button">Добавить в любимое</button></a>
+        {% endif %}
         <!-- add some logic to check if the title in favorites -->
-        <a href=""><button class="like_button ref_button">Добавить в любимое</button></a>
       </div>
       <br>
       <div class="button_group">

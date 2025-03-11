@@ -39,7 +39,7 @@ def about_rights_view(request):
     return render(request, 'main/about_rights.html')
 
 
-def render_about_section(title_type, title_id):
+def render_about_section(request, title_type, title_id):
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
@@ -51,7 +51,8 @@ def render_about_section(title_type, title_id):
         context = {
             'title': title,
             'title_type': title_type,
-            'section': 'about'
+            'section': 'about',
+            'user_favorite': request.user.likes_title(title)
         }
     else:
         context = {}
@@ -59,7 +60,7 @@ def render_about_section(title_type, title_id):
     return context
 
 
-def render_chapter_section(title_type, title_id):
+def render_chapter_section(request, title_type, title_id):
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapters = title.graphic_chapters.all()
@@ -74,7 +75,8 @@ def render_chapter_section(title_type, title_id):
             'title': title,
             'chapters': chapters,
             'title_type': title_type,
-            'section': 'chapters'
+            'section': 'chapters',
+            'user_favorite': request.user.likes_title(title)
         }
     else:
         context = {}
@@ -82,7 +84,7 @@ def render_chapter_section(title_type, title_id):
     return context
 
 
-def render_comment_section(title_type, title_id):
+def render_comment_section(request, title_type, title_id):
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
@@ -94,7 +96,8 @@ def render_comment_section(title_type, title_id):
         context = {
             'title': title,
             'title_type': title_type,
-            'section': 'comments'
+            'section': 'comments',
+            'user_favorite': request.user.likes_title(title)
         }
     else:
         context = {}
@@ -108,16 +111,19 @@ def title_page_view(request, title_id=None):
     title_type = request.GET.get('title_type')
     
     if section == 'about':
-        context = render_about_section(title_type, title_id)
+        context = render_about_section(request, title_type, title_id)
     elif section == 'chapters':
-        context = render_chapter_section(title_type, title_id)
+        context = render_chapter_section(request, title_type, title_id)
     elif section == 'comments':
-        context = render_comment_section(title_type, title_id)
+        context = render_comment_section(request, title_type, title_id)
     else:
         pass # TODO: add response here
-    
     return render(request, 'main/title_page.html', context)    
     
+    
+def change_favorite_title_status(request, title_id=None):
+    return render(request.META.get('HTTP_REFERER', '/'))
+
 
 @login_required
 def upload_title_view(request):

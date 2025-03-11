@@ -14,3 +14,5 @@ class User(AbstractUser):
     favorite_text_titles = models.ManyToManyField(TextTitle, blank=True)
     favorite_graphic_titles = models.ManyToManyField(GraphicTitle, blank=True)
     
+    def likes_title(self, title: TextTitle | GraphicTitle):
+        return self.favorite_text_titles.filter(id=title.id).exists() or self.favorite_graphic_titles.filter(id=title.id).exists()
