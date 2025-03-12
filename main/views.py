@@ -46,7 +46,7 @@ def render_about_section(request, title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         pass
-    print(title_type)
+    
     if title:
         context = {
             'title': title,
@@ -120,9 +120,30 @@ def title_page_view(request, title_id=None):
         pass # TODO: add response here
     return render(request, 'main/title_page.html', context)    
     
-    
+
+@login_required
 def change_favorite_title_status(request, title_id=None):
-    return render(request.META.get('HTTP_REFERER', '/'))
+    title_type = request.GET.get('title_type')
+    
+    if title_type == 'graphic':
+        title = get_object_or_404(GraphicTitle, id=title_id)
+    elif title_type == 'text':
+        title = get_object_or_404(TextTitle, id=title_id)
+    else:
+        pass
+    
+    if request.user.likes_title(title):
+        request.user.remove_title_from_favorites(title)
+    else:
+        request.user.add_title_to_favorites(title)
+    context = {
+        'title': title,
+        'title_type': title_type,
+        'section': request.GET.get('section'),
+        'user_favorite': request.user.likes_title(title)
+    }
+    
+    return render(request, 'main/title_page.html', context) 
 
 
 @login_required
@@ -180,12 +201,10 @@ def upload_graphic_chapter(request, title_id):
     title = get_object_or_404(GraphicTitle, id=title_id)
 
     if request.method == 'POST':
-        print(request.FILES.getlist('images'))
         chapter_form = GraphicTitleChapterForm(request.POST, title=title)
         pages_form = GraphicTitlePagesForm(request.POST, request.FILES)
         
         if chapter_form.is_valid() and pages_form.is_valid():
-            print('passed')
             chapter = chapter_form.save(commit=False)
             chapter.title = title
             chapter.save()
