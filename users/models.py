@@ -15,8 +15,10 @@ class User(AbstractUser):
     favorite_graphic_titles = models.ManyToManyField(GraphicTitle, blank=True)
     
     def likes_title(self, title: TextTitle | GraphicTitle):
-        return self.favorite_text_titles.filter(id=title.id).exists() or \
-            self.favorite_graphic_titles.filter(id=title.id).exists()
+        if title.title_type == 'text':
+            return self.favorite_text_titles.filter(id=title.id).exists()
+        elif title.title_type == 'graphic':
+            return self.favorite_graphic_titles.filter(id=title.id).exists()
             
     def add_title_to_favorites(self, title: TextTitle | GraphicTitle):
         if title.title_type == 'text':
@@ -26,9 +28,6 @@ class User(AbstractUser):
             
     def remove_title_from_favorites(self, title: TextTitle | GraphicTitle):
         if title.title_type == 'text':
-            print(1 ,self.favorite_text_titles)
-            print('5')
             self.favorite_text_titles.remove(title)
         elif title.title_type == 'graphic':
-            print('6')
             self.favorite_graphic_titles.remove(title)

@@ -133,10 +133,8 @@ def change_favorite_title_status(request, title_id=None):
         pass
     
     if request.user.likes_title(title):
-        print(3, request.user.likes_title(title))
         request.user.remove_title_from_favorites(title)
     else:
-        print(4)
         request.user.add_title_to_favorites(title)
     context = {
         'title': title,
