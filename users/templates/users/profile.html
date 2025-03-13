@@ -30,6 +30,11 @@
       <p>{{ user.email }}</p>
       <hr />
       <h2>Любимое</h2>
+      <div id="titles">
+        {% for title in favorite_titles %}
+          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

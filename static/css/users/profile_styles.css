@@ -3,3 +3,12 @@
     height: 100px;
     width: 100px;
 }
+
+#titles {
+    display: flex;
+    flex-direction: column;
+}
+
+#titles .ref_button {
+    width: 100%;
+}

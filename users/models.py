@@ -26,6 +26,9 @@ class User(AbstractUser):
             
     def remove_title_from_favorites(self, title: TextTitle | GraphicTitle):
         if title.title_type == 'text':
+            print(1 ,self.favorite_text_titles)
+            print('5')
             self.favorite_text_titles.remove(title)
         elif title.title_type == 'graphic':
+            print('6')
             self.favorite_graphic_titles.remove(title)

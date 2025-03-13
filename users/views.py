@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from . models import User
+from itertools import chain
 from . forms import RegisterForm
 
 
@@ -10,10 +10,21 @@ from . forms import RegisterForm
 @login_required
 def user_profile_view(request):
     """Shows user profile page and it's info"""
-    user = get_object_or_404(User, id=request.user.id)
+    user = request.user
+    
+    text_titles = user.favorite_text_titles.all()
+    graphic_titles = user.favorite_graphic_titles.all()
+
+    # unite titles and sort by date added
+    favorite_titles = sorted(
+        chain(text_titles, graphic_titles), 
+        key=lambda title: title.added_at,
+        reverse=True
+    )
 
     context = {
-        'user': user
+        'user': user,
+        'favorite_titles': favorite_titles
     }
 
     return render(request, 'users/profile.html', context)
