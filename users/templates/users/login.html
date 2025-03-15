@@ -25,17 +25,9 @@
         {% csrf_token %}
         <h2>Введите данные</h2>
         <div class="input_block">
-          <label for="username">Никнейм</label>
-          <br />
-          <input placeholder="Никнейм" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" />
+          {{ form.as_p }}
         </div>
 
-        <div class="input_block">
-          <label for="password">Пароль</label>
-          <br />
-          <input placeholder="Пароль" type="password" name="password" autocomplete="current-password" required id="id_password" />
-        </div>
-        <br />
         <div class='button_group'>
           <button name="submit">Войти</button>
           <input type="hidden" name="next" value="{% url 'main:home' %}" />

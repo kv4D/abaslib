@@ -136,6 +136,7 @@ def change_favorite_title_status(request, title_id=None):
         request.user.remove_title_from_favorites(title)
     else:
         request.user.add_title_to_favorites(title)
+        
     context = {
         'title': title,
         'title_type': title_type,

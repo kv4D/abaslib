@@ -1,5 +1,6 @@
 <!-- Page for user registration -->
 {% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block styles %}
   <link rel="stylesheet" href="{% static 'css/users/auth_styles.css' %}" />
@@ -26,38 +27,7 @@
         {% csrf_token %}
         <h2>Введите данные</h2>
         <div class="input_block">
-          <label for="username">Никнейм</label>
-          <br />
-          <input placeholder="username" type="text" name="username" maxlength="150" autofocus required aria-describedby="id_username_helptext" id="id_username" />
-          <br />
-          <span class="warning" id="id_username_helptext"><p>Только буквы, цифры и символы @/./+/-/_!</p></span>
-        </div>
-    
-        <div class="input_block">
-          <label for="email">Электронная почта</label>
-          <br />
-          <input placeholder="e-mail" type="email" name="email" maxlength="320" required id="id_email" />
-        </div>
-    
-        <div class="input_block">
-          <label for="password1">Пароль</label>
-          <br />
-          <input placeholder="password" type="password" name="password1" autocomplete="new-password" required aria-describedby="id_password1_helptext" id="id_password1" />
-          <br />
-          <span class="warning" id="id_password1_helptext">
-              <p>Пароль должен содержать не менее 8 символов</p>
-          </span>
-          <span class="warning" id="id_password1_helptext">
-            <p>Пароль должен содержать хотя бы одну букву или символ</p>
-          </span>
-        </div>
-    
-        <div class="input_block">
-          <label for="password2">Подтверждение пароля</label>
-          <br />
-          <input placeholder="password" type="password" name="password2" autocomplete="new-password" required aria-describedby="id_password2_helptext" id="id_password2" />
-          <br />
-          <span class="warning" id="id_password2_helptext"><p>Пароли должны совпадать</p></span>
+          {{ form|crispy }}
         </div>
         <br />
         <div class='button_group'>

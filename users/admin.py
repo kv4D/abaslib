@@ -6,7 +6,7 @@ from . models import User
 
 class ModifiedUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ('Extra info', {
+        ('Profile info and stats', {
             'fields': ('user_avatar', 'titles_read_amount', 'favorite_text_titles', 'favorite_graphic_titles'),
         }),
     )
