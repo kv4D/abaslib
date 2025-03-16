@@ -6,60 +6,70 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit, Layout
 
 
 class RegisterForm(UserCreationForm):
     """Registration form for User"""
     email = forms.EmailField(required=True)
     
+    # error messages
+    error_messages = {
+        'invalid_email': _('Пользователь с такой электронной почтой уже существует'),
+    }
+    
     class Meta:
         model = get_user_model()
         fields = ['username', 'email', 'password1', 'password2']
-        
-        labels = {
-            'title_name_rus': _('Название тайтла'),
-            'title_name_eng': _('Название тайтла (английский, опционально)'), 
-            'title_author': _('Автор'), 
-            'title_is_ongoing': _('Тайтл все еще выходит'),
-            'title_description': _('Описание'), 
-            'publication_year': _('Год выпуска')
-        }
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         
+        # build crispy form
         self.helper = FormHelper()
-        self.helper.form_id = 'auth_form'
         self.helper.form_method = 'post'
         self.helper.form_action = reverse('users:register')
-        
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.layout = Layout(
+            'username',
+            'email',
+            'password1',
+            'password2',
+            Submit(name='submit', value=_('Зарегистрироваться'), css_class='submit_button'),)
         
         # change labels
         self.fields['username'].label = _('Никнейм')
         self.fields['email'].label = _('Электронная почта')
         self.fields['password1'].label = _('Пароль')
-        self.fields['password2'].label = _('Подтверждение пароля')
+        self.fields['password2'].label = _('Подтвердите пароль')
         
         # change help text
         self.fields['username'].help_text = None
-        self.fields['password1'].help_text = _('<br/>Пароль должен содержать хотя бы 8 символов')
+        self.fields['password1'].help_text = _('<br>Пароль должен содержать хотя бы 8 символов (из них обязательно 1 символ не цифра)')
+        self.fields['password2'].help_text = None
         
         # change error messages
         self.fields['username'].error_messages = {
-            'required': 'Поле "Имя пользователя" обязательно для заполнения.',
-            'unique': 'Пользователь с таким именем уже существует.',
+            'unique': _('Пользователь с таким именем уже существует'),
         }
-        self.fields['password1'].error_messages = {
-            'required': 'Поле "Пароль" обязательно для заполнения.',
-        }
-        self.fields['password2'].error_messages = {
-            'required': 'Поле "Подтверждение пароля" обязательно для заполнения.',
-        }
-        
+    
+    def clean_email(self):
+        """Validate email"""
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and get_user_model().objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError(
+                self.error_messages['invalid_email'],
+                code='invalid_login',
+                )
+        return email
         
 class LoginForm(AuthenticationForm):    
+    # error messages
+    error_messages = {
+        'invalid_login': _('Неверный никнейм или пароль'),
+        'inactive': _('Этот аккаунт отключён'),
+    }
+    
     class Meta:
         model = get_user_model()
         
@@ -73,18 +83,14 @@ class LoginForm(AuthenticationForm):
         self.helper.layout = Layout(
             'username',
             'password',
-            Submit('submit', 'Войти', css_class='submit_button'),)
+            Submit('submit', _('Войти'), css_class='submit_button'),)
         
         # change labels
         self.fields['username'].label = 'Никнейм'
         self.fields['password'].label = 'Пароль'
-    
-    error_messages = {
-        'invalid_login': _('Неверный никнейм или пароль'),
-        'inactive': _('Этот аккаунт отключён'),
-    }
 
     def clean(self):
+        """Validate form"""
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 

@@ -31,6 +31,9 @@ def user_profile_view(request):
 
 def register_user_view(request):
     """Registers user, allow input and redirect to homepage"""
+    if request.user.is_authenticated:
+        return redirect('main:home')
+    
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -47,6 +50,9 @@ def register_user_view(request):
 
 def login_user_view(request):
     """Tries to login user with input data"""
+    if request.user.is_authenticated:
+        return redirect('main:home')
+    
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
