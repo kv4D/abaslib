@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from itertools import chain
-from . forms import RegisterForm
+from . forms import RegisterForm, LoginForm
 
 
 # Create your views here.
@@ -49,7 +48,7 @@ def register_user_view(request):
 def login_user_view(request):
     """Tries to login user with input data"""
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
             username_received = form.cleaned_data.get('username')
             password_received = form.cleaned_data.get('password')
@@ -58,7 +57,7 @@ def login_user_view(request):
                 login(request, user)
                 return redirect('main:home')
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     context = {
         'form': form
         }

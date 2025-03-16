@@ -23,18 +23,8 @@
     </div>
 
     <div id="main_content">
-      <form action="{% url 'users:register' %}" method="post">
-        {% csrf_token %}
-        <h2>Введите данные</h2>
-        <div class="input_block">
-          {{ form|crispy }}
-        </div>
-        <br />
-        <div class='button_group'>
-          <button name="submit">Зарегистрироваться</button>
-          <input type="hidden" name="next" value="{% url 'main:home' %}" />
-        </div>
-      </form>
+      <h2>Введите данные</h2>
+        {% crispy form %}
     </div>
   </div>
 {% endblock %}

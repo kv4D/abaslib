@@ -1,5 +1,6 @@
 <!-- Log in page -->
 {% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block styles %}
   <link rel="stylesheet" href="{% static 'css/users/auth_styles.css' %}" />
@@ -21,18 +22,8 @@
       <h1><a href="{% url 'users:register' %}">Регистрация</a></h1>
     </div>
     <div id="main_content">
-      <form action="{% url 'users:login' %}" method="post">
-        {% csrf_token %}
-        <h2>Введите данные</h2>
-        <div class="input_block">
-          {{ form.as_p }}
-        </div>
-
-        <div class='button_group'>
-          <button name="submit">Войти</button>
-          <input type="hidden" name="next" value="{% url 'main:home' %}" />
-        </div>
-      </form>
+      <h2>Введите данные</h2>
+      {% crispy form %}
     </div>
   </div>
 {% endblock %}

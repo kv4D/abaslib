@@ -33,3 +33,44 @@ input {
 .input_block {
     margin: 20px;
 }
+
+.asteriskField {
+    display: none;
+}
+
+.alert {
+    margin-bottom: 30px;
+}
+
+.alert ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alert ul {
+    color: #BA181B;
+    font-size: 14px;
+}
+
+.submit_button {
+    transition-duration: 0.1s;
+    border: 1px solid;
+    font-family: inherit; 
+    font-size: inherit; 
+    border-radius: 5px;
+    white-space: nowrap;
+    min-width: fit-content;
+    cursor: pointer;
+    color: #0B090A;
+    background-color: #EFEFEF;
+}
+
+.submit_button:hover {
+    background-color: #0B090A; 
+    color: #EFEFEF;
+}
+
+.submit_button:active {
+    color: #EFEFEF;
+}

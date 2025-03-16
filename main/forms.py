@@ -12,6 +12,7 @@ class TextTitleForm(forms.ModelForm):
                   'title_is_ongoing',
                   'title_description', 
                   'publication_year']
+        
         labels = {
             'title_name_rus': _('Название тайтла'),
             'title_name_eng': _('Название тайтла (английский, опционально)'), 
@@ -20,6 +21,7 @@ class TextTitleForm(forms.ModelForm):
             'title_description': _('Описание'), 
             'publication_year': _('Год выпуска')
         }
+        
         widgets = {
             'title_name_rus': forms.TextInput(
                 attrs={
