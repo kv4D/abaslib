@@ -78,7 +78,7 @@ class TitleChapter(models.Model):
         return f'Глава {self.chapter_number} - {self.chapter_name}'
     
     def __str__(self):
-        return f'Глава {self.chapter_number} - {self.chapter_name} / {str(self.title)}'
+        return f'Глава {self.chapter_number} - {self.chapter_name}'
     
 
 class TextTitleChapter(TitleChapter):
