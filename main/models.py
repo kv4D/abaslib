@@ -31,7 +31,7 @@ class Title(models.Model):
     title_is_ongoing = models.BooleanField(default=True)
     title_description = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
-    publication_year = models.PositiveSmallIntegerField(default=0)
+    publication_year = models.PositiveSmallIntegerField(default=timezone.now().year)
 
     class Meta:
         abstract = True
@@ -46,8 +46,8 @@ class TextTitle(Title):
     class Meta:
         constraints = [
                 models.CheckConstraint(
-                    check=models.Q(publication_year__lte=timezone.now().year),
-                    name='publication year <= current year (text)'
+                    check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
+                    name='0 < publication year <= current year (text)'
                 )
             ]
             
@@ -64,8 +64,8 @@ class GraphicTitle(Title):
     class Meta:
         constraints = [
                 models.CheckConstraint(
-                    check=models.Q(publication_year__lte=timezone.now().year),
-                    name='publication year <= current year (graphic)'
+                    check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
+                    name='0 < publication year <= current year (graphic)'
                 )
             ]
             
@@ -92,13 +92,11 @@ class TitleChapter(models.Model):
         ordering = ["id"]
         # one chapter for a title
         constraints = [
-        models.UniqueConstraint(fields=['chapter_name', 'chapter_number'], name='unique_chapter_per_title')]
-    
-    def get_chapter_name(self):
-        return f'Глава {self.chapter_number} - {self.chapter_name}'
+            models.UniqueConstraint(fields=['chapter_name', 'chapter_number'], name='unique_chapter_per_title')
+            ]
     
     def __str__(self):
-        return f'Глава {self.chapter_number} - {self.chapter_name}'
+        return f'Глава {self.chapter_number}: {self.chapter_name}'
     
 
 class TextTitleChapter(TitleChapter):

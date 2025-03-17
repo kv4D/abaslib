@@ -63,11 +63,11 @@
           {% for chapter in chapters %}
             {% if title.title_type == 'graphic' %}
               <a href="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter.chapter_number }}&page={{ 1 }}">
-                <button class="ref_button">{{ chapter.get_chapter_name }}</button>
+                <button class="ref_button">{{ chapter }}</button>
               </a>
             {% else %}
               <a href="{% url 'reader:read_text' title.id %}?chapter={{ chapter.chapter_number }}">
-                <button class="ref_button">{{ chapter.get_chapter_name }}</button>
+                <button class="ref_button">{{ chapter }}</button>
               </a>
             {% endif %}
           {% endfor %}
