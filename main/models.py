@@ -2,21 +2,19 @@
 Models for 'main' app. Basically models for content and
 some functions for convenience.
 """
-import os
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
+import os
 
 
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
-    # if there is no title in eng, use russian
     title_id = instance.chapter.title.id
     return os.path.join('graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename)
 
 
 def get_text_chapter_path(instance, filename):
     """Creates the path to the chapter of a text title"""
-    # if there is no title in eng, use russian
     title_id = instance.title.id
     return os.path.join('text', str(title_id), 'chapters', instance.chapter_name, filename)
 
@@ -44,14 +42,36 @@ class Title(models.Model):
 
 class TextTitle(Title):
     """A title with text only"""
-    # for specification purposes
+    # for specification purposes        
+    class Meta:
+        constraints = [
+                models.CheckConstraint(
+                    check=models.Q(publication_year__lte=timezone.now().year),
+                    name='publication year <= current year (text)'
+                )
+            ]
+            
+    def get_path(self):
+        return os.path.join('media', 'text', str(self.id))
+    
     @property
     def title_type(self):
         return 'text'
 
 class GraphicTitle(Title):
     """A comic title or manga only"""
-    # for specification purposes
+    # for specification purposes    
+    class Meta:
+        constraints = [
+                models.CheckConstraint(
+                    check=models.Q(publication_year__lte=timezone.now().year),
+                    name='publication year <= current year (graphic)'
+                )
+            ]
+            
+    def get_path(self):
+        return os.path.join('media', 'graphic', str(self.id))
+        
     @property
     def title_type(self):
         return 'graphic'
@@ -73,7 +93,7 @@ class TitleChapter(models.Model):
         # one chapter for a title
         constraints = [
         models.UniqueConstraint(fields=['chapter_name', 'chapter_number'], name='unique_chapter_per_title')]
-
+    
     def get_chapter_name(self):
         return f'Глава {self.chapter_number} - {self.chapter_name}'
     
@@ -87,7 +107,9 @@ class TextTitleChapter(TitleChapter):
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='text_chapters')     
     text_content = models.FileField(upload_to=get_text_chapter_path)
     
-    # for specification purposes
+    def get_path(self):
+        return os.path.join('media', 'text', str(self.title.id), str(self.id))
+    
     @property
     def title_type(self):
         return 'text'
@@ -97,6 +119,9 @@ class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
     # for specification purposes
     title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE, related_name='graphic_chapters')     
+    
+    def get_path(self):
+        return os.path.join('media', 'graphic', str(self.title.id), str(self.id))
     
     @property
     def title_type(self):
@@ -115,7 +140,8 @@ class GraphicTitlePage(models.Model):
         ordering = ['page_number']
         # one page №(some number) for a chapter
         constraints = [
-        models.UniqueConstraint(fields=['chapter', 'page_number'], name='unique_page_per_chapter')]
+            models.UniqueConstraint(fields=['chapter', 'page_number'], name='unique_page_per_chapter')
+            ]
 
     def __str__(self):
         return f'{self.page_number} / {str(self.chapter)}'
