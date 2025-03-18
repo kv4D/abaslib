@@ -39,7 +39,10 @@ def read_graphic_title_view(request, title_id):
     chapter = GraphicTitleChapter.objects.get(chapter_number=chapter_number, title=title)
     page = GraphicTitlePage.objects.get(chapter=chapter, page_number=page_number)
     
+    image = page.image.url
     context = {
-        
+        'title': title,
+        'chapter': chapter,
+        'image': image
     }
     return render(request, 'reader/read_graphic.html', context)
