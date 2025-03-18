@@ -7,7 +7,12 @@ from . models import User
 class ModifiedUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ('Profile info and stats', {
-            'fields': ('user_avatar', 'titles_read_amount', 'favorite_text_titles', 'favorite_graphic_titles'),
+            'fields': (
+                'user_avatar',
+                'titles_read_amount',
+                'favorite_text_titles',
+                'favorite_graphic_titles'
+                ),
         }),
     )
     filter_horizontal = ('favorite_text_titles', 'favorite_graphic_titles')

@@ -1,43 +1,46 @@
 """Contains forms for 'main' app"""
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from . models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
+from . models import TextTitle, GraphicTitle, TextTitleChapter, \
+    GraphicTitleChapter
 
 class TextTitleForm(forms.ModelForm):
+    """
+    Form for text titles
+    """
     class Meta:
         model = TextTitle
-        fields = ['title_name_rus', 
-                  'title_name_eng', 
-                  'title_author', 
+        fields = ['title_name_rus',
+                  'title_name_eng',
+                  'title_author',
                   'title_is_ongoing',
-                  'title_description', 
-                  'publication_year']
-        
+                  'title_description',
+                  'publication_year'
+                  ]
         labels = {
             'title_name_rus': _('Название тайтла'),
-            'title_name_eng': _('Название тайтла (английский, опционально)'), 
-            'title_author': _('Автор'), 
+            'title_name_eng': _('Название тайтла (английский, опционально)'),
+            'title_author': _('Автор'),
             'title_is_ongoing': _('Тайтл все еще выходит'),
-            'title_description': _('Описание'), 
+            'title_description': _('Описание'),
             'publication_year': _('Год выпуска')
         }
-        
         widgets = {
             'title_name_rus': forms.TextInput(
                 attrs={
-                    'placeholder': 'Введите название', 
+                    'placeholder': _('Введите название'),
                     'class': 'form_input'
                     }
                 ),
             'title_name_eng': forms.TextInput(
                 attrs={
-                    'placeholder': 'Введите название (если есть)', 
+                    'placeholder': _('Введите название (если есть)'),
                     'class': 'form_input'
                     }
                 ),
             'title_author': forms.TextInput(
                 attrs={
-                    'placeholder': 'Автор', 
+                    'placeholder': _('Автор'),
                     'class': 'form_input'
                     }
                 ),
@@ -48,8 +51,8 @@ class TextTitleForm(forms.ModelForm):
                 ),
             'title_description': forms.Textarea(
                 attrs={
-                    'placeholder': 'Введите описание...', 
-                    'class': 'form_input', 
+                    'placeholder': _('Введите описание...'),
+                    'class': 'form_input',
                     'rows': 10
                     }
                 ),
@@ -59,42 +62,45 @@ class TextTitleForm(forms.ModelForm):
                     }
                 ),
         }
-        
+
 
 
 class GraphicTitleForm(forms.ModelForm):
+    """
+    Form for graphic titles
+    """
     class Meta:
         model = GraphicTitle
-        fields = ['title_name_rus', 
-                  'title_name_eng', 
-                  'title_author', 
+        fields = ['title_name_rus',
+                  'title_name_eng',
+                  'title_author',
                   'title_is_ongoing',
-                  'title_description', 
+                  'title_description',
                   'publication_year']
         labels = {
             'title_name_rus': _('Название тайтла'),
-            'title_name_eng': _('Название тайтла (английский, опционально)'), 
-            'title_author': _('Автор'), 
+            'title_name_eng': _('Название тайтла (английский, опционально)'),
+            'title_author': _('Автор'),
             'title_is_ongoing': _('Тайтл все еще выходит'),
-            'title_description': _('Описание'), 
+            'title_description': _('Описание'),
             'publication_year': _('Год выпуска')
-        }        
+        }
         widgets = {
             'title_name_rus': forms.TextInput(
                 attrs={
-                    'placeholder': 'Введите название', 
+                    'placeholder': _('Введите название'),
                     'class': 'form_input'
                     }
                 ),
             'title_name_eng': forms.TextInput(
                 attrs={
-                    'placeholder': 'Введите название (если есть)', 
+                    'placeholder': _('Введите название (если есть)'),
                     'class': 'form_input'
                     }
                 ),
             'title_author': forms.TextInput(
                 attrs={
-                    'placeholder': 'Автор', 
+                    'placeholder': _('Автор'),
                     'class': 'form_input'
                     }
                 ),
@@ -105,8 +111,8 @@ class GraphicTitleForm(forms.ModelForm):
                 ),
             'title_description': forms.Textarea(
                 attrs={
-                    'placeholder': 'Введите описание...', 
-                    'class': 'form_input', 
+                    'placeholder': _('Введите описание...'),
+                    'class': 'form_input',
                     'rows': 10
                     }
                 ),
@@ -120,20 +126,20 @@ class GraphicTitleForm(forms.ModelForm):
 class TextTitleChapterForm(forms.ModelForm):
     class Meta:
         model = TextTitleChapter
-        fields = ['title', 
-                  'chapter_name', 
+        fields = ['title',
+                  'chapter_name',
                   'chapter_number',
                   'text_content']
         labels = {
-            'title': _('Тайтл'), 
-            'chapter_name': _('Название главы'), 
+            'title': _('Тайтл'),
+            'chapter_name': _('Название главы'),
             'chapter_number': _('Номер главы'),
             'text_content': _('Содержание главы')
         }
         widgets = {
             'chapter_name': forms.TextInput(
                 attrs={
-                    'placeholder': 'Введите название', 
+                    'placeholder': _('Введите название'),
                     'class': 'form_input'
                     }
                 ),
@@ -143,7 +149,7 @@ class TextTitleChapterForm(forms.ModelForm):
                     }
                 ),
         }
-    
+
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
         if title:
@@ -154,17 +160,17 @@ class TextTitleChapterForm(forms.ModelForm):
 class GraphicTitleChapterForm(forms.ModelForm):
     class Meta:
         model = GraphicTitleChapter
-        fields = ['title', 
-                  'chapter_name', 
+        fields = ['title',
+                  'chapter_name',
                   'chapter_number']
         labels = {
-            'title': _('Тайтл'), 
-            'chapter_name': _('Название главы'), 
+            'title': _('Тайтл'),
+            'chapter_name': _('Название главы'),
             'chapter_number': _('Номер главы')
         }
         widgets = {
             'chapter_name': forms.TextInput(
-                attrs={'placeholder': 'Введите название', 
+                attrs={'placeholder': _('Введите название'),
                        'class': 'form_input'
                        }
                 ),
@@ -174,7 +180,7 @@ class GraphicTitleChapterForm(forms.ModelForm):
                     }
                 ),
         }
-    
+
     def __init__(self, *args, title=None, **kwargs):
         super().__init__(*args, **kwargs)
         if title:
@@ -201,5 +207,7 @@ class MultipleFileField(forms.FileField):
 
 
 class GraphicTitlePagesForm(forms.Form):
-    """Форма для загрузки страниц"""
-    images = MultipleFileField(label="Выберите страницы (пронумерованные файлы)", required=True)
+    """Form for uploading multiple pages for graphic titles"""
+    images = MultipleFileField(label=_('Выберите страницы (не забудьте пронумеровать файлы)'),
+                               required=True
+                               )

@@ -21,10 +21,31 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.home_view, name='home'),
-    path('upload_title/', views.upload_title_view, name='upload_title'),
-    path('title/<int:title_id>/', views.title_page_view, name='title_page'),
-    path('upload_chapter/title=<int:title_id>/', views.upload_chapter_view, name='upload_chapter'),
-    path('about_rights/', views.about_rights_view, name='about_rights'),
-    path('title/<int:title_id>/add-to-favorites/', views.change_favorite_title_status, name='change_favorite_status'),
+    path('',
+        views.home_view,
+        name='home'
+        ),
+    path(
+        'upload_title/',
+        views.upload_title_view,
+        name='upload_title'
+        ),
+    path(
+        'title/<int:title_id>/',
+        views.title_page_view,
+        name='title_page'
+        ),
+    path(
+        'upload_chapter/title=<int:title_id>/',
+        views.upload_chapter_view,
+        name='upload_chapter'
+        ),
+    path('about_rights/',
+        views.about_rights_view,
+        name='about_rights'
+        ),
+    path('title/<int:title_id>/add-to-favorites/',
+        views.change_favorite_title_status,
+        name='change_favorite_status'
+        ),
 ]

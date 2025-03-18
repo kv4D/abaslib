@@ -13,13 +13,13 @@
   {% if user.is_authenticated %}
     <div class="button_group">
       {% if user.is_authenticated %}
-        <div class="custom_select">      
-          <select onchange="location = this.value" class="ref_button">                  
+        <div class="custom_select">
+          <select onchange="location = this.value" class="ref_button">
             <option selected hidden disabled class="ref_button">Редакция</option>
             <option value="{% url 'main:upload_title' %}?title_type=graphic">Добавить тайтл (текст)</option>
             <option value="{% url 'main:upload_title' %}?title_type=text">Добавить тайтл (графика)</option>
             {% block redact_options %}
-          
+
             {% endblock %}
           </select>
         </div>
@@ -44,6 +44,8 @@
           <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
         {% endfor %}
       </div>
+      <h4>Что-то еще</h4>
+      <div id="titles"></div>
     </div>
 
     <div id="side">

@@ -12,19 +12,19 @@ from crispy_forms.layout import Submit, Layout
 class RegisterForm(UserCreationForm):
     """Registration form for User"""
     email = forms.EmailField(required=True)
-    
+
     # error messages
     error_messages = {
         'invalid_email': _('Пользователь с такой электронной почтой уже существует'),
     }
-    
+
     class Meta:
         model = get_user_model()
         fields = ['username', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
-        super(RegisterForm, self).__init__(*args, **kwargs)
-        
+        super().__init__(*args, **kwargs)
+
         # build crispy form
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -35,47 +35,49 @@ class RegisterForm(UserCreationForm):
             'password1',
             'password2',
             Submit(name='submit', value=_('Зарегистрироваться'), css_class='submit_button'),)
-        
+
         # change labels
         self.fields['username'].label = _('Никнейм')
         self.fields['email'].label = _('Электронная почта')
         self.fields['password1'].label = _('Пароль')
         self.fields['password2'].label = _('Подтвердите пароль')
-        
+
         # change help text
         self.fields['username'].help_text = None
         self.fields['password1'].help_text = _('<br>Пароль должен содержать хотя бы 8 символов (из них обязательно 1 символ не цифра)')
         self.fields['password2'].help_text = None
-        
+
         # change error messages
         self.fields['username'].error_messages = {
             'unique': _('Пользователь с таким именем уже существует'),
         }
-    
+
     def clean_email(self):
         """Validate email"""
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
-        if email and get_user_model().objects.filter(email=email).exclude(username=username).exists():
+        email_used = get_user_model().objects.filter(email=email).exclude(username=username).exists()
+        if email and email_used:
             raise forms.ValidationError(
                 self.error_messages['invalid_email'],
                 code='invalid_login',
                 )
         return email
-        
-class LoginForm(AuthenticationForm):    
+
+class LoginForm(AuthenticationForm):
+    """Login form for User"""
     # error messages
     error_messages = {
         'invalid_login': _('Неверный никнейм или пароль'),
         'inactive': _('Этот аккаунт отключён'),
     }
-    
+
     class Meta:
         model = get_user_model()
-        
+
     def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
-        
+        super().__init__(*args, **kwargs)
+
         # build crispy form
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -84,7 +86,7 @@ class LoginForm(AuthenticationForm):
             'username',
             'password',
             Submit('submit', _('Войти'), css_class='submit_button'),)
-        
+
         # change labels
         self.fields['username'].label = 'Никнейм'
         self.fields['password'].label = 'Пароль'
@@ -101,7 +103,7 @@ class LoginForm(AuthenticationForm):
                     self.error_messages['invalid_login'],
                     code='invalid_login',
                 )
-            else:
-                self.confirm_login_allowed(self.user_cache)
+
+            self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data

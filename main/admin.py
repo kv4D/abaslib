@@ -9,26 +9,20 @@ from . models import TextTitle, GraphicTitle, \
 class TextTitleChapterInline(admin.TabularInline):
     model = TextTitleChapter
     extra = 1
-
-class TextTitleAdmin(admin.ModelAdmin):
-    readonly_fields = ('added_at',)
-    inlines = [TextTitleChapterInline]
-
 class GraphicTitleChapterInline(admin.TabularInline):
     model = GraphicTitleChapter
     extra = 1
-
-class GraphicTitleAdmin(admin.ModelAdmin):
-    readonly_fields = ('added_at',)
-    inlines = [GraphicTitleChapterInline]
-
-class TextTitleChapterAdmin(admin.ModelAdmin):
-    readonly_fields = ('added_at',)
-    
 class GraphicTitlePageInline(admin.TabularInline):
     model = GraphicTitlePage
     extra = 1
-
+class TextTitleAdmin(admin.ModelAdmin):
+    readonly_fields = ('added_at',)
+    inlines = [TextTitleChapterInline]
+class GraphicTitleAdmin(admin.ModelAdmin):
+    readonly_fields = ('added_at',)
+    inlines = [GraphicTitleChapterInline]
+class TextTitleChapterAdmin(admin.ModelAdmin):
+    readonly_fields = ('added_at',)
 class GraphicTitleChapterAdmin(admin.ModelAdmin):
     readonly_fields = ('added_at',)
     inlines = [GraphicTitlePageInline]

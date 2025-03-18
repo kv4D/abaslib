@@ -1,7 +1,8 @@
+"""Views for user control and handling"""
+from itertools import chain
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from itertools import chain
 from . forms import RegisterForm, LoginForm
 
 
@@ -10,13 +11,13 @@ from . forms import RegisterForm, LoginForm
 def user_profile_view(request):
     """Shows user profile page and it's info"""
     user = request.user
-    
+
     text_titles = user.favorite_text_titles.all()
     graphic_titles = user.favorite_graphic_titles.all()
 
     # unite titles and sort by date added
     favorite_titles = sorted(
-        chain(text_titles, graphic_titles), 
+        chain(text_titles, graphic_titles),
         key=lambda title: title.added_at,
         reverse=True
     )
@@ -30,10 +31,10 @@ def user_profile_view(request):
 
 
 def register_user_view(request):
-    """Registers user, allow input and redirect to homepage"""
+    """Registers user and redirects to homepage"""
     if request.user.is_authenticated:
         return redirect('main:home')
-    
+
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -52,7 +53,7 @@ def login_user_view(request):
     """Tries to login user with input data"""
     if request.user.is_authenticated:
         return redirect('main:home')
-    
+
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
