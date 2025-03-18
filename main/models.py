@@ -10,6 +10,7 @@ from django.utils import timezone
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
     title_id = instance.chapter.title.id
+    filename = 'text'
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )

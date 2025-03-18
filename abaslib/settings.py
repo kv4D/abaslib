@@ -129,6 +129,8 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+DEFAULT_CHARSET = 'utf-8'
+
 DATE_FORMAT = 'D d M Y'
 
 USE_I18N = True
