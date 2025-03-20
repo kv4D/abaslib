@@ -29,7 +29,7 @@
         {% endif %}
         <!-- add some logic to check if the title in favorites -->
       </div>
-      <br>
+      <br />
       <div class="button_group">
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">О тайтле</button></a>
         <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters"><button class="ref_button">Главы</button></a>
@@ -37,11 +37,10 @@
       </div>
       <br />
       {% if section == 'about' %}
-        
         <div class="info">
           <p class="highlighted_text">Статус:</p>
           {% if title.title_is_ongoing %}
-              <p>продолжается</p>
+            <p>продолжается</p>
           {% else %}
             <p>закончено</p>
           {% endif %}
@@ -62,13 +61,9 @@
         <div id="chapters">
           {% for chapter in chapters %}
             {% if title.title_type == 'graphic' %}
-              <a href="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter.chapter_number }}&page={{ 1 }}">
-                <button class="ref_button">{{ chapter }}</button>
-              </a>
+              <a href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}&page=1"><button class="ref_button">{{ chapter }}</button></a>
             {% else %}
-              <a href="{% url 'reader:read_text' title.id %}?chapter={{ chapter.chapter_number }}">
-                <button class="ref_button">{{ chapter }}</button>
-              </a>
+              <a href="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}"><button class="ref_button">{{ chapter }}</button></a>
             {% endif %}
           {% endfor %}
         </div>

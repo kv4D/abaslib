@@ -1,5 +1,21 @@
 {% extends 'reader/reader_base.html' %}
 
+{% block header %}
+  <div class="button_group">
+    <div class="custom_select">
+      <select class="ref_button" onchange="location = this.value">
+        {% for chapter in chapters_list %}
+          {% if chapter == current_chapter %}
+            <option value="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter }}">{{ chapter }}</option>
+          {% else %}
+            <option value="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter }}">{{ chapter }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
   <div id="#chapter_text" class="container">
     <pre>{{ chapter_content }}</pre>

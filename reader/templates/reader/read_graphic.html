@@ -1,5 +1,21 @@
 {% extends 'reader/reader_base.html' %}
 
+{% block header %}
+  <div class="button_group">
+    <div class="custom_select">
+      <select class="ref_button" onchange="location = this.value">
+        {% for chapter in chapters_list %}
+          {% if chapter == current_chapter %}
+            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter }}">{{ chapter }}</option>
+          {% else %}
+            <option value="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter }}">{{ chapter }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
-    <img id="chapter_image" src="{{ image }}" alt="Что-то пошло не так">
+  <img id="chapter_image" src="{{ image }}" alt="Что-то пошло не так" />
 {% endblock %}

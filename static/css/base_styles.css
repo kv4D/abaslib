@@ -165,6 +165,7 @@ option {
 }
 
 .ref_button {
+    white-space: nowrap;
     flex: 1;
     border-radius: 0;
     background-color: #161A1D;
