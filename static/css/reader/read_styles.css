@@ -22,3 +22,11 @@ pre {
     padding: 10px 30px 10px 30px;
     margin-top: 75px;
 }
+
+#chapter_selector {
+    width: 200px;
+}
+
+#page_selector {
+    width: 80px;
+}

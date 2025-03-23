@@ -3,12 +3,12 @@
 {% block header %}
   <div class="button_group">
     <div class="custom_select">
-      <select class="ref_button" onchange="location = this.value">
-        {% for chapter in chapters_list %}
-          {% if chapter == current_chapter %}
-            <option value="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter }}">{{ chapter }}</option>
+      <select id="chapter_selector" class="ref_button" onchange="location = this.value">
+        {% for chapter in all_chapters %}
+          {% if chapter.chapter_number == current_chapter.chapter_number %}
+            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
           {% else %}
-            <option value="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter }}">{{ chapter }}</option>
+            <option value="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
           {% endif %}
         {% endfor %}
       </select>
@@ -21,3 +21,5 @@
     <pre>{{ chapter_content }}</pre>
   </div>
 {% endblock %}
+
+

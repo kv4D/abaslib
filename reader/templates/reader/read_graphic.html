@@ -3,12 +3,28 @@
 {% block header %}
   <div class="button_group">
     <div class="custom_select">
-      <select class="ref_button" onchange="location = this.value">
-        {% for chapter in chapters_list %}
-          {% if chapter == current_chapter %}
-            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter }}">{{ chapter }}</option>
+      <select id="chapter_selector" class="ref_button" onchange="location = this.value">
+        {% for chapter in all_chapters %}
+          {% if chapter.chapter_number == current_chapter.chapter_number %}
+            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
           {% else %}
-            <option value="{% url 'reader:read_graphic' title.id %}?chapter={{ chapter }}">{{ chapter }}</option>
+            <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="custom_select">
+      <select id="page_selector" class="ref_button" onchange="location = this.value">
+        {% for page in all_pages %}
+          {% if page.page_number == current_page.page_number %}
+            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">
+              Стр. {{ page.page_number }}
+            </option>
+          {% else %}
+            <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">
+              Стр. {{ page.page_number }}
+            </option>
           {% endif %}
         {% endfor %}
       </select>
@@ -17,5 +33,5 @@
 {% endblock %}
 
 {% block content %}
-  <img id="chapter_image" src="{{ image }}" alt="Что-то пошло не так" />
+  <img id="chapter_image" src="{{ page_image }}" alt="Что-то пошло не так" />
 {% endblock %}

@@ -5,7 +5,7 @@ from main.models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleC
 def read_text_title_view(request, title_id):
     """Render page with chapter's content"""
     chapter_number = request.GET.get('chapter_num')
-    
+
     title = get_object_or_404(TextTitle, id=title_id)
     chapter = TextTitleChapter.objects.get(chapter_number=chapter_number, title=title)
     
@@ -14,13 +14,15 @@ def read_text_title_view(request, title_id):
         chapter_content = file.read()
     
     # for user selection
-    chapters_amount = TextTitleChapter.objects.filter(title=title).count()
+    all_chapters = TextTitleChapter.objects.filter(title=title).all()
+    
+    print(chapter)
     
     context = {
         'title': title,
         'current_chapter': chapter,
         'chapter_content': chapter_content,
-        'chapters_amount': chapters_amount
+        'all_chapters': all_chapters
     }
     
     return render(request, 'reader/read_text.html', context)
@@ -39,15 +41,16 @@ def read_graphic_title_view(request, title_id):
     page_image = page.image.url
     
     # for user selection
-    chapter_amount = GraphicTitleChapter.objects.filter(title=title).count()
-    pages_amount = GraphicTitlePage.objects.filter(chapter=chapter).count()
+    all_chapters = GraphicTitleChapter.objects.filter(title=title).all()
+    all_pages = GraphicTitlePage.objects.filter(chapter=chapter).all()
     
     context = {
         'title': title,
         'current_chapter': chapter,
+        'current_page': page,
         'page_image': page_image,
-        'chapters_amount': chapter_amount,
-        'pages_amount': pages_amount
+        'all_chapters': all_chapters,
+        'all_pages': all_pages
     }
     
     return render(request, 'reader/read_graphic.html', context)
