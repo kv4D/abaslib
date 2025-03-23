@@ -21,6 +21,6 @@ from . import views
 app_name = 'reader'
 
 urlpatterns = [
-    path('title/<int:title_id>/read/type=t', views.read_text_title_view, name='read_text'),
-    path('title/<int:title_id>/read/type=g', views.read_graphic_title_view, name='read_graphic')
+    path('title/<int:title_id>/read/type=txt/', views.read_text_title_view, name='read_text'),
+    path('title/<int:title_id>/read/type=grp/', views.read_graphic_title_view, name='read_graphic')
 ]

@@ -195,7 +195,7 @@ def upload_title_view(request):
 @login_required
 def upload_text_chapter(request, title_id):
     """Uploads text chapter with provided data"""
-    title = get_object_or_404(GraphicTitle, id=title_id)
+    title = get_object_or_404(TextTitle, id=title_id)
 
     if request.method == 'POST':
         form = TextTitleChapterForm(request.POST, title=title)
