@@ -10,17 +10,20 @@ pre {
     width: 100%;
     max-width: 1600px; 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    margin-top: 90px;
+    position: relative;
+    z-index: 1;
 }
 
-#chapter_image {
+#page_image {
     max-width: 100%; 
     max-height: none; 
     width: auto;
     height: auto;
     object-fit: scale-down; 
     image-rendering: crisp-edges; 
+    z-index: 1;
 }
 
 #chapter_selector {
@@ -29,4 +32,20 @@ pre {
 
 #page_selector {
     width: 80px;
+}
+
+#previous_page, #next_page {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 25%;
+    z-index: 2;
+}
+
+#previous_page {
+    left: 0;
+}
+
+#next_page {
+    right: 0;
 }

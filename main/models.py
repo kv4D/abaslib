@@ -59,7 +59,25 @@ class TextTitle(Title):
     def get_path(self):
         """Returns path to title"""
         return os.path.join('media', 'text', str(self.id))
-
+    
+    def get_next_chapter(self, chapter):
+        """Tries to get the next chapter for the provided chapter"""
+        if chapter.title != self:
+            raise ValueError('Chapter does not belong to this book')
+        chapter = self.text_chapters.filter(chapter_number__gt=chapter.chapter_number).first()
+        if chapter is None:
+            raise ValueError('No more chapters: it is the last chapter')
+        return chapter
+    
+    def get_previous_chapter(self, chapter):
+        """Tries to get the previous chapter for the provided chapter"""
+        if chapter.title != self:
+            raise ValueError('Chapter does not belong to this book')
+        chapter = self.text_chapters.filter(chapter_number__lt=chapter.chapter_number).first()
+        if chapter is None:
+            raise ValueError('No more chapters: it is the first chapter')
+        return chapter
+        
     @property
     def title_type(self):
         """Returns title type"""
@@ -79,7 +97,25 @@ class GraphicTitle(Title):
     def get_path(self):
         """Returns path to title"""
         return os.path.join('media', 'graphic', str(self.id))
-
+    
+    def get_next_chapter(self, chapter):        
+        """Tries to get the next chapter for the provided chapter"""
+        if chapter.title != self:
+            raise ValueError('Chapter does not belong to this book')
+        chapter =  self.graphic_chapters.filter(chapter_number__gt=chapter.chapter_number).first()
+        if chapter is None:
+            raise ValueError('No more chapters: it is the last chapter')
+        return chapter
+        
+    def get_previous_chapter(self, chapter):
+        """Tries to get the previous chapter for the provided chapter"""
+        if chapter.title != self:
+            raise ValueError('Chapter does not belong to this book')
+        chapter = self.graphic_chapters.filter(chapter_number__lt=chapter.chapter_number).first()
+        if chapter is None:
+            raise ValueError('No more chapters: it is the first chapter')
+        return chapter
+    
     @property
     def title_type(self):
         """Returns title type"""
@@ -98,7 +134,7 @@ class TitleChapter(models.Model):
 
     class Meta:
         # chapters are ordered by their ids
-        ordering = ["id"]
+        ordering = ["chapter_number"]
         # one chapter for a title
         constraints = [
             models.UniqueConstraint(
@@ -106,9 +142,6 @@ class TitleChapter(models.Model):
                 name='unique_chapter_per_title'
                 )
             ]
-
-    def __str__(self):
-        return f'Глава {self.chapter_number}: {self.chapter_name}'
 
 
 class TextTitleChapter(TitleChapter):
@@ -130,6 +163,9 @@ class TextTitleChapter(TitleChapter):
         """Returns title type"""
         return 'text'
 
+    def __str__(self):
+        return f'Глава {self.chapter_number}: {self.chapter_name}'
+
 
 class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
@@ -143,11 +179,32 @@ class GraphicTitleChapter(TitleChapter):
     def get_path(self):
         """Returns path to chapter"""
         return os.path.join('media', 'graphic', str(self.title.id), str(self.id))
-
+    
+    def get_next_page(self, page):
+        """Tries to get the next page for the provided page"""
+        if page.chapter != self:
+            raise ValueError('Page does not belong to this chapter')
+        page = self.pages.filter(page_number__gt=page.page_number).first()
+        if page is None:
+            raise ValueError('No more pages: it is the last page')
+        return page
+    
+    def get_previous_page(self, page):
+        """Tries to get the previous page for the provided page"""
+        if page.chapter != self:
+            raise ValueError('Page does not belong to this chapter')
+        page = self.pages.filter(page_number__lt=page.page_number).first()
+        if page is None:
+            raise ValueError('No more pages: it is the first page')
+        return page
+    
     @property
     def title_type(self):
         """Returns title type"""
         return 'graphic'
+    
+    def __str__(self):
+        return f'Глава {self.chapter_number}: {self.chapter_name}'
 
 
 class GraphicTitlePage(models.Model):

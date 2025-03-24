@@ -35,11 +35,6 @@ def home_view(request):
     return render(request, 'main/home.html', context)
 
 
-def about_rights_view(request):
-    """Renders page with rights info with contacts"""
-    return render(request, 'main/about_rights.html')
-
-
 def collect_about_section(request, title_type, title_id):
     """Creates context for about section of title's page"""
     if title_type == 'graphic':

@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.views.generic import TemplateView
 from . import views
 
 
@@ -41,7 +42,7 @@ urlpatterns = [
         name='upload_chapter'
         ),
     path('about_rights/',
-        views.about_rights_view,
+        TemplateView.as_view(template_name="main/about_rights.html"),
         name='about_rights'
         ),
     path('title/<int:title_id>/add-to-favorites/',
