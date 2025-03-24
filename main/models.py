@@ -105,6 +105,8 @@ class GraphicTitle(Title):
         chapter =  self.graphic_chapters.filter(chapter_number__gt=chapter.chapter_number).first()
         if chapter is None:
             raise ValueError('No more chapters: it is the last chapter')
+        if chapter.is_empty():
+            raise ValueError('This chapter is empty')
         return chapter
         
     def get_previous_chapter(self, chapter):
@@ -112,8 +114,11 @@ class GraphicTitle(Title):
         if chapter.title != self:
             raise ValueError('Chapter does not belong to this book')
         chapter = self.graphic_chapters.filter(chapter_number__lt=chapter.chapter_number).first()
+
         if chapter is None:
-            raise ValueError('No more chapters: it is the first chapter')
+            raise ValueError('No more chapters: it is the first chapter')        
+        if chapter.is_empty():
+            raise ValueError('This chapter is empty')
         return chapter
     
     @property
@@ -158,6 +163,10 @@ class TextTitleChapter(TitleChapter):
         """Returns path to chapter"""
         return os.path.join('media', 'text', str(self.title.id), str(self.id))
 
+    def is_empty(self):
+        """Checks if chapter is empty (has no text_content)"""
+        return self.text_content is None
+    
     @property
     def title_type(self):
         """Returns title type"""
@@ -197,6 +206,10 @@ class GraphicTitleChapter(TitleChapter):
         if page is None:
             raise ValueError('No more pages: it is the first page')
         return page
+    
+    def is_empty(self):
+        """Checks if chapter is empty (has no pages)"""
+        return self.pages.count() == 0
     
     @property
     def title_type(self):

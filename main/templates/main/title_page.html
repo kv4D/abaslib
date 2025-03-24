@@ -60,10 +60,12 @@
         {% endif %}
         <div id="chapters">
           {% for chapter in chapters %}
-            {% if title.title_type == 'graphic' %}
-              <a href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}&page=1"><button class="ref_button">{{ chapter }}</button></a>
-            {% else %}
-              <a href="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}"><button class="ref_button">{{ chapter }}</button></a>
+            {% if not chapter.is_empty %}
+              {% if title.title_type == 'graphic' %}
+                <a href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}&page=1"><button class="ref_button">{{ chapter }}</button></a>
+              {% else %}
+                <a href="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}"><button class="ref_button">{{ chapter }}</button></a>
+              {% endif %}
             {% endif %}
           {% endfor %}
         </div>

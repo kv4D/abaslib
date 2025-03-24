@@ -5,10 +5,12 @@
     <div class="custom_select">
       <select id="chapter_selector" class="ref_button" onchange="location = this.value">
         {% for chapter in all_chapters %}
-          {% if chapter.chapter_number == current_chapter.chapter_number %}
-            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
-          {% else %}
-            <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
+          {% if not chapter.is_empty %}
+            {% if chapter.chapter_number == current_chapter.chapter_number %}
+              <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
+            {% else %}
+              <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}">{{ chapter }}</option>
+            {% endif %}
           {% endif %}
         {% endfor %}
       </select>
@@ -18,13 +20,9 @@
       <select id="page_selector" class="ref_button" onchange="location = this.value">
         {% for page in all_pages %}
           {% if page.page_number == current_page.page_number %}
-            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">
-              Стр. {{ page.page_number }}
-            </option>
+            <option selected value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">Стр. {{ page.page_number }}</option>
           {% else %}
-            <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">
-              Стр. {{ page.page_number }}
-            </option>
+            <option value="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ page.page_number }}">Стр. {{ page.page_number }}</option>
           {% endif %}
         {% endfor %}
       </select>
@@ -34,10 +32,8 @@
 
 {% block content %}
   <div class="container img_container">
-    <a id="next_page" href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ current_page.page_number|add:"1" }}">
-    </a>
+    <a id="next_page" href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ current_page.page_number|add:'1' }}"></a>
     <img id="page_image" src="{{ page_image }}" alt="Что-то пошло не так" />
-    <a id="previous_page" href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ current_page.page_number|add:"-1" }}">
-    </a>
+    <a id="previous_page" href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ current_chapter.chapter_number }}&page={{ current_page.page_number|add:'-1' }}"></a>
   </div>
 {% endblock %}
