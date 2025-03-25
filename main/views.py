@@ -43,13 +43,19 @@ def collect_about_section(request, title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         pass
-
+    
+    try:
+        is_favorite = request.user.likes_title(title)
+    except AttributeError:
+        # user is unauthorized
+        is_favorite = None
+    
     if title:
         context = {
             'title': title,
             'title_type': title_type,
             'section': 'about',
-            'user_favorite': request.user.likes_title(title)
+            'user_favorite': is_favorite
         }
     else:
         context = {}
@@ -68,13 +74,19 @@ def collect_chapters_section(request, title_type, title_id):
     else:
         pass
 
+    try:
+        is_favorite = request.user.likes_title(title)
+    except AttributeError:
+        # user is unauthorized
+        is_favorite = None
+        
     if title:
         context = {
             'title': title,
             'chapters': chapters,
             'title_type': title_type,
             'section': 'chapters',
-            'user_favorite': request.user.likes_title(title)
+            'user_favorite': is_favorite
         }
     else:
         context = {}
@@ -90,13 +102,19 @@ def collect_comment_section(request, title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
     else:
         pass
-
+    
+    try:
+        is_favorite = request.user.likes_title(title)
+    except AttributeError:
+        # user is unauthorized
+        is_favorite = None
+    
     if title:
         context = {
             'title': title,
             'title_type': title_type,
             'section': 'comments',
-            'user_favorite': request.user.likes_title(title)
+            'user_favorite': is_favorite
         }
     else:
         context = {}
