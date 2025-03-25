@@ -24,6 +24,10 @@
     flex-direction: column;
 }
 
+#actions {
+    gap: 5px;
+}
+
 .button_group a {
     flex: 1; 
     display: grid; 

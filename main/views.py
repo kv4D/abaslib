@@ -147,23 +147,10 @@ def change_favorite_title_status(request, title_id=None):
     """
     title_type = request.GET.get('title_type')
 
-    context = {
-        'title_type': title_type,
-        'section': request.GET.get('section'),
-    }
-
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
-        if request.GET.get('section') == 'chapters':
-            chapters = title.graphic_chapters.all()
-            context['chapters'] = chapters
-
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-        if request.GET.get('section') == 'chapters':
-            chapters = title.text_chapters.all()
-            context['chapters'] = chapters
-
     else:
         assert title_type not in ['text', 'graphic']
 
@@ -171,11 +158,10 @@ def change_favorite_title_status(request, title_id=None):
         request.user.remove_title_from_favorites(title)
     else:
         request.user.add_title_to_favorites(title)
-
-    context['title'] = title
-    context['user_favorite'] = request.user.likes_title(title)
-
-    return render(request, 'main/title_page.html', context)
+    
+    response = redirect('main:title_page', title_id=title_id)
+    response['Location'] += f'?title_type=graphic&section={request.GET.get('section')}'
+    return response
 
 
 @login_required
