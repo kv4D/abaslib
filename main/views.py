@@ -197,12 +197,12 @@ def upload_text_chapter(request, title_id):
     title = get_object_or_404(TextTitle, id=title_id)
 
     if request.method == 'POST':
-        form = TextTitleChapterForm(request.POST, title=title)
+        form = TextTitleChapterForm(request.POST, request.FILES, title=title)
         if form.is_valid():
             form.save()
 
             response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += '?title_type=graphic&section=about'
+            response['Location'] += '?title_type=text&section=about'
             return response
     else:
         form = TextTitleChapterForm(title=title)
@@ -232,15 +232,24 @@ def upload_graphic_chapter(request, title_id):
 
             # collect all of the images for pages
             images = request.FILES.getlist('images')
-            for image in images:
-                match = search(r'(\d+)', image.name)
-                page_number = int(match.group()) if match else 10_000
-
+            if len(images) == 1:
+                page_number = 1
+                
                 GraphicTitlePage.objects.create(
                     chapter = chapter,
-                    image=image,
+                    image=images[0],
                     page_number=page_number
                 )
+            else:
+                for image in images:
+                    match = search(r'(\d+)', image.name)
+                    page_number = int(match.group()) if match else 10_000
+
+                    GraphicTitlePage.objects.create(
+                        chapter = chapter,
+                        image=image,
+                        page_number=page_number
+                    )
 
             response = redirect('main:title_page', title_id=title_id)
             response['Location'] += '?title_type=graphic&section=about'
@@ -270,6 +279,6 @@ def upload_chapter_view(request, title_id=None):
     elif title_type == 'graphic':
         response = upload_graphic_chapter(request, title_id)
     else:
-        pass # TODO: add response here
+        pass 
 
     return response

@@ -24,7 +24,6 @@
     <div id="main_content">
       <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {{ form.errors }}
         <div id="input">
           <h1>Заполните поля</h1>
           {% if title_type == 'text' %}

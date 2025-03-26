@@ -148,6 +148,11 @@ class TextTitleChapterForm(forms.ModelForm):
                     'class': 'form_input'
                     }
                 ),
+            'text_content': forms.ClearableFileInput(
+                attrs={
+                    
+                }
+            )
         }
 
     def __init__(self, *args, title=None, **kwargs):

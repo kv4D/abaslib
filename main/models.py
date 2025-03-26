@@ -10,7 +10,6 @@ from django.utils import timezone
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
     title_id = instance.chapter.title.id
-    filename = 'text'
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )
@@ -133,7 +132,7 @@ class TitleChapter(models.Model):
     for graphic and text content
     """
     # access title's chapters with obj.chapters.all()
-    chapter_name = models.CharField(max_length=255)
+    chapter_name = models.CharField(max_length=255, blank=True)
     chapter_number = models.PositiveIntegerField()
     added_at = models.DateTimeField(auto_now_add=True)
 
@@ -173,8 +172,9 @@ class TextTitleChapter(TitleChapter):
         return 'text'
 
     def __str__(self):
-        return f'Глава {self.chapter_number}: {self.chapter_name}'
-
+        if self.chapter_name:
+            return f'Глава {self.chapter_number}: {self.chapter_name}'
+        return f'Глава {self.chapter_number}'
 
 class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
@@ -217,7 +217,9 @@ class GraphicTitleChapter(TitleChapter):
         return 'graphic'
     
     def __str__(self):
-        return f'Глава {self.chapter_number}: {self.chapter_name}'
+        if self.chapter_name:
+            return f'Глава {self.chapter_number}: {self.chapter_name}'
+        return f'Глава {self.chapter_number}'
 
 
 class GraphicTitlePage(models.Model):
