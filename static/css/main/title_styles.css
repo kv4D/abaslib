@@ -3,15 +3,11 @@
 }
 
 .container {
-    width: 50%;
+    width: 60%;
 }
 
 #main_content {
     flex: 3;
-}
-
-#side {
-    flex: 2;
 }
 
 #main_content .ref_button {
@@ -21,6 +17,7 @@
 
 #chapters {
     display: flex;
+    flex: 1;
     flex-direction: column;
 }
 
@@ -33,13 +30,19 @@
     display: grid; 
 }
 
-#chapters .ref_button {
-    border: none;
-    width: 100%;
+#chapters .button_group a:first-child {
+    flex: 0 0 10%; 
 }
 
-.like_button {
+#chapters .button_group a:last-child {
+    flex: 0 0 90%; 
+}
+
+#chapters .ref_button {
+    border: none;
+}
+
+.action_button {
     color: #BA181B;
-    width: 100%;
     border: 2px solid;
 }

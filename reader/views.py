@@ -4,8 +4,6 @@ from django.urls import reverse
 from main.models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
 
 
-# TODO: manage impossible pages (last pages + first pages)
-# Create your views here.
 def read_text_title_view(request, title_id):
     """Render page with chapter's content"""
     chapter_number = request.GET.get('chapter_num')
@@ -98,3 +96,8 @@ def read_graphic_title_view(request, title_id):
     }
 
     return render(request, 'reader/read_graphic.html', context)
+
+
+def open_bookmark_view(request, title_id):
+    """Start reading on the active bookmark"""
+    pass

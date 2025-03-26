@@ -45,7 +45,7 @@ def collect_about_section(request, title_type, title_id):
         pass
     
     try:
-        is_favorite = request.user.likes_title(title)
+        is_favorite = request.user.has_title_in_favorites(title)
     except AttributeError:
         # user is unauthorized
         is_favorite = None
@@ -75,7 +75,7 @@ def collect_chapters_section(request, title_type, title_id):
         pass
 
     try:
-        is_favorite = request.user.likes_title(title)
+        is_favorite = request.user.has_title_in_favorites(title)
     except AttributeError:
         # user is unauthorized
         is_favorite = None
@@ -104,7 +104,7 @@ def collect_comment_section(request, title_type, title_id):
         pass
     
     try:
-        is_favorite = request.user.likes_title(title)
+        is_favorite = request.user.has_title_in_favorites(title)
     except AttributeError:
         # user is unauthorized
         is_favorite = None
@@ -154,13 +154,13 @@ def change_favorite_title_status(request, title_id=None):
     else:
         assert title_type not in ['text', 'graphic']
 
-    if request.user.likes_title(title):
+    if request.user.has_title_in_favorites(title):
         request.user.remove_title_from_favorites(title)
     else:
         request.user.add_title_to_favorites(title)
     
     response = redirect('main:title_page', title_id=title_id)
-    response['Location'] += f'?title_type=graphic&section={request.GET.get('section')}'
+    response['Location'] += f'?title_type={ title_type }&section={request.GET.get('section')}'
     return response
 
 
