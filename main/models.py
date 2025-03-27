@@ -112,7 +112,7 @@ class GraphicTitle(Title):
         """Tries to get the previous chapter for the provided chapter"""
         if chapter.title != self:
             raise ValueError('Chapter does not belong to this book')
-        chapter = self.graphic_chapters.filter(chapter_number__lt=chapter.chapter_number).first()
+        chapter = self.graphic_chapters.filter(chapter_number__lt=chapter.chapter_number).last()
 
         if chapter is None:
             raise ValueError('No more chapters: it is the first chapter')        
@@ -125,7 +125,7 @@ class GraphicTitle(Title):
         """Returns title type"""
         return 'graphic'
 
-
+# TODO: все еще нужна проверка на уникальный номер + название, номер
 class TitleChapter(models.Model):
     """
     Represents a basic title chapter model and its common attributes both

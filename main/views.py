@@ -10,7 +10,6 @@ from . utils import create_pages_from_list, get_new_titles, redirect_to_title_pa
 
 # TODO: from uploading return to the previous page OR to new title page
 # TODO: replace favorite check or omit
-# TODO: get request params in templates, not context
 
 # create views here.
 def home_view(request):
@@ -25,12 +24,12 @@ def home_view(request):
 
 def collect_about_section(request, title_type, title_id):
     """Creates context for about section of title's page"""
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-    else:
-        pass
     
     try:
         is_favorite = request.user.has_title_in_favorites(title)
@@ -42,7 +41,6 @@ def collect_about_section(request, title_type, title_id):
         context = {
             'title': title,
             'title_type': title_type,
-            'section': 'about',
             'user_favorite': is_favorite
         }
     else:
@@ -53,6 +51,8 @@ def collect_about_section(request, title_type, title_id):
 
 def collect_chapters_section(request, title_type, title_id):
     """Creates context for chapters section of title's page"""
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapters = title.graphic_chapters.all()
@@ -73,7 +73,6 @@ def collect_chapters_section(request, title_type, title_id):
             'title': title,
             'chapters': chapters,
             'title_type': title_type,
-            'section': 'chapters',
             'user_favorite': is_favorite
         }
     else:
@@ -84,12 +83,12 @@ def collect_chapters_section(request, title_type, title_id):
 
 def collect_comment_section(request, title_type, title_id):
     """Creates context for comment section of title's page"""
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-    else:
-        pass
     
     try:
         is_favorite = request.user.has_title_in_favorites(title)
@@ -101,7 +100,6 @@ def collect_comment_section(request, title_type, title_id):
         context = {
             'title': title,
             'title_type': title_type,
-            'section': 'comments',
             'user_favorite': is_favorite
         }
     else:
@@ -116,7 +114,6 @@ def title_page_view(request, title_id=None):
     title_type = request.GET.get('title_type')
 
     # collect context for different sections
-    
     assert section in ['about', 'chapters', 'comments']
     
     if section == 'about':
@@ -174,8 +171,7 @@ def upload_title_view(request):
         form = form()
 
     context = {
-        'form': form,
-        'title_type': title_type
+        'form': form
     }
 
     return render(request, 'main/upload_title.html', context)
@@ -196,8 +192,7 @@ def upload_text_chapter(request, title_id):
 
     context = {
         'form': form,
-        'title': title,
-        'title_type': 'text'
+        'title': title
     }
 
     return render(request, 'main/upload_chapter.html', context)
@@ -228,8 +223,7 @@ def upload_graphic_chapter(request, title_id):
     context = {
         'chapter_form': chapter_form,
         'pages_form': pages_form,
-        'title': title,
-        'title_type': 'graphic'
+        'title': title
     }
 
     return render(request, 'main/upload_chapter.html', context)

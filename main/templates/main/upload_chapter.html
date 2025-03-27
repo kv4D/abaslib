@@ -22,13 +22,14 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ title.title_type }}" enctype="multipart/form-data" method="post">
+      <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ request.GET.title_type }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div id="input">
           <h1>Заполните поля</h1>
-          {% if title_type == 'text' %}
+          <h2>Новая глава {% if request.GET.title_type == 'text' %}текстового {% else %} графического {% endif %} тайтла</h2>
+          {% if request.GET.title_type == 'text' %}
             {{ form.as_table }}
-          {% elif title_type == 'graphic' %}
+          {% elif request.GET.title_type == 'graphic' %}
             {{ chapter_form.as_table }}
             {{ pages_form.as_table }}
           {% endif %}

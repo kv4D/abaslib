@@ -40,6 +40,7 @@ h4, h5 {
 a {
     color: #EFEFEF;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 a:hover, option:hover {
@@ -111,9 +112,8 @@ footer {
     display: flex;
     flex: 1; 
     width: 80%;  
-    max-width: 1600px;
+    max-width: 1500px;
     margin: 100px auto 30px auto;
-    padding: 15px;
     gap: 20px;
 }
 
@@ -163,6 +163,7 @@ button:active {
 
 select {
     font-family: inherit;
+    font-size: inherit;
     border: none;
     appearance: none;
     text-align: center;

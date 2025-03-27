@@ -22,10 +22,11 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'main:upload_title' %}?title_type={{ title_type }}" method="post">
+      <form action="{% url 'main:upload_title' %}?title_type={{ request.GET.title_type }}" method="post">
         {% csrf_token %}
         <div id="input">
           <h1>Заполните поля</h1>
+          <h2>Новый {% if request.GET.title_type == 'text' %}текстовый {% else %} графический {% endif %} тайтл</h2>
           {{ form.as_table }}
           <br />
           <button name="submit">Добавить тайтл</button>
