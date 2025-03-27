@@ -137,15 +137,9 @@ class TitleChapter(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        abstract = True
         # chapters are ordered by their ids
         ordering = ["chapter_number"]
-        # one chapter for a title
-        constraints = [
-            models.UniqueConstraint(
-                fields=['chapter_name', 'chapter_number'],
-                name='unique_chapter_per_title'
-                )
-            ]
 
 
 class TextTitleChapter(TitleChapter):
@@ -157,6 +151,15 @@ class TextTitleChapter(TitleChapter):
         related_name='text_chapters'
         )
     text_content = models.FileField(upload_to=get_text_chapter_path)
+    
+    class Meta:
+        # one chapter for a title
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title', 'chapter_name', 'chapter_number'],
+                name='unique_chapter_per_text_title'
+                )
+            ]
 
     def get_path(self):
         """Returns path to chapter"""
@@ -184,6 +187,15 @@ class GraphicTitleChapter(TitleChapter):
         on_delete=models.CASCADE,
         related_name='graphic_chapters'
         )
+
+    class Meta:
+        # one chapter for a title
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title', 'chapter_name', 'chapter_number'],
+                name='unique_chapter_per_graphic_title'
+                )
+            ]
 
     def get_path(self):
         """Returns path to chapter"""

@@ -56,7 +56,7 @@
       <hr />
       <h4>Новые тайтлы</h4>
       <div id="titles">
-        {% for title in titles %}
+        {% for title in new_titles %}
           <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
         {% endfor %}
       </div>

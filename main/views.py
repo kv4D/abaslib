@@ -1,5 +1,4 @@
 """Views for 'main' app, pages with content"""
-from itertools import chain
 from re import search
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -7,30 +6,19 @@ from users.models import User
 from . models import TextTitle, GraphicTitle, GraphicTitlePage
 from . forms import TextTitleForm, GraphicTitleForm, \
     GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
+from . utils import create_pages_from_list, get_new_titles, redirect_to_title_page
 
+# TODO: from uploading return to the previous page OR to new title page
+# TODO: replace favorite check or omit
+# TODO: get request params in templates, not context
 
 # create views here.
 def home_view(request):
-    """Renders website's home page with optional user info"""
-    if request.user.is_authenticated:
-        user = get_object_or_404(User, id=request.user.id)
-        context = {
-            'user': user
+    """Renders website's home page"""
+    
+    context = {
+        'new_titles': get_new_titles()
         }
-    else:
-        context = {}
-
-    text_titles = TextTitle.objects.all()
-    graphic_titles = GraphicTitle.objects.all()
-
-    # unite titles and sort by date added
-    titles = sorted(
-        chain(text_titles, graphic_titles),
-        key=lambda title: title.added_at,
-        reverse=True
-    )
-
-    context['titles'] = titles[:10]
 
     return render(request, 'main/home.html', context)
 
@@ -128,14 +116,16 @@ def title_page_view(request, title_id=None):
     title_type = request.GET.get('title_type')
 
     # collect context for different sections
+    
+    assert section in ['about', 'chapters', 'comments']
+    
     if section == 'about':
         context = collect_about_section(request, title_type, title_id)
     elif section == 'chapters':
         context = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
         context = collect_comment_section(request, title_type, title_id)
-    else:
-        pass # TODO: add response here
+
     return render(request, 'main/title_page.html', context)
 
 
@@ -146,22 +136,20 @@ def change_favorite_title_status(request, title_id=None):
     on title page
     """
     title_type = request.GET.get('title_type')
-
+    
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-    else:
-        assert title_type not in ['text', 'graphic']
 
     if request.user.has_title_in_favorites(title):
         request.user.remove_title_from_favorites(title)
     else:
         request.user.add_title_to_favorites(title)
-    
-    response = redirect('main:title_page', title_id=title_id)
-    response['Location'] += f'?title_type={ title_type }&section={request.GET.get('section')}'
-    return response
+        
+    return redirect_to_title_page(title_id, title_type, request.GET.get('section'))
 
 
 @login_required
@@ -170,9 +158,11 @@ def upload_title_view(request):
     # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
 
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'text':
         form = TextTitleForm
-    else:
+    elif title_type == 'graphic':
         form = GraphicTitleForm
 
     if request.method == 'POST':
@@ -200,10 +190,7 @@ def upload_text_chapter(request, title_id):
         form = TextTitleChapterForm(request.POST, request.FILES, title=title)
         if form.is_valid():
             form.save()
-
-            response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += '?title_type=text&section=about'
-            return response
+            return redirect_to_title_page(title_id, 'text')
     else:
         form = TextTitleChapterForm(title=title)
 
@@ -232,28 +219,8 @@ def upload_graphic_chapter(request, title_id):
 
             # collect all of the images for pages
             images = request.FILES.getlist('images')
-            if len(images) == 1:
-                page_number = 1
-                
-                GraphicTitlePage.objects.create(
-                    chapter = chapter,
-                    image=images[0],
-                    page_number=page_number
-                )
-            else:
-                for image in images:
-                    match = search(r'(\d+)', image.name)
-                    page_number = int(match.group()) if match else 10_000
-
-                    GraphicTitlePage.objects.create(
-                        chapter = chapter,
-                        image=image,
-                        page_number=page_number
-                    )
-
-            response = redirect('main:title_page', title_id=title_id)
-            response['Location'] += '?title_type=graphic&section=about'
-            return response
+            create_pages_from_list(images, chapter)
+            return redirect_to_title_page(title_id, 'graphic')
     else:
         chapter_form = GraphicTitleChapterForm(title=title)
         pages_form = GraphicTitlePagesForm()
@@ -271,14 +238,13 @@ def upload_graphic_chapter(request, title_id):
 @login_required
 def upload_chapter_view(request, title_id=None):
     """Selects which title type to upload and provide response"""
-    # there can be 'graphic' or 'text' content type
     title_type = request.GET.get('title_type')
 
+    assert title_type in ['text', 'graphic']
+    
     if title_type == 'text':
         response = upload_text_chapter(request, title_id)
     elif title_type == 'graphic':
         response = upload_graphic_chapter(request, title_id)
-    else:
-        pass 
 
     return response

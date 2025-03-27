@@ -12,7 +12,7 @@ pre {
     max-width: 1600px; 
     display: flex;
     justify-content: center; 
-    margin-top: 55px;
+    margin-top: 70px;
     position: relative;
     z-index: 1;
 }
@@ -22,7 +22,6 @@ pre {
     max-height: none; 
     width: auto;
     height: auto;
-    object-fit: scale-down; 
     image-rendering: crisp-edges; 
     z-index: 1;
 }
@@ -39,7 +38,7 @@ pre {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 30%;
+    width: 40%;
     z-index: 2;
 }
 
