@@ -155,9 +155,9 @@ class TextTitleChapter(TitleChapter):
     class Meta:
         # one chapter for a title
         constraints = [
-            models.UniqueConstraint(
-                fields=['title', 'chapter_name', 'chapter_number'],
-                name='unique_chapter_per_text_title'
+                models.UniqueConstraint(
+                    fields=['title', 'chapter_number'],
+                    name='unique_chapter_number_per_text_title'
                 )
             ]
 
@@ -191,9 +191,9 @@ class GraphicTitleChapter(TitleChapter):
     class Meta:
         # one chapter for a title
         constraints = [
-            models.UniqueConstraint(
-                fields=['title', 'chapter_name', 'chapter_number'],
-                name='unique_chapter_per_graphic_title'
+                models.UniqueConstraint(
+                    fields=['title', 'chapter_number'],
+                    name='unique_chapter_number_per_graphic_title'
                 )
             ]
 
