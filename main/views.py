@@ -8,8 +8,6 @@ from . forms import TextTitleForm, GraphicTitleForm, \
     GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
 from . utils import create_pages_from_list, get_new_titles, redirect_to_title_page
 
-# TODO: from uploading return to the previous page OR to new title page
-# TODO: replace favorite check or omit
 
 # create views here.
 def home_view(request):

@@ -13,6 +13,14 @@ def get_graphic_chapter_path(instance, filename):
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )
+    
+
+def get_graphic_title_cover_path(instance, filename):
+    """Creates the path to title's cover"""
+    title_id = instance.id
+    return os.path.join(
+        'covers', 'graphic', str(title_id), filename
+        )
 
 
 def get_text_chapter_path(instance, filename):
@@ -20,6 +28,14 @@ def get_text_chapter_path(instance, filename):
     title_id = instance.title.id
     return os.path.join(
         'text', str(title_id), 'chapters', instance.chapter_name, filename
+        )
+
+
+def get_text_title_cover_path(instance, filename):
+    """Creates the path to title's cover"""
+    title_id = instance.id
+    return os.path.join(
+        'covers', 'text', str(title_id), filename
         )
 
 
@@ -33,8 +49,8 @@ class Title(models.Model):
     title_author = models.CharField(max_length=100)
     title_is_ongoing = models.BooleanField(default=True)
     title_description = models.TextField()
-    added_at = models.DateTimeField(auto_now_add=True)
     publication_year = models.PositiveSmallIntegerField(default=timezone.now().year)
+    added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         abstract = True
@@ -46,6 +62,8 @@ class Title(models.Model):
 class TextTitle(Title):
     """A title with text only"""
     # for specification purposes
+    title_cover = models.ImageField(default='default_cover.jpg', upload_to=get_text_title_cover_path)
+    
     class Meta:
         constraints = [
                 models.CheckConstraint(
@@ -84,6 +102,8 @@ class TextTitle(Title):
 class GraphicTitle(Title):
     """A comic title or manga only"""
     # for specification purposes
+    title_cover = models.ImageField(default='default_cover.jpg', upload_to=get_graphic_title_cover_path)
+    
     class Meta:
         constraints = [
                 models.CheckConstraint(
