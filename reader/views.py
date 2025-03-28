@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import QueryDict
 from django.urls import reverse
 from main.models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
+from main.utils import redirect_to_title_page
 
 
 def read_text_title_view(request, title_id):
@@ -15,9 +16,7 @@ def read_text_title_view(request, title_id):
     except Exception:
         # for some reason there is no chapter
         # back to title's page
-        response = redirect('main:title_page', title_id=title_id)
-        response['Location'] += '?title_type=text&section=about'
-        return response
+        return redirect_to_title_page(title_id, 'text')
     
     # always remember about encodings
     with open(chapter.text_content.path, "r", encoding='utf-8') as file:
@@ -79,9 +78,7 @@ def read_graphic_title_view(request, title_id):
     except Exception:
         # for some reason no chapters to load (empty or nonexistent)
         # return to the title page
-        response = redirect('main:title_page', title_id=title_id)
-        response['Location'] += '?title_type=graphic&section=about'
-        return response
+        return redirect_to_title_page(title_id, 'graphic')
 
     page = chapter.pages.filter(page_number=page_number).first()
 

@@ -1,4 +1,4 @@
-"""Functions for certain purposes"""
+"""Functions for certain purposes within apps"""
 from re import search
 from django.shortcuts import redirect
 from itertools import chain

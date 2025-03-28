@@ -23,7 +23,6 @@ def get_text_chapter_path(instance, filename):
         )
 
 
-# Create your models here.
 class Title(models.Model):
     """
     Represents a basic title model and its common attributes both
@@ -125,7 +124,7 @@ class GraphicTitle(Title):
         """Returns title type"""
         return 'graphic'
 
-# TODO: все еще нужна проверка на уникальный номер + название, номер
+
 class TitleChapter(models.Model):
     """
     Represents a basic title chapter model and its common attributes both
@@ -155,9 +154,9 @@ class TextTitleChapter(TitleChapter):
     class Meta:
         # one chapter for a title
         constraints = [
-            models.UniqueConstraint(
-                fields=['title', 'chapter_name', 'chapter_number'],
-                name='unique_chapter_per_text_title'
+                models.UniqueConstraint(
+                    fields=['title', 'chapter_number'],
+                    name='unique_chapter_number_per_text_title'
                 )
             ]
 
@@ -191,9 +190,9 @@ class GraphicTitleChapter(TitleChapter):
     class Meta:
         # one chapter for a title
         constraints = [
-            models.UniqueConstraint(
-                fields=['title', 'chapter_name', 'chapter_number'],
-                name='unique_chapter_per_graphic_title'
+                models.UniqueConstraint(
+                    fields=['title', 'chapter_number'],
+                    name='unique_chapter_number_per_graphic_title'
                 )
             ]
 
