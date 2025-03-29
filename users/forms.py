@@ -60,7 +60,7 @@ class RegisterForm(UserCreationForm):
         if email and email_used:
             raise forms.ValidationError(
                 self.error_messages['invalid_email'],
-                code='invalid_login',
+                code='invalid_email',
                 )
         return email
 

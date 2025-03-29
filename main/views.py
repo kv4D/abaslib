@@ -95,6 +95,7 @@ def collect_comment_section(request, title_type, title_id):
         is_favorite = None
     
     if title:
+        print(title.title_cover.url)
         context = {
             'title': title,
             'title_type': title_type,

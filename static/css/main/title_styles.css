@@ -46,3 +46,17 @@
     color: #BA181B;
     border: 2px solid;
 }
+
+.highlighted_text {
+    margin-bottom: 0;
+}
+
+p {
+    width: 50%;
+}
+
+#cover {
+    width: 370px;
+    height: 540px;
+    border-radius: 5px;
+}

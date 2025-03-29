@@ -17,7 +17,7 @@
   <div class="container">
     <div id="main_content">
       <div id="title_head">
-        Здесь будет обложка
+        <img id="cover" src="{{ title.title_cover.url }}" alt="Тут была обложка">
         <h2>{{ title.title_name_rus }}</h2>
         <h2>{{ title.title_name_eng }}</h2>
       </div>
@@ -98,26 +98,25 @@
       </div>
       <br />
       {% if request.GET.section == 'about' %}
-        <div class="info">
-          <p class="highlighted_text">Статус:</p>
-          {% if title.title_is_ongoing %}
-            <p>продолжается</p>
-          {% else %}
-            <p>закончено</p>
-          {% endif %}
-        </div>
-        <div class="info">
-          <p class="highlighted_text">Автор:</p>
-          <p>кто-то</p>
-        </div>
-        <div class="info">
-          <p class="highlighted_text">Описание:</p>
-          <p>какое-то</p>
-        </div>
-        <p>ЗАПОЛНЕНИЕ БУДЕТ ПОЗЖЕ (другой спринт)</p>
+
+        <p class="highlighted_text">Описание</p>
+        <p>{{ title.title_description }}</p>
+
+        <p class="highlighted_text">Статус</p>
+        {% if title.title_is_ongoing %}
+          <p>продолжается</p>
+        {% else %}
+          <p>закончено</p>
+        {% endif %}
+
+        <p class="highlighted_text">Автор</p>
+        <p>{{ title.title_author }}</p>
+
+        <p class="highlighted_text">Год выпуска</p>
+        <p>{{ title.publication_year }}</p>
       {% elif request.GET.section == 'chapters' %}
         {% if not chapters %}
-          <p>Пока что здесь нет ничего</p>
+          <p>Кажется, главы еще не загрузили</p>
         {% endif %}
         <div id="chapters">
           {% for chapter in chapters %}
