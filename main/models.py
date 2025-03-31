@@ -51,6 +51,9 @@ class Title(models.Model):
     title_description = models.TextField()
     publication_year = models.PositiveSmallIntegerField(default=timezone.now().year)
     added_at = models.DateTimeField(auto_now_add=True)
+    
+    views_count = models.PositiveIntegerField(default=0)
+    favorites_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         abstract = True
