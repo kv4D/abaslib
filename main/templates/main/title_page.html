@@ -97,23 +97,38 @@
         </a>
       </div>
       <br />
+      <!-- ABOUT SECTION -->
       {% if request.GET.section == 'about' %}
-
-        <p class="highlighted_text">Описание</p>
-        <p>{{ title.title_description }}</p>
-
-        <p class="highlighted_text">Статус</p>
-        {% if title.title_is_ongoing %}
-          <p>продолжается</p>
-        {% else %}
-          <p>закончено</p>
-        {% endif %}
-
-        <p class="highlighted_text">Автор</p>
-        <p>{{ title.title_author }}</p>
-
-        <p class="highlighted_text">Год выпуска</p>
-        <p>{{ title.publication_year }}</p>
+        <div id="caption">
+          <div id="title_info">
+            <p class="highlighted_text">Описание</p>
+            <p>{{ title.title_description }}</p>
+    
+            <p class="highlighted_text">Статус</p>
+            {% if title.title_is_ongoing %}
+              <p>продолжается</p>
+            {% else %}
+              <p>закончено</p>
+            {% endif %}
+    
+            <p class="highlighted_text">Автор</p>
+            <p>{{ title.title_author }}</p>
+    
+            <p class="highlighted_text">Год выпуска</p>
+            <p>{{ title.publication_year }}</p>
+          </div>
+          <div id="title_stats">
+            <p class="highlighted_text">Оценка</p>
+            <p>Какая-то</p>
+    
+            <p class="highlighted_text">В любимом</p>
+            <p>У кого то</p>
+    
+            <p class="highlighted_text">Просмотров</p>
+            <p>Немало</p>
+          </div>
+        </div>
+      <!-- CHAPTERS SECTION -->
       {% elif request.GET.section == 'chapters' %}
         {% if not chapters %}
           <p>Кажется, главы еще не загрузили</p>
@@ -153,6 +168,7 @@
             {% endif %}
           {% endfor %}
         </div>
+      <!-- COMMENTS SECTION -->
       {% elif request.GET.section == 'comments' %}
         <p>Здесь будут комментарии</p>
       {% endif %}

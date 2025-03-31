@@ -49,14 +49,25 @@
 
 .highlighted_text {
     margin-bottom: 0;
-}
-
-p {
-    width: 50%;
+    font-size: larger;
 }
 
 #cover {
     width: 370px;
     height: 540px;
     border-radius: 5px;
+}
+
+#caption {
+    display: flex;
+    justify-content: space-between;
+}
+
+#title_stats {
+    width: 45%;
+    text-align: right;
+}
+
+#title_info {
+    width: 45%;
 }
