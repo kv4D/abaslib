@@ -9,6 +9,11 @@ class GraphicTitleFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graphic_favorites')
     title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
+    
+    @staticmethod
+    def get_favorite_count(title):
+        count = GraphicTitleFavorite.objects.filter(title=title).count()
+        return count
 
 
 class TextTitleFavorite(models.Model):
@@ -16,13 +21,29 @@ class TextTitleFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='text_favorites')
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-
+    
+    def __str__(self):
+        return f'{self.user} - {self.title}'
+    
+    @staticmethod
+    def get_favorite_count(title):
+        count = TextTitleFavorite.objects.filter(title=title).count()
+        return count
+        
 
 class GraphicTitleView(models.Model):
     """Allows tracking views for graphic titles"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graphic_viewed')
     title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE, related_name='graphic_viewers')
     time = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user} - {self.title}'
+    
+    @staticmethod
+    def get_views_count(title):
+        count = GraphicTitleFavorite.objects.filter(title=title).count()
+        return count
 
 
 class TextTitleView(models.Model):
@@ -30,6 +51,11 @@ class TextTitleView(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='text_viewed')
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='text_viewers')
     time = models.DateTimeField(auto_now_add=True)
+    
+    @staticmethod
+    def get_views_count(title):
+        count = TextTitleFavorite.objects.filter(title=title).count()
+        return count
     
     
 class GraphicTitleBookmark(models.Model):

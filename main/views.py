@@ -2,7 +2,7 @@
 from re import search
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from users.models import User
+from reader import models
 from . models import TextTitle, GraphicTitle, GraphicTitlePage
 from . forms import TextTitleForm, GraphicTitleForm, \
     GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
@@ -137,13 +137,39 @@ def change_favorite_title_status(request, title_id=None):
     
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        
+        if request.user.has_title_in_favorites(title):
+            request.user.remove_title_from_favorites(title)
+            models.GraphicTitleFavorite.objects.filter(user=request.user, title=title).delete()
+        else:
+            request.user.add_title_to_favorites(title)
+            models.GraphicTitleFavorite.objects.create(
+                user = request.user,
+                title = title
+            )
+            
+        title.favorites_count = models.GraphicTitleFavorite.get_favorite_count(title)
+        print(models.GraphicTitleFavorite.get_favorite_count(title))
+        title.save()
+            
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
 
-    if request.user.has_title_in_favorites(title):
-        request.user.remove_title_from_favorites(title)
-    else:
-        request.user.add_title_to_favorites(title)
+        if request.user.has_title_in_favorites(title):
+            request.user.remove_title_from_favorites(title)
+            models.TextTitleFavorite.objects.filter(user=request.user, title=title).delete()
+        else:
+            request.user.add_title_to_favorites(title)
+            models.TextTitleFavorite.objects.create(
+                user = request.user,
+                title = title
+            )
+
+        title.favorites_count = models.TextTitleFavorite.get_favorite_count(title)
+        print(models.TextTitleFavorite.get_favorite_count(title))
+        title.save()
+
+
         
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))
 
