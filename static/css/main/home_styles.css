@@ -12,6 +12,13 @@
 .title_card {
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.title_card:hover {
+    color: #EFEFEF;
+    background-color: #21262b;
 }
 
 .cover {
