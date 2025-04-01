@@ -22,7 +22,12 @@
             {% endblock %}
           </select>  
         </div>
-        <a id="profile_link" href="{% url 'users:profile' %}"><button class="ref_button"><img src="{{ user.user_avatar.url }}" />{{ user.username }}</button></a>
+        <a id="profile_link" href="{% url 'users:profile' %}">
+          <button class="ref_button">
+            <img id="user_pic" src="{{ user.user_avatar.url }}" />
+              {{ user.username }}
+            </button>
+          </a>
         <a id="logout_link" href="{% url 'users:logout' %}">
           <button class="ref_button">
             <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
@@ -54,14 +59,17 @@
       <h1>ABASlib</h1>
       <h2>Тихо и стандартно</h2>
       <hr />
-      <h4>Новые тайтлы</h4>
-      <div id="titles">
+      <h4>Недавно добавлено</h4>
+      <div class="titles">
         {% for title in new_titles %}
-          <a href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
+          <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+              <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
+              <div class="title_name">{{ title.title_name_rus }}</div>
+          </a>
         {% endfor %}
       </div>
       <h4>Что-то еще</h4>
-      <div id="titles"></div>
+      <div class="titles"></div>
     </div>
 
     <div id="side">

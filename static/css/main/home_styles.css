@@ -1,9 +1,27 @@
-.ref_button img {
+#user_pic {
     width: 20px;
     height: 20px;
 }
 
-#titles .ref_button {
-    border: none;
+.titles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap:15px;
+}
+
+.title_card {
+    display: flex;
+    flex-direction: column;
+}
+
+.cover {
     width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.title_name {
+    margin-top: 8px;
+    padding: 0 5px;
 }

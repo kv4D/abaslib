@@ -10,7 +10,7 @@ body {
     padding: 0;
     background-color: #0B090A;
     color: #EFEFEF;
-    font-size: 16px;
+    font-size: 14px;
     font-family: Roboto mono, monospace;
     overflow-x: visible;
     width: max-content;
@@ -22,15 +22,15 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 35px;
+    font-size: 30px;
 }
 
 h2 {
-    font-size: 28px;
+    font-size: 25px;
 }
 
 h3 {
-    font-size: 25px;
+    font-size: 23px;
 } 
 
 h4, h5 {
