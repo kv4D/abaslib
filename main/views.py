@@ -22,6 +22,16 @@ def home_view(request):
     return render(request, 'main/home.html', context)
 
 
+def text_titles_view(request):
+    """Renders page with text titles"""
+    return render(request, 'main/text_titles.html')
+
+
+def graphic_titles_view(request):
+    """Renders page with graphic titles"""
+    return render(request, 'main/graphic_titles.html')
+
+
 def collect_about_section(request, title_type, title_id):
     """Creates context for about section of title's page"""
     assert title_type in ['text', 'graphic']

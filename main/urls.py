@@ -49,4 +49,14 @@ urlpatterns = [
         views.change_favorite_title_status,
         name='change_favorite_status'
         ),
+    path(
+        'text/',
+        views.text_titles_view,
+        name='text_titles'
+        ),
+    path(
+        'graphic/',
+        views.graphic_titles_view,
+        name='graphic_titles'
+        )
 ]
