@@ -2,13 +2,14 @@
 from re import search
 from django.shortcuts import redirect
 from itertools import chain
-from . models import GraphicTitlePage, TextTitle, GraphicTitle
+from . models import GraphicTitlePage, TextTitle, GraphicTitle, \
+    GraphicTitleChapter, TextTitleChapter
 
 
 def get_new_titles(return_amount: int = 5):
     """Get first 'return_amount' titles of all new titles"""
-    text_titles = TextTitle.objects.all()
-    graphic_titles = GraphicTitle.objects.all()
+    text_titles = TextTitle.objects.all()[:return_amount]
+    graphic_titles = GraphicTitle.objects.all()[:return_amount]
     
     # unite titles and sort by date added
     titles = sorted(
@@ -16,6 +17,29 @@ def get_new_titles(return_amount: int = 5):
         key=lambda title: title.added_at,
         reverse=True
     )
+    
+    return titles[:return_amount]
+
+
+def get_updated_titles(return_amount: int = 5):
+    """Get first 'return_amount' recently updated titles"""
+    text_chapters = TextTitleChapter.objects.all()
+    graphic_chapters = GraphicTitleChapter.objects.all()
+    
+    # unite chapters and sort by chapter date added
+    chapters = sorted(
+        chain(text_chapters, graphic_chapters),
+        key=lambda chapter: chapter.added_at,
+        reverse=True
+    )
+    
+    titles = []
+    for chapter in chapters:
+        if len(titles) == return_amount:
+            break
+        if chapter.title not in titles:
+            titles.append(chapter.title)
+    
     return titles[:return_amount]
 
 

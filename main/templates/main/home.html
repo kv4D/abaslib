@@ -68,13 +68,20 @@
           </a>
         {% endfor %}
       </div>
-      <h4>Что-то еще</h4>
-      <div class="titles"></div>
+      <h4>Обновления (тайтлы с недавно загруженными главами)</h4>
+      <div class="titles">
+        {% for title in updated_titles %}
+          <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+              <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
+              <div class="title_name">{{ title.title_name_rus }}</div>
+          </a>
+        {% endfor %}
+      </div>
     </div>
 
     <div id="side">
       <h1>Разделы</h1>
-      <p>Я сайд под разделы и, быть может, еще для чего</p>
+      <a href=""></a>
     </div>
   </div>
 {% endblock %}

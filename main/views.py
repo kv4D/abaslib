@@ -6,7 +6,8 @@ from reader import models
 from . models import TextTitle, GraphicTitle
 from . forms import TextTitleForm, GraphicTitleForm, \
     GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
-from . utils import create_pages_from_list, get_new_titles, redirect_to_title_page
+from . utils import create_pages_from_list, get_new_titles, \
+    redirect_to_title_page, get_updated_titles
 
 
 # create views here.
@@ -14,7 +15,8 @@ def home_view(request):
     """Renders website's home page"""
     
     context = {
-        'new_titles': get_new_titles()
+        'new_titles': get_new_titles(),
+        'updated_titles': get_updated_titles(),
         }
 
     return render(request, 'main/home.html', context)
