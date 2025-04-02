@@ -27,12 +27,17 @@
         <div id="input">
           <h1>Заполните поля</h1>
           <h2>Новый {% if request.GET.title_type == 'text' %}текстовый {% else %} графический {% endif %} тайтл</h2>
+          <hr />
           {{ form.as_table }}
+          <div id="cover_preview">
+            <img id="cover" src="{% get_media_prefix %}default_cover.jpg" alt="Здесь была обложка">
+          </div>
           <br />
           <button name="submit">Добавить тайтл</button>
-          <div id="title_cover">здесь будет обложка (не здесь, справа)</div>
         </div>
       </form>
     </div>
   </div>
+
+  <script src="{% static "js/upload_title.js" %}"></script>
 {% endblock %}

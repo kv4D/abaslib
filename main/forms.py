@@ -15,7 +15,8 @@ class TextTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
-                  'publication_year'
+                  'publication_year',
+                  'title_cover'
                   ]
         labels = {
             'title_name_rus': _('Название тайтла'),
@@ -23,7 +24,8 @@ class TextTitleForm(forms.ModelForm):
             'title_author': _('Автор'),
             'title_is_ongoing': _('Тайтл все еще выходит'),
             'title_description': _('Описание'),
-            'publication_year': _('Год выпуска')
+            'publication_year': _('Год выпуска'),
+            'title_cover': _('Обложка')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -61,8 +63,12 @@ class TextTitleForm(forms.ModelForm):
                     'class': 'form_input'
                     }
                 ),
+            'title_cover': forms.FileInput(
+                attrs={
+                    'class': 'form_input'
+                }
+            )
         }
-
 
 
 class GraphicTitleForm(forms.ModelForm):
@@ -76,14 +82,17 @@ class GraphicTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
-                  'publication_year']
+                  'publication_year',
+                  'title_cover'
+                  ]
         labels = {
             'title_name_rus': _('Название тайтла'),
             'title_name_eng': _('Название тайтла (английский, опционально)'),
             'title_author': _('Автор'),
             'title_is_ongoing': _('Тайтл все еще выходит'),
             'title_description': _('Описание'),
-            'publication_year': _('Год выпуска')
+            'publication_year': _('Год выпуска'),
+            'title_cover': _('Обложка')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -107,7 +116,7 @@ class GraphicTitleForm(forms.ModelForm):
             'title_is_ongoing': forms.CheckboxInput(
                 attrs={
                     'class': 'form_checkbox_input'
-                       }
+                    }
                 ),
             'title_description': forms.Textarea(
                 attrs={
@@ -119,8 +128,13 @@ class GraphicTitleForm(forms.ModelForm):
             'publication_year': forms.NumberInput(
                 attrs={
                     'class': 'form_input'
-                       }
+                    }
                 ),
+            'title_cover': forms.FileInput(
+                attrs={
+                    'class': 'form_input'
+                }
+            )
         }
 
 class TextTitleChapterForm(forms.ModelForm):
