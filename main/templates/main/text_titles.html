@@ -2,9 +2,41 @@
 {% load static %}
 
 {% block title %}
-  ABASlib — Книги
+  ABASlib — Новеллы
 {% endblock %}
 
 {% block content %}
-  Это заглушка
+  <div class="container">
+    <div id="main_content">
+      <h1>Новеллы</h1>
+      <hr />
+      <div class="titles">
+        {% for title in text_titles %}
+          <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+              <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
+              <div class="title_name">{{ title.title_name_rus }}</div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="side">
+      <h1>Разделы</h1>
+      <a href="{% url 'main:home' %}">
+        <button class="ref_button">
+          Главная
+        </button>
+      </a>
+      <a href="{% url 'main:text_titles' %}">
+        <button class="ref_button">
+          Новеллы
+        </button>
+      </a>
+      <a href="{% url 'main:graphic_titles' %}">
+        <button class="ref_button">
+          Комиксы
+        </button>
+      </a>
+    </div>
+  </div>
 {% endblock %}

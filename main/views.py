@@ -7,7 +7,8 @@ from . models import TextTitle, GraphicTitle
 from . forms import TextTitleForm, GraphicTitleForm, \
     GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
 from . utils import create_pages_from_list, get_new_titles, \
-    redirect_to_title_page, get_updated_titles
+    redirect_to_title_page, get_updated_titles, get_graphic_titles, \
+        get_text_titles
 
 
 # create views here.
@@ -24,12 +25,22 @@ def home_view(request):
 
 def text_titles_view(request):
     """Renders page with text titles"""
-    return render(request, 'main/text_titles.html')
+    
+    context = {
+        'text_titles': get_text_titles()
+    }
+    
+    return render(request, 'main/text_titles.html', context)
 
 
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
-    return render(request, 'main/graphic_titles.html')
+    
+    context = {
+        'graphic_titles': get_graphic_titles()
+    }
+    
+    return render(request, 'main/graphic_titles.html', context)
 
 
 def collect_about_section(request, title_type, title_id):

@@ -57,7 +57,6 @@
   <div class="container">
     <div id="main_content">
       <h1>ABASlib</h1>
-      <h2>Тихо и стандартно</h2>
       <hr />
       <h4>Недавно добавлено</h4>
       <div class="titles">
@@ -68,7 +67,7 @@
           </a>
         {% endfor %}
       </div>
-      <h4>Обновления (тайтлы с недавно загруженными главами)</h4>
+      <h4>Обновления</h4>
       <div class="titles">
         {% for title in updated_titles %}
           <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
@@ -88,7 +87,7 @@
       </a>
       <a href="{% url 'main:text_titles' %}">
         <button class="ref_button">
-          Текстовое
+          Новеллы
         </button>
       </a>
       <a href="{% url 'main:graphic_titles' %}">

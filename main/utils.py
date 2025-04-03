@@ -4,6 +4,18 @@ from django.shortcuts import redirect
 from itertools import chain
 from . models import GraphicTitlePage, TextTitle, GraphicTitle, \
     GraphicTitleChapter, TextTitleChapter
+    
+
+def get_text_titles(return_amount: int = None):
+    """Get first 'return_amount' text titles"""
+    text_titles = TextTitle.objects.all()[:return_amount]
+    return text_titles
+
+
+def get_graphic_titles(return_amount: int = None):
+    """Get first 'return_amount' graphic titles"""
+    text_titles = GraphicTitle.objects.all()[:return_amount]
+    return text_titles
 
 
 def get_new_titles(return_amount: int = 5):

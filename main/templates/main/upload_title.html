@@ -28,6 +28,7 @@
           <h1>Заполните поля</h1>
           <h2>Новый {% if request.GET.title_type == 'text' %}текстовый {% else %} графический {% endif %} тайтл</h2>
           <hr />
+          <br />
           {{ form.as_table }}
           <div id="cover_preview">
             <img id="cover" src="{% get_media_prefix %}default_cover.jpg" alt="Здесь была обложка">

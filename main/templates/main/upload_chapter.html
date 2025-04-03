@@ -27,6 +27,8 @@
         <div id="input">
           <h1>Заполните поля</h1>
           <h2>Новая глава {% if request.GET.title_type == 'text' %}текстового {% else %} графического {% endif %} тайтла</h2>
+          <hr />
+          <br />
           {% if request.GET.title_type == 'text' %}
             {{ form.as_table }}
           {% elif request.GET.title_type == 'graphic' %}
