@@ -3,14 +3,20 @@
     text-align: center;
     margin: auto;
     width: 50%;
-    background-color: #161A1D;
+    background-color: var(--bg-color-light);
     padding: 15px;
     gap: 20px;
     min-width: fit-content;
 }
 
+.auth_buttons a{
+    font-size: 1.3rem;
+}
+
 .container {
     max-width: 50%;
+    max-height: none;
+    align-self: center;
 }
 
 #main_content {
@@ -43,14 +49,11 @@ input {
 }
 
 .alert ul {
+    color: var(--text-color-bright);
+    font-size: 1.1rem;
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.alert ul {
-    color: #BA181B;
-    font-size: 15px;
 }
 
 .submit_button {
@@ -62,23 +65,15 @@ input {
     white-space: nowrap;
     min-width: fit-content;
     cursor: pointer;
-    color: #0B090A;
     background-color: #EFEFEF;
     margin-top: 20px;
 }
 
 .submit_button:hover {
     background-color: #0B090A; 
-    color: #EFEFEF;
+    color: var(--text-color-base);
 }
 
 .submit_button:active {
-    color: #EFEFEF;
-}
-
-.invalid-feedback {
-    display: block; 
-    margin-top: 5px; 
-    margin-bottom: 20px;
-    color: #BA181B;
+    color: var(--text-color-base);
 }

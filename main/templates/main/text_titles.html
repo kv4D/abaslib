@@ -8,8 +8,9 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <h1>Новеллы</h1>
+      <h1>ABASlib</h1>
       <hr />
+      <h4>Новеллы</h4>
       <div class="titles">
         {% for title in text_titles %}
           <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
@@ -22,6 +23,7 @@
 
     <div id="side">
       <h1>Разделы</h1>
+      <hr />
       <a href="{% url 'main:home' %}">
         <button class="ref_button">
           Главная

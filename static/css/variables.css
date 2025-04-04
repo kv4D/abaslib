@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+:root {
+    /* Text vars */
+    --font-size-base: 16px;
+    --font-family-base: Roboto mono, monospace;
+    /* Color vars */
+    --text-color-base: #EFEFEF;
+    --text-color-bright: #BA181B;
+    --link-color-hover: #FF090D;
+    --ref-button-color-hover: #21262B;
+    --bg-color-dark: #0B090A;
+    --bg-color-light: #161A1D;
+}

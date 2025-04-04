@@ -8,13 +8,13 @@ from . models import GraphicTitlePage, TextTitle, GraphicTitle, \
 
 def get_text_titles(return_amount: int = None):
     """Get first 'return_amount' text titles"""
-    text_titles = TextTitle.objects.all()[:return_amount]
+    text_titles = TextTitle.objects.all()[:return_amount:-1]
     return text_titles
 
 
 def get_graphic_titles(return_amount: int = None):
     """Get first 'return_amount' graphic titles"""
-    text_titles = GraphicTitle.objects.all()[:return_amount]
+    text_titles = GraphicTitle.objects.all()[:return_amount:-1]
     return text_titles
 
 

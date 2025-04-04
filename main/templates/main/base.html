@@ -1,12 +1,11 @@
 <!-- Base for html files in "main" app -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="author" content="withered" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}" />
@@ -17,6 +16,7 @@
       {% endblock %}
     </title>
 
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
     <link rel="stylesheet" href="{% static 'css/base_styles.css' %}" />
     {% block styles %}
 
@@ -27,7 +27,11 @@
     <header>
       <div id="header_container">
         <div id="site_icon">
-          <a href="{% url 'main:home' %}"><button class="ref_button"><img style="width:50px;height:50px;" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib</button></a>
+          <a href="{% url 'main:home' %}">
+            <button class="ref_button">
+              <img id="icon" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib
+            </button>
+          </a>
         </div>
         {% block header %}
 

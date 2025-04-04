@@ -43,7 +43,6 @@
 }
 
 .action_button {
-    color: #BA181B;
     border: 2px solid;
 }
 
@@ -53,8 +52,9 @@
 }
 
 #cover {
-    width: 370px;
-    height: 540px;
+    width: 30%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
     border-radius: 5px;
 }
 

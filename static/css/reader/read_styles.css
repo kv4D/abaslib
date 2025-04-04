@@ -9,20 +9,20 @@ pre {
 
 .img_container {
     width: 100%;
-    max-width: 1600px; 
+    max-width: 1600px;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     margin-top: 70px;
     position: relative;
     z-index: 1;
 }
 
 #page_image {
-    max-width: 100%; 
-    max-height: none; 
+    max-width: 100%;
+    max-height: none;
     width: auto;
     height: auto;
-    image-rendering: crisp-edges; 
+    image-rendering: crisp-edges;
     z-index: 1;
 }
 
@@ -34,7 +34,8 @@ pre {
     width: 80px;
 }
 
-#previous_page, #next_page {
+#previous_page,
+#next_page {
     position: absolute;
     top: 0;
     height: 100%;
@@ -48,4 +49,8 @@ pre {
 
 #next_page {
     right: 0;
+}
+
+#back_button {
+    text-overflow: ellipsis;
 }
