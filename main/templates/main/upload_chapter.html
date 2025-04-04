@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
+  <div class="container chapter_upload">
     <div id="main_content">
       <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ request.GET.title_type }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}

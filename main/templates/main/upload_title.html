@@ -30,13 +30,14 @@
           <hr />
           <br />
           {{ form.as_table }}
-          <div id="cover_preview">
-            <img id="cover" src="{% get_media_prefix %}default_cover.jpg" alt="Здесь была обложка">
-          </div>
           <br />
           <button name="submit">Добавить тайтл</button>
         </div>
       </form>
+    </div>
+    <div id="side">
+      <h1>Превью обложки</h1>
+      <img id="cover" src="{% get_media_prefix %}default_cover.jpg" alt="Здесь была обложка">
     </div>
   </div>
 
