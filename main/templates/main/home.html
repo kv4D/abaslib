@@ -61,7 +61,7 @@
       <h4>Недавно добавлено</h4>
       <div class="titles">
         {% for title in new_titles %}
-          <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+          <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
               <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
               <div class="title_name">{{ title.title_name_rus }}</div>
           </a>
@@ -70,7 +70,7 @@
       <h4>Обновления</h4>
       <div class="titles">
         {% for title in updated_titles %}
-          <a class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+          <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
               <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
               <div class="title_name">{{ title.title_name_rus }}</div>
           </a>

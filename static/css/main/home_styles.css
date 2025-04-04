@@ -30,6 +30,12 @@
 .title_name {
     margin-top: 8px;
     padding: 0 5px;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box;          
+    -webkit-box-orient: vertical;  
+    -webkit-line-clamp: 2;         
+    line-clamp: 2;
 }
 
 #side {
