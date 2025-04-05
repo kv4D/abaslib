@@ -26,8 +26,12 @@ def read_text_title_view(request, title_id):
         
     # update views
     user_ip = get_client_ip(request)
-    # user_view = TextTitleView.objects.get_or_create()
-
+    user_view = TextTitleView.objects.get_or_create(
+        user=request.user if request.user.is_authenticated else None,
+        title=title,
+        user_ip=user_ip
+    )
+    
     # for user selection
     all_chapters = title.text_chapters.all()
 
@@ -93,7 +97,11 @@ def read_graphic_title_view(request, title_id):
     
     # update views
     user_ip = get_client_ip(request)
-    # user_view = TextTitleView.objects.get_or_create()
+    user_view = GraphicTitleView.objects.get_or_create(
+        user=request.user if request.user.is_authenticated else None,
+        title=title,
+        user_ip=user_ip
+    )
 
     # for user selection
     all_chapters = GraphicTitleChapter.objects.filter(title=title).all()

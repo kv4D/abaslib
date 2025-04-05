@@ -49,8 +49,14 @@ def collect_about_section(request, title_type, title_id):
     
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        title.views_count = models.GraphicTitleView.get_views_count(title)
+        title.favorites_count = models.GraphicTitleFavorite.get_favorite_count(title)
+        title.save()
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
+        title.views_count = models.TextTitleView.get_views_count(title)
+        title.favorites_count = models.TextTitleFavorite.get_favorite_count(title)
+        title.save()
     
     try:
         is_favorite = request.user.has_title_in_favorites(title)
@@ -144,7 +150,7 @@ def title_page_view(request, title_id=None):
         context = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
         context = collect_comment_section(request, title_type, title_id)
-
+    
     return render(request, 'main/title_page.html', context)
 
 
@@ -169,8 +175,6 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-        title.favorites_count = models.GraphicTitleFavorite.get_favorite_count(title)
-        title.save()
             
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
@@ -183,10 +187,6 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-        title.favorites_count = models.TextTitleFavorite.get_favorite_count(title)
-        title.save()
-
-
         
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))
 
