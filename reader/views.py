@@ -3,6 +3,8 @@ from django.http import QueryDict
 from django.urls import reverse
 from main.models import TextTitle, GraphicTitle, TextTitleChapter, GraphicTitleChapter, GraphicTitlePage
 from main.utils import redirect_to_title_page
+from . utils import get_client_ip
+from . models import TextTitleView, GraphicTitleView
 
 
 def read_text_title_view(request, title_id):
@@ -21,6 +23,10 @@ def read_text_title_view(request, title_id):
     # always remember about encodings
     with open(chapter.text_content.path, "r", encoding='utf-8') as file:
         chapter_content = file.read()
+        
+    # update views
+    user_ip = get_client_ip(request)
+    # user_view = TextTitleView.objects.get_or_create()
 
     # for user selection
     all_chapters = title.text_chapters.all()
@@ -84,6 +90,10 @@ def read_graphic_title_view(request, title_id):
 
     # use urls
     page_image = page.image.url
+    
+    # update views
+    user_ip = get_client_ip(request)
+    # user_view = TextTitleView.objects.get_or_create()
 
     # for user selection
     all_chapters = GraphicTitleChapter.objects.filter(title=title).all()
@@ -103,4 +113,7 @@ def read_graphic_title_view(request, title_id):
 
 def open_bookmark_view(request, title_id):
     """Start reading on the active bookmark"""
+    user = request.user
+    title = get_object_or_404(TextTitle, id=title_id) \
+        or get_object_or_404(GraphicTitle, id=title_id)
     pass

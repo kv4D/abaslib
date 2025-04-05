@@ -160,7 +160,6 @@ def change_favorite_title_status(request, title_id=None):
     
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
-        
         if request.user.has_title_in_favorites(title):
             request.user.remove_title_from_favorites(title)
             models.GraphicTitleFavorite.objects.filter(user=request.user, title=title).delete()
@@ -170,14 +169,11 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-            
         title.favorites_count = models.GraphicTitleFavorite.get_favorite_count(title)
-        print(models.GraphicTitleFavorite.get_favorite_count(title))
         title.save()
             
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-
         if request.user.has_title_in_favorites(title):
             request.user.remove_title_from_favorites(title)
             models.TextTitleFavorite.objects.filter(user=request.user, title=title).delete()
@@ -187,9 +183,7 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-
         title.favorites_count = models.TextTitleFavorite.get_favorite_count(title)
-        print(models.TextTitleFavorite.get_favorite_count(title))
         title.save()
 
 
