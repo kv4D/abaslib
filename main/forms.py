@@ -138,6 +138,9 @@ class GraphicTitleForm(forms.ModelForm):
         }
 
 class TextTitleChapterForm(forms.ModelForm):
+    """
+    Form for text chapters
+    """
     class Meta:
         model = TextTitleChapter
         fields = ['title',
@@ -164,7 +167,7 @@ class TextTitleChapterForm(forms.ModelForm):
                 ),
             'text_content': forms.ClearableFileInput(
                 attrs={
-                    
+
                 }
             )
         }
@@ -177,6 +180,9 @@ class TextTitleChapterForm(forms.ModelForm):
 
 
 class GraphicTitleChapterForm(forms.ModelForm):
+    """
+    Form for graphic chapters
+    """
     class Meta:
         model = GraphicTitleChapter
         fields = ['title',
@@ -208,6 +214,7 @@ class GraphicTitleChapterForm(forms.ModelForm):
 
 
 class MultipleFileInput(forms.ClearableFileInput):
+    """Allows uploading multiple files"""
     allow_multiple_selected = True
 
 

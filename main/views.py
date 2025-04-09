@@ -1,23 +1,19 @@
 """Views for 'main' app, pages with content"""
-from re import search
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from reader import models
 from . models import TextTitle, GraphicTitle
-from . forms import TextTitleForm, GraphicTitleForm, \
-    GraphicTitleChapterForm, TextTitleChapterForm, GraphicTitlePagesForm
-from . utils import create_pages_from_list, get_new_titles, \
-    redirect_to_title_page, get_updated_titles, get_graphic_titles, \
-        get_text_titles
+from . import forms
+from . import utils
 
 
 # create views here.
 def home_view(request):
     """Renders website's home page"""
-    
+
     context = {
-        'new_titles': get_new_titles(),
-        'updated_titles': get_updated_titles(),
+        'new_titles': utils.get_new_titles(),
+        'updated_titles': utils.get_updated_titles(),
         }
 
     return render(request, 'main/home.html', context)
@@ -25,53 +21,46 @@ def home_view(request):
 
 def text_titles_view(request):
     """Renders page with text titles"""
-    
+
     context = {
-        'text_titles': get_text_titles()
+        'text_titles': TextTitle.get_titles()
     }
-    
+
     return render(request, 'main/text_titles.html', context)
 
 
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
-    
+
     context = {
-        'graphic_titles': get_graphic_titles()
+        'graphic_titles': GraphicTitle.get_titles()
     }
-    
+
     return render(request, 'main/graphic_titles.html', context)
 
 
 def collect_about_section(request, title_type, title_id):
     """Creates context for about section of title's page"""
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        # collect and update stats
         title.views_count = models.GraphicTitleView.get_views_count(title)
         title.favorites_count = models.GraphicTitleFavorite.get_favorite_count(title)
-        title.save()
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
+        # collect and update stats
         title.views_count = models.TextTitleView.get_views_count(title)
         title.favorites_count = models.TextTitleFavorite.get_favorite_count(title)
-        title.save()
-    
-    try:
-        is_favorite = request.user.has_title_in_favorites(title)
-    except AttributeError:
-        # user is unauthorized
-        is_favorite = None
-    
-    if title:
-        context = {
-            'title': title,
-            'title_type': title_type,
-            'user_favorite': is_favorite
-        }
-    else:
-        context = {}
+    title.save()
+    is_favorite = utils.get_favorite_status(request.user, title)
+
+    context = {
+        'title': title,
+        'title_type': title_type,
+        'user_favorite': is_favorite
+    }
 
     return context
 
@@ -79,31 +68,22 @@ def collect_about_section(request, title_type, title_id):
 def collect_chapters_section(request, title_type, title_id):
     """Creates context for chapters section of title's page"""
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapters = title.graphic_chapters.all()
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
         chapters = title.text_chapters.all()
-    else:
-        pass
 
-    try:
-        is_favorite = request.user.has_title_in_favorites(title)
-    except AttributeError:
-        # user is unauthorized
-        is_favorite = None
-        
-    if title:
-        context = {
-            'title': title,
-            'chapters': chapters,
-            'title_type': title_type,
-            'user_favorite': is_favorite
-        }
-    else:
-        context = {}
+    is_favorite = utils.get_favorite_status(request.user, title)
+
+    context = {
+        'title': title,
+        'chapters': chapters,
+        'title_type': title_type,
+        'user_favorite': is_favorite
+    }
 
     return context
 
@@ -111,20 +91,15 @@ def collect_chapters_section(request, title_type, title_id):
 def collect_comment_section(request, title_type, title_id):
     """Creates context for comment section of title's page"""
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-    
-    try:
-        is_favorite = request.user.has_title_in_favorites(title)
-    except AttributeError:
-        # user is unauthorized
-        is_favorite = None
-    
+
+    is_favorite = utils.get_favorite_status(request.user, title)
+
     if title:
-        print(title.title_cover.url)
         context = {
             'title': title,
             'title_type': title_type,
@@ -143,14 +118,14 @@ def title_page_view(request, title_id=None):
 
     # collect context for different sections
     assert section in ['about', 'chapters', 'comments']
-    
+
     if section == 'about':
         context = collect_about_section(request, title_type, title_id)
     elif section == 'chapters':
         context = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
         context = collect_comment_section(request, title_type, title_id)
-    
+
     return render(request, 'main/title_page.html', context)
 
 
@@ -161,9 +136,9 @@ def change_favorite_title_status(request, title_id=None):
     on title page
     """
     title_type = request.GET.get('title_type')
-    
+
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         if request.user.has_title_in_favorites(title):
@@ -175,7 +150,7 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-            
+
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
         if request.user.has_title_in_favorites(title):
@@ -187,8 +162,8 @@ def change_favorite_title_status(request, title_id=None):
                 user = request.user,
                 title = title
             )
-        
-    return redirect_to_title_page(title_id, title_type, request.GET.get('section'))
+
+    return utils.redirect_to_title_page(title_id, title_type, request.GET.get('section'))
 
 
 @login_required
@@ -198,11 +173,11 @@ def upload_title_view(request):
     title_type = request.GET.get('title_type')
 
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'text':
-        form = TextTitleForm
+        form = forms.TextTitleForm
     elif title_type == 'graphic':
-        form = GraphicTitleForm
+        form = forms.GraphicTitleForm
 
     if request.method == 'POST':
         form = form(request.POST)
@@ -225,12 +200,12 @@ def upload_text_chapter(request, title_id):
     title = get_object_or_404(TextTitle, id=title_id)
 
     if request.method == 'POST':
-        form = TextTitleChapterForm(request.POST, request.FILES, title=title)
+        form = forms.TextTitleChapterForm(request.POST, request.FILES, title=title)
         if form.is_valid():
             form.save()
-            return redirect_to_title_page(title_id, 'text')
+            return utils.redirect_to_title_page(title_id, 'text')
     else:
-        form = TextTitleChapterForm(title=title)
+        form = forms.TextTitleChapterForm(title=title)
 
     context = {
         'form': form,
@@ -246,8 +221,8 @@ def upload_graphic_chapter(request, title_id):
     title = get_object_or_404(GraphicTitle, id=title_id)
 
     if request.method == 'POST':
-        chapter_form = GraphicTitleChapterForm(request.POST, title=title)
-        pages_form = GraphicTitlePagesForm(request.POST, request.FILES)
+        chapter_form = forms.GraphicTitleChapterForm(request.POST, title=title)
+        pages_form = forms.GraphicTitlePagesForm(request.POST, request.FILES)
 
         if chapter_form.is_valid() and pages_form.is_valid():
             chapter = chapter_form.save(commit=False)
@@ -256,11 +231,11 @@ def upload_graphic_chapter(request, title_id):
 
             # collect all of the images for pages
             images = request.FILES.getlist('images')
-            create_pages_from_list(images, chapter)
-            return redirect_to_title_page(title_id, 'graphic')
+            utils.create_pages_from_list(images, chapter)
+            return utils.redirect_to_title_page(title_id, 'graphic')
     else:
-        chapter_form = GraphicTitleChapterForm(title=title)
-        pages_form = GraphicTitlePagesForm()
+        chapter_form = forms.GraphicTitleChapterForm(title=title)
+        pages_form = forms.GraphicTitlePagesForm()
 
     context = {
         'chapter_form': chapter_form,
@@ -277,7 +252,7 @@ def upload_chapter_view(request, title_id=None):
     title_type = request.GET.get('title_type')
 
     assert title_type in ['text', 'graphic']
-    
+
     if title_type == 'text':
         response = upload_text_chapter(request, title_id)
     elif title_type == 'graphic':

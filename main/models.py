@@ -13,7 +13,7 @@ def get_graphic_chapter_path(instance, filename):
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )
-    
+
 
 def get_graphic_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
@@ -51,7 +51,7 @@ class Title(models.Model):
     title_description = models.TextField()
     publication_year = models.PositiveSmallIntegerField(default=timezone.now().year)
     added_at = models.DateTimeField(auto_now_add=True)
-    
+
     views_count = models.PositiveIntegerField(default=0)
     favorites_count = models.PositiveIntegerField(default=0)
 
@@ -65,8 +65,11 @@ class Title(models.Model):
 class TextTitle(Title):
     """A title with text only"""
     # for specification purposes
-    title_cover = models.ImageField(default='default_cover.jpg', upload_to=get_text_title_cover_path)
-    
+    title_cover = models.ImageField(
+        default='default_cover.jpg',
+        upload_to=get_text_title_cover_path
+        )
+
     class Meta:
         constraints = [
                 models.CheckConstraint(
@@ -78,7 +81,7 @@ class TextTitle(Title):
     def get_path(self):
         """Returns path to title"""
         return os.path.join('media', 'text', str(self.id))
-    
+
     def get_next_chapter(self, chapter):
         """Tries to get the next chapter for the provided chapter"""
         if chapter.title != self:
@@ -87,7 +90,7 @@ class TextTitle(Title):
         if chapter is None:
             raise ValueError('No more chapters: it is the last chapter')
         return chapter
-    
+
     def get_previous_chapter(self, chapter):
         """Tries to get the previous chapter for the provided chapter"""
         if chapter.title != self:
@@ -96,17 +99,27 @@ class TextTitle(Title):
         if chapter is None:
             raise ValueError('No more chapters: it is the first chapter')
         return chapter
-        
+
     @property
     def title_type(self):
         """Returns title type"""
         return 'text'
 
+    @staticmethod
+    def get_titles(return_amount = None):
+        """Get first 'return_amount' text titles"""
+        # from new to old
+        return TextTitle.objects.all()[:return_amount:-1]
+
+
 class GraphicTitle(Title):
     """A comic title or manga only"""
     # for specification purposes
-    title_cover = models.ImageField(default='default_cover.jpg', upload_to=get_graphic_title_cover_path)
-    
+    title_cover = models.ImageField(
+        default='default_cover.jpg',
+        upload_to=get_graphic_title_cover_path
+        )
+
     class Meta:
         constraints = [
                 models.CheckConstraint(
@@ -118,8 +131,8 @@ class GraphicTitle(Title):
     def get_path(self):
         """Returns path to title"""
         return os.path.join('media', 'graphic', str(self.id))
-    
-    def get_next_chapter(self, chapter):        
+
+    def get_next_chapter(self, chapter):
         """Tries to get the next chapter for the provided chapter"""
         if chapter.title != self:
             raise ValueError('Chapter does not belong to this book')
@@ -129,7 +142,7 @@ class GraphicTitle(Title):
         if chapter.is_empty():
             raise ValueError('This chapter is empty')
         return chapter
-        
+
     def get_previous_chapter(self, chapter):
         """Tries to get the previous chapter for the provided chapter"""
         if chapter.title != self:
@@ -137,15 +150,21 @@ class GraphicTitle(Title):
         chapter = self.graphic_chapters.filter(chapter_number__lt=chapter.chapter_number).last()
 
         if chapter is None:
-            raise ValueError('No more chapters: it is the first chapter')        
+            raise ValueError('No more chapters: it is the first chapter')
         if chapter.is_empty():
             raise ValueError('This chapter is empty')
         return chapter
-    
+
     @property
     def title_type(self):
         """Returns title type"""
         return 'graphic'
+
+    @staticmethod
+    def get_titles(return_amount = None):
+        """Get first 'return_amount' graphic titles"""
+        # from new to old
+        return GraphicTitle.objects.all()[:return_amount:-1]
 
 
 class TitleChapter(models.Model):
@@ -173,7 +192,7 @@ class TextTitleChapter(TitleChapter):
         related_name='text_chapters'
         )
     text_content = models.FileField(upload_to=get_text_chapter_path)
-    
+
     class Meta:
         # one chapter for a title
         constraints = [
@@ -190,7 +209,7 @@ class TextTitleChapter(TitleChapter):
     def is_empty(self):
         """Checks if chapter is empty (has no text_content)"""
         return self.text_content is None
-    
+
     @property
     def title_type(self):
         """Returns title type"""
@@ -222,7 +241,7 @@ class GraphicTitleChapter(TitleChapter):
     def get_path(self):
         """Returns path to chapter"""
         return os.path.join('media', 'graphic', str(self.title.id), str(self.id))
-    
+
     def get_next_page(self, page):
         """Tries to get the next page for the provided page"""
         if page.chapter != self:
@@ -231,7 +250,7 @@ class GraphicTitleChapter(TitleChapter):
         if page is None:
             raise ValueError('No more pages: it is the last page')
         return page
-    
+
     def get_previous_page(self, page):
         """Tries to get the previous page for the provided page"""
         if page.chapter != self:
@@ -240,16 +259,16 @@ class GraphicTitleChapter(TitleChapter):
         if page is None:
             raise ValueError('No more pages: it is the first page')
         return page
-    
+
     def is_empty(self):
         """Checks if chapter is empty (has no pages)"""
         return self.pages.count() == 0
-    
+
     @property
     def title_type(self):
         """Returns title type"""
         return 'graphic'
-    
+
     def __str__(self):
         if self.chapter_name:
             return f'Глава {self.chapter_number}: {self.chapter_name}'

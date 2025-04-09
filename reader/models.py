@@ -9,7 +9,7 @@ class GraphicTitleFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graphic_favorites')
     title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    
+
     @staticmethod
     def get_favorite_count(title):
         """Count all views for this title (unauthorized users included)"""
@@ -22,32 +22,36 @@ class TextTitleFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='text_favorites')
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f'{self.user} - {self.title}'
-    
+
     @staticmethod
     def get_favorite_count(title):
         """Count all users with provided title in favorites"""
         count = TextTitleFavorite.objects.filter(title=title).count()
         return count
-        
+
 
 class GraphicTitleView(models.Model):
     """Allows tracking views for graphic titles"""
-    user = models.ForeignKey(User, 
+    user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
-                             null=True, 
-                             blank=True, 
+                             null=True,
+                             blank=True,
                              related_name='graphic_viewed'
                              )
-    title = models.ForeignKey(GraphicTitle, on_delete=models.CASCADE, related_name='graphic_viewers')
+    title = models.ForeignKey(
+        GraphicTitle,
+        on_delete=models.CASCADE,
+        related_name='graphic_viewers'
+        )
     user_ip = models.CharField()
     time = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f'{self.user} - {self.title}'
-    
+
     @staticmethod
     def get_views_count(title):
         """Count all users with provided title in favorites"""
@@ -57,23 +61,23 @@ class GraphicTitleView(models.Model):
 
 class TextTitleView(models.Model):
     """Allows tracking views for text titles"""
-    user = models.ForeignKey(User, 
-                             on_delete=models.CASCADE, 
-                             null=True, 
-                             blank=True, 
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             null=True,
+                             blank=True,
                              related_name='text_viewed'
                              )
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE, related_name='text_viewers')
     user_ip = models.CharField()
     time = models.DateTimeField(auto_now_add=True)
-    
+
     @staticmethod
     def get_views_count(title):
         """Count all views for this title (unauthorized users included)"""
         count = TextTitleView.objects.filter(title=title).count()
         return count
-    
-    
+
+
 class GraphicTitleBookmark(models.Model):
     """Tracking bookmarks for graphic titles"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='graphic_bookmarks')
@@ -86,4 +90,3 @@ class TextTitleBookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='text_bookmarks')
     title = models.ForeignKey(TextTitle, on_delete=models.CASCADE)
     chapter = models.ForeignKey(TextTitleChapter, on_delete=models.CASCADE)
-    

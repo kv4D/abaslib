@@ -21,7 +21,16 @@ from . import views
 app_name = 'reader'
 
 urlpatterns = [
-    path('title/<int:title_id>/read/type=txt/', views.read_text_title_view, name='read_text'),
-    path('title/<int:title_id>/read/type=grp/', views.read_graphic_title_view, name='read_graphic'),
-    path('title/<int:title_id>/read/bookmark', views.open_bookmark_view, name='open_bookmark')
+    path('title/<int:title_id>/read/type=txt/',
+         views.read_text_title_view,
+         name='read_text'),
+    path('title/<int:title_id>/read/type=grp/',
+         views.read_graphic_title_view,
+         name='read_graphic'),
+    path('title/<int:title_id>/read/manage_bookmark/<int:chapter_id>/',
+         views.manage_bookmark_view,
+         name='manage_bookmark'),
+    path('title/<int:title_id>/read/bookmark/<int:chapter_id>/',
+         views.open_bookmark_view,
+         name='open_bookmark')
 ]

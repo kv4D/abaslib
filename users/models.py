@@ -33,7 +33,7 @@ class User(AbstractUser):
             self.favorite_text_titles.remove(title)
         elif title.title_type == 'graphic':
             self.favorite_graphic_titles.remove(title)
-            
+
     def get_bookmark(self, title: TextTitle | GraphicTitle):
         """Provides user's bookmark for title"""
         pass
