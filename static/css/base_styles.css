@@ -66,6 +66,10 @@ a:hover {
     font-weight: bold;
 }
 
+.activated {
+    color: var(--link-color-hover) !important;
+}
+
 footer,
 header,
 #main_content,
@@ -122,7 +126,7 @@ footer {
 .container {
     display: flex;
     flex: 1;
-    width: 80%;
+    width: 70%;
     max-width: 1500px;
     margin: 80px auto 30px auto;
     gap: 20px;
