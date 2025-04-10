@@ -1,6 +1,6 @@
 """Functions for certain purposes within apps"""
 from django.http import QueryDict
-from main.models import GraphicTitle, GraphicTitleChapter, TextTitle
+from titles.models import GraphicTitle, GraphicTitleChapter, TextTitle
 from reader.models import GraphicTitleView, TextTitleView
 
 

@@ -1,7 +1,7 @@
 """Contains forms for 'main' app"""
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from . models import TextTitle, GraphicTitle, TextTitleChapter, \
+from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter
 
 class TextTitleForm(forms.ModelForm):

@@ -1,7 +1,7 @@
 """Models for reading related features"""
 from django.db import models
 from users.models import User
-from main.models import GraphicTitle, TextTitle, GraphicTitleChapter, TextTitleChapter
+from titles.models import GraphicTitle, TextTitle, GraphicTitleChapter, TextTitleChapter
 
 
 class GraphicTitleFavorite(models.Model):

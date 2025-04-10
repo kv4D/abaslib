@@ -3,7 +3,7 @@ Models for 'main' app. Mostly user related.
 """
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from main.models import TextTitle, GraphicTitle
+from titles.models import TextTitle, GraphicTitle
 
 
 class User(AbstractUser):

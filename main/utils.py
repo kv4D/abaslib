@@ -2,7 +2,7 @@
 from re import search
 from itertools import chain
 from django.shortcuts import redirect
-from . models import GraphicTitlePage, TextTitle, GraphicTitle, \
+from titles.models import GraphicTitlePage, TextTitle, GraphicTitle, \
     GraphicTitleChapter, TextTitleChapter
 
 

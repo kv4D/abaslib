@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from main.models import TextTitle, GraphicTitle, TextTitleChapter, \
+from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter, GraphicTitlePage
 from main.utils import redirect_to_title_page
 from reader import utils
