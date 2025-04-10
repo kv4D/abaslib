@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from reader import models
 from titles.models import TextTitle, GraphicTitle
-from titles import forms
-from . import utils
+from titles import forms, utils
 
 
 # create views here.

@@ -1,7 +1,6 @@
 """Functions for certain purposes within apps"""
 from django.http import QueryDict
-from titles.models import GraphicTitle, GraphicTitleChapter, TextTitle
-from reader.models import GraphicTitleView, TextTitleView
+from titles.models import GraphicTitle, GraphicTitleChapter
 
 
 def get_client_ip(request):
@@ -36,21 +35,3 @@ def process_chapter_switch(page_number,
         get_params['chapter_num'] = str(chapter.chapter_number)
     # no switch or modifications required
     return page_number, chapter, get_params
-
-
-def update_views(request: QueryDict, title: TextTitle | GraphicTitle):
-    """Creates new view entry for title and user"""
-    if title.title_type == 'text':
-        user_ip = get_client_ip(request)
-        TextTitleView.objects.get_or_create(
-            user=request.user if request.user.is_authenticated else None,
-            title=title,
-            user_ip=user_ip
-        )
-    elif title.title_type == 'graphic':
-        user_ip = get_client_ip(request)
-        GraphicTitleView.objects.get_or_create(
-            user=request.user if request.user.is_authenticated else None,
-            title=title,
-            user_ip=user_ip
-        )

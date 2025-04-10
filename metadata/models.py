@@ -1,3 +1,130 @@
+"""Models for metadata about titles"""
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from users.models import User
 
-# Create your models here.
+
+class TitleFavorite(models.Model):
+    """Tracking which user has a title in favorites"""
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name='favorite_titles'
+                             )
+    
+    # for any title type
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    added_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('user', 'content_type')
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранное'
+    
+    def __str__(self):
+        return f"{self.user} - {self.content_object}"
+    
+    @staticmethod
+    def get_favorite_count(title):
+        """Count all views for this title (unauthorized users included)"""
+        count = TitleFavorite.objects.filter(
+            content_type=ContentType.objects.get_for_model(title),
+            object_id=title.id
+            ).count()
+        return count
+    
+
+class TitleView(models.Model):
+    """Tracking views for titles"""
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             null=True,
+                             blank=True,
+                             related_name='graphic_viewed'
+                             )
+    user_ip = models.CharField()
+    
+    # for any title type
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    added_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('user', 'content_type')
+        verbose_name = 'Просмотр'
+        verbose_name_plural = 'Просмотры'
+    
+    def __str__(self):
+        return f"{self.user} - {self.content_object}"
+    
+    @staticmethod
+    def get_views_count(title):
+        """Count all views for this title (unauthorized users included)"""
+        count = TitleView.objects.filter(
+            content_type=ContentType.objects.get_for_model(title),
+            object_id=title.id
+            ).count()
+        return count
+    
+
+class Tag(models.Model):
+    """Tag for special information about titles"""
+    tag_name = models.CharField(verbose_name='Имя тэга', max_length=100, unique=True)
+    
+    class Meta:
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'
+        
+    def __str__(self):
+        return f"{self.tag_name}"
+    
+    
+class TagGenre(models.Model):
+    """Tag for title genres only"""
+    tag_name = models.CharField(verbose_name='Название жанра', max_length=100, unique=True)
+    
+    class Meta:
+        verbose_name = 'Тэг-жанр'
+        verbose_name_plural = 'Тэги-жанры'
+    
+    def __str__(self):
+        return f"{self.tag_name}"
+    
+    
+class TitleGenre(models.Model):
+    """Titles and genres relation"""
+    tag_genre = models.ForeignKey(TagGenre, on_delete=models.CASCADE)
+    
+    # for any title type
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    class Meta:
+        verbose_name = 'Жанр тайтла'
+        verbose_name_plural = 'Жанры тайтлов'
+    
+    def __str__(self):
+        return f"{self.content_object} - {self.tag_genre}"
+    
+    
+class TitleTag(models.Model):
+    """Titles and tags relation"""
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    
+    # for any title type
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    class Meta:
+        verbose_name = 'Тэг тайтла'
+        verbose_name_plural = 'Тэги тайтлов'
+    
+    def __str__(self):
+        return f"{self.content_object} - {self.tag}"
