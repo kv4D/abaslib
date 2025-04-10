@@ -174,13 +174,28 @@ class TitleChapter(models.Model):
     """
     # access title's chapters with obj.chapters.all()
     chapter_name = models.CharField(max_length=255, blank=True)
-    chapter_number = models.PositiveIntegerField()
+    # because there is sometimes chapters with letters
+    # example: chapter 0A or chapter 4K
+    display_number = models.CharField(max_length=20, blank=True)
+    # because there is sometime extra chapters
+    # example: chapter 5.5 (extra to 5th chapter)
+    chapter_number = models.DecimalField(max_digits=10, decimal_places=2)
+    # there is only one volume often
+    volume = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         abstract = True
+        ordering = ['chapter_number']
         # chapters are ordered by their ids
-        ordering = ["chapter_number"]
+        constraints = [
+            models.CheckConstraint(check=models.Q(chapter_number__gte=0), name="chapter_number_not_negative"),
+        ]
+        
+    def __str__(self):
+        if self.chapter_name:
+            return f'Глава {self.chapter_number}: {self.chapter_name}'
+        return f'Глава {self.chapter_number}'
 
 
 class TextTitleChapter(TitleChapter):
@@ -215,10 +230,6 @@ class TextTitleChapter(TitleChapter):
         """Returns title type"""
         return 'text'
 
-    def __str__(self):
-        if self.chapter_name:
-            return f'Глава {self.chapter_number}: {self.chapter_name}'
-        return f'Глава {self.chapter_number}'
 
 class GraphicTitleChapter(TitleChapter):
     """Represents a chapter from a certain graphic title"""
@@ -268,11 +279,6 @@ class GraphicTitleChapter(TitleChapter):
     def title_type(self):
         """Returns title type"""
         return 'graphic'
-
-    def __str__(self):
-        if self.chapter_name:
-            return f'Глава {self.chapter_number}: {self.chapter_name}'
-        return f'Глава {self.chapter_number}'
 
 
 class GraphicTitlePage(models.Model):
