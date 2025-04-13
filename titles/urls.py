@@ -20,4 +20,15 @@ from . import views
 
 app_name = 'titles'
 
-urlpatterns = []
+urlpatterns = [
+    path(
+        'upload_title/',
+        views.upload_title_view,
+        name='upload_title'
+        ),
+    path(
+        'upload_chapter/title=<int:title_id>/',
+        views.upload_chapter_view,
+        name='upload_chapter'
+        ),
+]

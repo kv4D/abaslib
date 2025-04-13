@@ -15,8 +15,8 @@
         <div class="custom_select">
           <select name="redact_options" onchange="location = this.value" class="ref_button">
             <option selected hidden disabled>Меню редактора</option>
-            <option value="{% url 'main:upload_title' %}?title_type=text">Добавить тайтл (текст)</option>
-            <option value="{% url 'main:upload_title' %}?title_type=graphic">Добавить тайтл (графика)</option>
+            <option value="{% url 'titles:upload_title' %}?title_type=text">Добавить тайтл (текст)</option>
+            <option value="{% url 'titles:upload_title' %}?title_type=graphic">Добавить тайтл (графика)</option>
             {% block redact_options %}
 
             {% endblock %}

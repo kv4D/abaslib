@@ -1,9 +1,11 @@
 """For 'main' app's models registration"""
 from django.contrib import admin
 from django.utils.html import mark_safe
+from django.contrib.contenttypes.admin import GenericTabularInline
 from . models import TextTitle, GraphicTitle, \
                         TextTitleChapter, GraphicTitleChapter, \
                         GraphicTitlePage
+from metadata.models import TitleGenre, TitleTag
                         
 
 # modifying admin site fields to show
@@ -19,9 +21,21 @@ class GraphicTitlePageInline(admin.TabularInline):
     model = GraphicTitlePage
     extra = 1
     
+class TitleGenreInline(GenericTabularInline):
+    model = TitleGenre
+    extra = 1
+    ct_field = 'content_type'  
+    ct_fk_field = 'object_id'  
+    
+class TitleTagInline(GenericTabularInline):
+    model = TitleTag
+    extra = 1
+    ct_field = 'content_type'  
+    ct_fk_field = 'object_id'  
+    
 class TextTitleAdmin(admin.ModelAdmin):
     readonly_fields = ('title_cover_preview', 'added_at')
-    inlines = [TextTitleChapterInline]
+    inlines = [TextTitleChapterInline, TitleGenreInline, TitleTagInline]
     
     def title_cover_preview(self, title):
         width = title.title_cover.width
@@ -33,7 +47,7 @@ class TextTitleAdmin(admin.ModelAdmin):
     
 class GraphicTitleAdmin(admin.ModelAdmin):
     readonly_fields = ('title_cover_preview', 'added_at')
-    inlines = [GraphicTitleChapterInline]    
+    inlines = [GraphicTitleChapterInline, TitleGenreInline, TitleTagInline]    
     
     def title_cover_preview(self, title):
         width = title.title_cover.width

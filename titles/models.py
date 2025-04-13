@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
 from django.utils import timezone
 
 
@@ -30,6 +31,10 @@ def get_text_chapter_path(instance, filename):
 def get_text_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
     title_id = instance.id
+    print(title_id)
+    print(os.path.join(
+        'covers', 'text', str(title_id), filename
+        ))
     return os.path.join(
         'covers', 'text', str(title_id), filename
         )
@@ -49,7 +54,10 @@ class Title(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     views_count = models.PositiveIntegerField(default=0)
+    views = GenericRelation('metadata.TitleView')
+    
     favorites_count = models.PositiveIntegerField(default=0)
+    favorites = GenericRelation('metadata.TitleFavorite')
 
     class Meta:
         abstract = True
@@ -63,8 +71,6 @@ class TextTitle(Title):
     # for specification purposes
     title_cover = models.ImageField(
         default='default_cover.jpg',
-        blank=True,
-        null=True,
         upload_to=get_text_title_cover_path
         )
 
@@ -115,8 +121,6 @@ class GraphicTitle(Title):
     # for specification purposes
     title_cover = models.ImageField(
         default='default_cover.jpg',
-        blank=True,
-        null=True,
         upload_to=get_graphic_title_cover_path
         )
 
@@ -179,7 +183,7 @@ class TitleChapter(models.Model):
     display_number = models.CharField(max_length=20, blank=True)
     # because there is sometime extra chapters
     # example: chapter 5.5 (extra to 5th chapter)
-    chapter_number = models.DecimalField(max_digits=10, decimal_places=2)
+    chapter_number = models.FloatField(max_length=5)
     # there is only one volume often
     volume = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
@@ -193,9 +197,10 @@ class TitleChapter(models.Model):
         ]
         
     def __str__(self):
+        chapter_number = int(self.chapter_number) if '.0' in str(self.chapter_number) else self.chapter_number
         if self.chapter_name:
-            return f'Глава {self.chapter_number}: {self.chapter_name}'
-        return f'Глава {self.chapter_number}'
+            return f'Глава {chapter_number}: {self.chapter_name}'
+        return f'Глава {chapter_number}'
 
 
 class TextTitleChapter(TitleChapter):

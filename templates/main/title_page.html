@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block redact_options %}
-  <option value="{% url 'main:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</option>
+  <option value="{% url 'titles:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</option>
 {% endblock %}
 
 {% block content %}
@@ -118,6 +118,9 @@
             <p>{{ title.publication_year }}</p>
           </div>
           <div id="title_stats">
+            <p class="highlighted_text">Теги</p>
+            <p>{{ }}</p>
+
             <p class="highlighted_text">Оценка</p>
             <p>Какая-то</p>
     

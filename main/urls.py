@@ -27,19 +27,9 @@ urlpatterns = [
         name='home'
         ),
     path(
-        'upload_title/',
-        views.upload_title_view,
-        name='upload_title'
-        ),
-    path(
         'title/<int:title_id>/',
         views.title_page_view,
         name='title_page'
-        ),
-    path(
-        'upload_chapter/title=<int:title_id>/',
-        views.upload_chapter_view,
-        name='upload_chapter'
         ),
     path('about_rights/',
         TemplateView.as_view(template_name="main/about_rights.html"),

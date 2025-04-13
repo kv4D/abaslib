@@ -5,19 +5,20 @@ from django.contrib.auth.decorators import login_required
 from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter, GraphicTitlePage
 from titles.utils import redirect_to_title_page
-from reader import utils
-from reader.models import TextTitleBookmark, GraphicTitleBookmark
+from metadata.utils import update_views
+from .models import TextTitleBookmark, GraphicTitleBookmark
+from .utils import process_chapter_switch
 
 
 def read_text_title_view(request, title_id):
     """Render page with chapter's content"""
     chapter_number = request.GET.get('chapter_num')
-
+    chapter_number = float(str(chapter_number).replace(',', '.'))
+    
     title = get_object_or_404(TextTitle, id=title_id)
-
     try:
-        chapter = TextTitleChapter.objects.get(chapter_number=chapter_number, title=title)
-    except Exception:
+        chapter = TextTitleChapter.objects.get(chapter_number=float(chapter_number), title=title)
+    except Exception as e:
         # for some reason there is no chapter
         # back to title's page
         return redirect_to_title_page(title_id, 'text')
@@ -27,7 +28,7 @@ def read_text_title_view(request, title_id):
         chapter_content = file.read()
 
     # update views
-    utils.update_views(request, title)
+    update_views(request, title)
 
     # for user selection
     all_chapters = title.text_chapters.all()
@@ -52,7 +53,7 @@ def read_graphic_title_view(request, title_id):
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapter = GraphicTitleChapter.objects.get(chapter_number=chapter_number, title=title)
 
-        page_number, chapter, get_params = utils.process_chapter_switch(
+        page_number, chapter, get_params = process_chapter_switch(
             page_number,
             chapter, title,
             get_params
@@ -75,7 +76,7 @@ def read_graphic_title_view(request, title_id):
     page_image = page.image.url
 
     # update views
-    utils.update_views(request, title)
+    update_views(request, title)
 
     # for user selection
     all_chapters = GraphicTitleChapter.objects.filter(title=title).all()

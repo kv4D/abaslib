@@ -2,19 +2,18 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from users.models import User
 
 
 class TitleFavorite(models.Model):
     """Tracking which user has a title in favorites"""
-    user = models.ForeignKey(User,
+    user = models.ForeignKey('users.User',
                              on_delete=models.CASCADE,
                              related_name='favorite_titles'
                              )
     
     # for any title type
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveBigIntegerField()
+    object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     
     added_at = models.DateTimeField(auto_now_add=True)
@@ -39,17 +38,17 @@ class TitleFavorite(models.Model):
 
 class TitleView(models.Model):
     """Tracking views for titles"""
-    user = models.ForeignKey(User,
+    user = models.ForeignKey('users.User',
                              on_delete=models.CASCADE,
                              null=True,
                              blank=True,
-                             related_name='graphic_viewed'
+                             related_name='viewed_titles'
                              )
     user_ip = models.CharField()
     
     # for any title type
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveBigIntegerField()
+    object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     
     added_at = models.DateTimeField(auto_now_add=True)

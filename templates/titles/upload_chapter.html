@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}
   ABASlib - Добавление главы
@@ -22,7 +22,7 @@
 {% block content %}
   <div class="container chapter_upload">
     <div id="main_content">
-      <form action="{% url 'main:upload_chapter' title.id %}?title_type={{ request.GET.title_type }}" enctype="multipart/form-data" method="post">
+      <form action="{% url 'titles:upload_chapter' title.id %}?title_type={{ request.GET.title_type }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div id="input">
           <h1>Заполните поля</h1>
