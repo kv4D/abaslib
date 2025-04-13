@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from django.contrib.contenttypes.admin import GenericTabularInline
+from django.utils.translation import gettext_lazy as _
 from . models import TextTitle, GraphicTitle, \
                         TextTitleChapter, GraphicTitleChapter, \
                         GraphicTitlePage
@@ -34,9 +35,10 @@ class TitleTagInline(GenericTabularInline):
     ct_fk_field = 'object_id'  
     
 class TextTitleAdmin(admin.ModelAdmin):
-    readonly_fields = ('title_cover_preview', 'added_at')
+    readonly_fields = ('title_cover_preview', 'added_at', 'views_count', 'favorites_count')
     inlines = [TextTitleChapterInline, TitleGenreInline, TitleTagInline]
     
+    @admin.display(description=_('Превью обложки'))
     def title_cover_preview(self, title):
         width = title.title_cover.width
         height = title.title_cover.height
@@ -46,9 +48,10 @@ class TextTitleAdmin(admin.ModelAdmin):
             )
     
 class GraphicTitleAdmin(admin.ModelAdmin):
-    readonly_fields = ('title_cover_preview', 'added_at')
+    readonly_fields = ('title_cover_preview', 'added_at', 'views_count', 'favorites_count')
     inlines = [GraphicTitleChapterInline, TitleGenreInline, TitleTagInline]    
     
+    @admin.display(description=_('Превью обложки'))
     def title_cover_preview(self, title):
         width = title.title_cover.width
         height = title.title_cover.height

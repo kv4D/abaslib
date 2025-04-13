@@ -2,15 +2,23 @@
 Models for 'main' app. Mostly user related.
 """
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
     '''Extending Django base User model'''
-    user_avatar = models.ImageField(default='default_avatar.jpg', upload_to='profile_avatars')
-    titles_read_amount = models.IntegerField(default=0)
-    favorite_text_titles = models.ManyToManyField('titles.TextTitle', blank=True)
-    favorite_graphic_titles = models.ManyToManyField('titles.GraphicTitle', blank=True)
+    user_avatar = models.ImageField(default='default_avatar.jpg', 
+                                    upload_to='profile_avatars',
+                                    verbose_name=_('Аватарка пользователя'))
+    titles_read_amount = models.IntegerField(default=0,
+                                             verbose_name=_('Количество прочитанных тайтлов'))
+    favorite_text_titles = models.ManyToManyField('titles.TextTitle', 
+                                                  blank=True,
+                                                  verbose_name=_('Любимые новеллы'))
+    favorite_graphic_titles = models.ManyToManyField('titles.GraphicTitle', 
+                                                     blank=True,
+                                                     verbose_name='Любимые комиксы')
 
     def has_title_in_favorites(self, title):
         """Checks if user likes title"""

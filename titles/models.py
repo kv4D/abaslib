@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 from django.utils import timezone
 
@@ -7,7 +8,6 @@ from django.utils import timezone
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
     title_id = instance.chapter.title.id
-    print(1)
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )
@@ -16,7 +16,6 @@ def get_graphic_chapter_path(instance, filename):
 def get_graphic_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
     title_id = instance.id
-    print(4)
     return os.path.join(
         'covers', 'graphic', str(title_id), filename
         )
@@ -25,7 +24,6 @@ def get_graphic_title_cover_path(instance, filename):
 def get_text_chapter_path(instance, filename):
     """Creates the path to the chapter of a text title"""
     title_id = instance.title.id
-    print(2)
     return os.path.join(
         'text', str(title_id), 'chapters', instance.chapter_name, filename
         )
@@ -34,7 +32,6 @@ def get_text_chapter_path(instance, filename):
 def get_text_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
     title_id = instance.id
-    print(3)
     return os.path.join(
         'covers', 'text', str(title_id), filename
         )
@@ -45,18 +42,29 @@ class Title(models.Model):
     Represents a basic title model and its common attributes both
     for graphic and text content
     """
-    title_name_rus = models.CharField(max_length=100, unique=True)
-    title_name_eng = models.CharField(max_length=100, unique=True, blank=True)
-    title_author = models.CharField(max_length=100)
-    title_is_ongoing = models.BooleanField(default=True)
-    title_description = models.TextField()
-    publication_year = models.PositiveSmallIntegerField(default=timezone.now().year)
-    added_at = models.DateTimeField(auto_now_add=True)
+    title_name_rus = models.CharField(max_length=100,
+                                      unique=True,
+                                      verbose_name=_('Название тайтла'))
+    title_name_eng = models.CharField(max_length=100,
+                                      unique=True,
+                                      blank=True,
+                                      verbose_name=_('Название тайтла (английское)'))
+    title_author = models.CharField(max_length=100,
+                                    verbose_name=_('Автор'))
+    title_is_ongoing = models.BooleanField(default=True,
+                                           verbose_name=_('Статус (продолжается - галочка, закончено - пусто)'))
+    title_description = models.TextField(verbose_name=_('Описание'))
+    publication_year = models.PositiveSmallIntegerField(default=timezone.now().year,
+                                                        verbose_name=_('Год выпуска'))
+    added_at = models.DateTimeField(auto_now_add=True,
+                                    verbose_name=_('Добавлено'))
 
-    views_count = models.PositiveIntegerField(default=0)
+    views_count = models.PositiveIntegerField(default=0,
+                                              verbose_name=_('Количество просмотров'))
     views = GenericRelation('metadata.TitleView')
-    
-    favorites_count = models.PositiveIntegerField(default=0)
+
+    favorites_count = models.PositiveIntegerField(default=0,
+                                                  verbose_name=_('Количество людей, добавивших в избранное'))
     favorites = GenericRelation('metadata.TitleFavorite')
 
     class Meta:
@@ -71,10 +79,13 @@ class TextTitle(Title):
     # for specification purposes
     title_cover = models.ImageField(
         default='default_cover.jpg',
-        upload_to=get_text_title_cover_path
+        upload_to=get_text_title_cover_path,
+        verbose_name=_('Обложка')
         )
 
     class Meta:
+        verbose_name = _('Новелла')
+        verbose_name_plural = _('Новеллы')
         constraints = [
                 models.CheckConstraint(
                     check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
@@ -121,10 +132,13 @@ class GraphicTitle(Title):
     # for specification purposes
     title_cover = models.ImageField(
         default='default_cover.jpg',
-        upload_to=get_graphic_title_cover_path
+        upload_to=get_graphic_title_cover_path,
+        verbose_name=_('Обложка')
         )
 
     class Meta:
+        verbose_name = _('Комикс')
+        verbose_name_plural = _('Комиксы')
         constraints = [
                 models.CheckConstraint(
                     check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
@@ -176,16 +190,22 @@ class TitleChapter(models.Model):
     Represents a basic title chapter model and its common attributes both
     for graphic and text content
     """
-    # access title's chapters with obj.chapters.all()
-    chapter_name = models.CharField(max_length=255, blank=True)
+    chapter_name = models.CharField(max_length=255,
+                                    blank=True,
+                                    verbose_name=_('Название'))
     # because there is sometimes chapters with letters
     # example: chapter 0A or chapter 4K
-    display_number = models.CharField(max_length=20, blank=True)
+    display_number = models.CharField(max_length=20,
+                                      blank=True,
+                                      verbose_name=_('Номер главы для отображения'))
     # because there is sometime extra chapters
     # example: chapter 5.5 (extra to 5th chapter)
-    chapter_number = models.FloatField(max_length=5)
+    chapter_number = models.DecimalField(max_digits=5,
+                                         decimal_places=1,
+                                         verbose_name=_('Фактический номер главы'))
     # there is only one volume often
-    volume = models.PositiveIntegerField(default=1)
+    volume = models.PositiveIntegerField(default=1,
+                                         verbose_name=_('Том главы'))
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -195,7 +215,7 @@ class TitleChapter(models.Model):
         constraints = [
             models.CheckConstraint(check=models.Q(chapter_number__gte=0), name="chapter_number_not_negative"),
         ]
-        
+
     def __str__(self):
         chapter_number = int(self.chapter_number) if '.0' in str(self.chapter_number) else self.chapter_number
         if self.chapter_name:
@@ -209,11 +229,15 @@ class TextTitleChapter(TitleChapter):
     title = models.ForeignKey(
         TextTitle,
         on_delete=models.CASCADE,
-        related_name='text_chapters'
+        related_name='text_chapters',
+        verbose_name=_('Связанный тайтл')
         )
-    text_content = models.FileField(upload_to=get_text_chapter_path)
+    text_content = models.FileField(upload_to=get_text_chapter_path,
+                                    verbose_name=_('Содержимое главы'))
 
     class Meta:
+        verbose_name = _('Глава новеллы')
+        verbose_name_plural = _('Главы новелл')
         # one chapter for a title
         constraints = [
                 models.UniqueConstraint(
@@ -242,10 +266,13 @@ class GraphicTitleChapter(TitleChapter):
     title = models.ForeignKey(
         GraphicTitle,
         on_delete=models.CASCADE,
-        related_name='graphic_chapters'
+        related_name='graphic_chapters',
+        verbose_name=_('Связанный тайтл')
         )
 
     class Meta:
+        verbose_name = _('Глава комикса')
+        verbose_name_plural = _('Главы комиксов')
         # one chapter for a title
         constraints = [
                 models.UniqueConstraint(
@@ -292,12 +319,16 @@ class GraphicTitlePage(models.Model):
     chapter = models.ForeignKey(
         GraphicTitleChapter,
         on_delete=models.CASCADE,
-        related_name='pages'
+        related_name='pages',
+        verbose_name=_('Связанная глава')
         )
-    image = models.ImageField(upload_to=get_graphic_chapter_path)
-    page_number = models.PositiveIntegerField()
+    image = models.ImageField(upload_to=get_graphic_chapter_path,
+                              verbose_name=_('Страница (изображение)'))
+    page_number = models.PositiveIntegerField(verbose_name=_('Номер страницы'))
 
     class Meta:
+        verbose_name = _('Страница комикса')
+        verbose_name_plural = _('Страницы комиксов')
         # we should sort by page number
         ordering = ['page_number']
         # one page №(some number) for a chapter
