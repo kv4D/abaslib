@@ -7,6 +7,7 @@ from django.utils import timezone
 def get_graphic_chapter_path(instance, filename):
     """Creates the path to the chapter of a graphic title"""
     title_id = instance.chapter.title.id
+    print(1)
     return os.path.join(
         'graphic', str(title_id), 'chapters', instance.chapter.chapter_name, filename
         )
@@ -15,6 +16,7 @@ def get_graphic_chapter_path(instance, filename):
 def get_graphic_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
     title_id = instance.id
+    print(4)
     return os.path.join(
         'covers', 'graphic', str(title_id), filename
         )
@@ -23,6 +25,7 @@ def get_graphic_title_cover_path(instance, filename):
 def get_text_chapter_path(instance, filename):
     """Creates the path to the chapter of a text title"""
     title_id = instance.title.id
+    print(2)
     return os.path.join(
         'text', str(title_id), 'chapters', instance.chapter_name, filename
         )
@@ -31,10 +34,7 @@ def get_text_chapter_path(instance, filename):
 def get_text_title_cover_path(instance, filename):
     """Creates the path to title's cover"""
     title_id = instance.id
-    print(title_id)
-    print(os.path.join(
-        'covers', 'text', str(title_id), filename
-        ))
+    print(3)
     return os.path.join(
         'covers', 'text', str(title_id), filename
         )

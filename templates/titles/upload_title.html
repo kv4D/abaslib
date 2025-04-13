@@ -22,7 +22,7 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'titles:upload_title' %}?title_type={{ request.GET.title_type }}" method="post">
+      <form action="{% url 'titles:upload_title' %}?title_type={{ request.GET.title_type }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div id="input">
           <h1>Заполните поля</h1>

@@ -21,7 +21,9 @@ def upload_title_view(request):
         form = GraphicTitleForm
 
     if request.method == 'POST':
-        form = form(request.POST)
+        print(form)
+        print(request.FILES)
+        form = form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('main:home')
