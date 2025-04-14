@@ -3,11 +3,24 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter
+from metadata.models import Tag, TagGenre, TitleGenre, TitleTag
 
 class TextTitleForm(forms.ModelForm):
     """
     Form for text titles
     """
+    genres = forms.ModelMultipleChoiceField(
+        queryset=TagGenre.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    
     class Meta:
         model = TextTitle
         fields = ['title_name_rus',
@@ -15,6 +28,8 @@ class TextTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
+                  'genres',
+                  'tags',
                   'publication_year',
                   'title_cover'
                   ]
@@ -25,7 +40,9 @@ class TextTitleForm(forms.ModelForm):
             'title_is_ongoing': _('Тайтл все еще выходит'),
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
-            'title_cover': _('Обложка')
+            'title_cover': _('Обложка'),
+            'tags': _('Теги'),
+            'genres': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -69,12 +86,35 @@ class TextTitleForm(forms.ModelForm):
                 }
             )
         }
+    
+    def save(self, commit=True):
+        title = super().save(commit=commit)
+        if commit:
+            for genre in self.cleaned_data['genres']:
+                TitleGenre.objects.create(content_object=title, tag_genre=genre)
+            for tag in self.cleaned_data['tags']:
+                TitleTag.objects.create(content_object=title, tag=tag)
+        return title
 
 
 class GraphicTitleForm(forms.ModelForm):
     """
     Form for graphic titles
     """
+    genres = forms.ModelMultipleChoiceField(
+        queryset=TagGenre.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=_('Жанры'),
+        required=False
+    )
+    
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=_('Теги'),
+        required=False
+    )
+    
     class Meta:
         model = GraphicTitle
         fields = ['title_name_rus',
@@ -82,6 +122,8 @@ class GraphicTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
+                  'genres',
+                  'tags',
                   'publication_year',
                   'title_cover'
                   ]
@@ -135,7 +177,16 @@ class GraphicTitleForm(forms.ModelForm):
                     'class': 'form_input'
                 }
             )
-        }
+        }    
+        
+    def save(self, commit=True):
+        title = super().save(commit=commit)
+        if commit:
+            for genre in self.cleaned_data['genres']:
+                TitleGenre.objects.create(content_object=title, tag_genre=genre)
+            for tag in self.cleaned_data['tags']:
+                TitleTag.objects.create(content_object=title, tag=tag)
+        return title
 
 class TextTitleChapterForm(forms.ModelForm):
     """

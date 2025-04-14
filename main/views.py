@@ -158,8 +158,8 @@ def change_favorite_title_status(request, title_id=None):
     else:
         user.add_title_to_favorites(title)
         TitleFavorite.objects.create(
-            user = user,
-            content_object = title
+            user=user,
+            content_object=title
         )
 
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))
