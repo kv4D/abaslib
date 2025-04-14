@@ -1,6 +1,7 @@
 """Models for metadata about titles"""
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -20,8 +21,8 @@ class TitleFavorite(models.Model):
     
     class Meta:
         unique_together = ('user', 'content_type')
-        verbose_name = 'Избранное'
-        verbose_name_plural = 'Избранное'
+        verbose_name = _('Избранное')
+        verbose_name_plural = _('Избранное')
     
     def __str__(self):
         return f"{self.user} - {self.content_object}"
@@ -34,6 +35,16 @@ class TitleFavorite(models.Model):
             object_id=title.id
             ).count()
         return count
+    
+    @staticmethod
+    def get_favorite_status(title, user):
+        """Try to get favorite status"""
+        try:
+            is_favorite = user.has_title_in_favorites(title)
+        except AttributeError:
+            # user is unauthorized
+            is_favorite = None
+        return is_favorite
     
 
 class TitleView(models.Model):
@@ -55,8 +66,8 @@ class TitleView(models.Model):
     
     class Meta:
         unique_together = ('user', 'content_type')
-        verbose_name = 'Просмотр'
-        verbose_name_plural = 'Просмотры'
+        verbose_name = _('Просмотр')
+        verbose_name_plural = _('Просмотры')
     
     def __str__(self):
         return f"{self.user} - {self.content_object}"
@@ -76,8 +87,8 @@ class Tag(models.Model):
     tag_name = models.CharField(verbose_name='Имя тэга', max_length=100, unique=True)
     
     class Meta:
-        verbose_name = 'Тэг'
-        verbose_name_plural = 'Тэги'
+        verbose_name = _('Тэг')
+        verbose_name_plural = _('Тэги')
         
     def __str__(self):
         return f"{self.tag_name}"
@@ -88,8 +99,8 @@ class TagGenre(models.Model):
     tag_name = models.CharField(verbose_name='Название жанра', max_length=100, unique=True)
     
     class Meta:
-        verbose_name = 'Тэг-жанр'
-        verbose_name_plural = 'Тэги-жанры'
+        verbose_name = _('Тэг-жанр')
+        verbose_name_plural = _('Тэги-жанры')
     
     def __str__(self):
         return f"{self.tag_name}"
@@ -105,11 +116,20 @@ class TitleGenre(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     
     class Meta:
-        verbose_name = 'Жанр тайтла'
-        verbose_name_plural = 'Жанры тайтлов'
+        verbose_name = _('Жанр тайтла')
+        verbose_name_plural = _('Жанры тайтлов')
     
     def __str__(self):
         return f"{self.content_object} - {self.tag_genre}"
+    
+    @staticmethod
+    def get_all_title_genres(title):
+        content_type = ContentType.objects.get_for_model(title)
+        genres = TitleGenre.objects.filter(
+            content_type=content_type,
+            object_id=title.id
+            )
+        return genres
     
     
 class TitleTag(models.Model):
@@ -122,8 +142,17 @@ class TitleTag(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     
     class Meta:
-        verbose_name = 'Тэг тайтла'
-        verbose_name_plural = 'Тэги тайтлов'
+        verbose_name = _('Тэг тайтла')
+        verbose_name_plural = _('Тэги тайтлов')
     
     def __str__(self):
         return f"{self.content_object} - {self.tag}"
+    
+    @staticmethod
+    def get_all_title_tags(title):     
+        content_type = ContentType.objects.get_for_model(title)
+        tags = TitleTag.objects.filter(
+            content_type=content_type,
+            object_id=title.id
+            )
+        return tags

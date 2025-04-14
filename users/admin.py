@@ -5,8 +5,9 @@ from . models import User
 
 
 class ModifiedUserAdmin(UserAdmin):
+    readonly_fields = ['titles_read_amount']
     fieldsets = UserAdmin.fieldsets + (
-        ('Profile info and stats', {
+        ('Дополнительная информация', {
             'fields': (
                 'user_avatar',
                 'titles_read_amount',

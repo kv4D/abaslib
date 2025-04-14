@@ -118,7 +118,19 @@
             <p>{{ title.publication_year }}</p>
           </div>
           <div id="title_stats">
+            <p class="highlighted_text">Жанры</p>
+            {% for genre in genres %}
+              <p>{{ genre }}</p>
+            {% empty %}
+              <p>Жанры не добавлены</p>
+            {% endfor %}
+
             <p class="highlighted_text">Теги</p>
+            {% for tag in tags %}
+              <p>{{ tag }}</p>
+            {% empty %}
+              <p>Тэги не добавлены</p>
+            {% endfor %}
 
             <p class="highlighted_text">Оценка</p>
             <p>Какая-то</p>

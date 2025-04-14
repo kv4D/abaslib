@@ -1,19 +1,8 @@
 """Functions for certain purposes within apps"""
 from re import search
 from itertools import chain
-from django.shortcuts import redirect
 from titles.models import GraphicTitlePage, TextTitle, GraphicTitle, \
     GraphicTitleChapter, TextTitleChapter
-
-
-def get_favorite_status(user, title):
-    """Try to get favorite status"""
-    try:
-        is_favorite = user.has_title_in_favorites(title)
-    except AttributeError:
-        # user is unauthorized
-        is_favorite = None
-    return is_favorite
 
 
 def get_new_titles(return_amount: int = 5):
@@ -51,13 +40,6 @@ def get_updated_titles(return_amount: int = 5):
             titles.append(chapter.title)
 
     return titles[:return_amount]
-
-
-def redirect_to_title_page(title_id: int, title_type: str, section: str = 'about'):
-    """Redirect to provided title's page"""
-    response = redirect('main:title_page', title_id=title_id)
-    response['Location'] += f'?title_type={ title_type }&section={section}'
-    return response
 
 
 def create_pages_from_list(images, chapter):

@@ -4,7 +4,8 @@ from . models import TextTitle, GraphicTitle
 from . forms import TextTitleForm, GraphicTitleForm, \
                     TextTitleChapterForm, GraphicTitleChapterForm, \
                     GraphicTitlePagesForm
-from . utils import redirect_to_title_page, create_pages_from_list
+from . utils import create_pages_from_list
+from main.utils import redirect_to_title_page
 
 
 @login_required
