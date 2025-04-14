@@ -47,8 +47,8 @@ def read_graphic_title_view(request, title_id):
     """Render page with one of the chapter's pages"""
     try:
         get_params = request.GET.copy()
-
-        chapter_number = int(get_params.get('chapter_num', 1))
+        chapter_number = float(get_params.get('chapter_num', 1).replace(',', '.'))
+        
         page_number = int(get_params.get('page', 1))
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapter = GraphicTitleChapter.objects.get(chapter_number=chapter_number, title=title)
@@ -65,9 +65,10 @@ def read_graphic_title_view(request, title_id):
             # new get parameters
             response += f"?{get_params.urlencode()}"
             return redirect(response)
-    except Exception:
+    except Exception as e:
         # for some reason no chapters to load (empty or nonexistent)
         # return to the title page
+        print(e)
         return redirect_to_title_page(title_id, 'graphic')
 
     page = chapter.pages.filter(page_number=page_number).first()
@@ -93,9 +94,6 @@ def read_graphic_title_view(request, title_id):
 
     return render(request, 'reader/read_graphic.html', context)
 
-
-# TODO: bookmarks
-# --------------------------------------------------
 
 @login_required
 def open_bookmark_view(request, title_id):

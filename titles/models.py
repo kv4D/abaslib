@@ -217,10 +217,9 @@ class TitleChapter(models.Model):
         ]
 
     def __str__(self):
-        chapter_number = int(self.chapter_number) if '.0' in str(self.chapter_number) else self.chapter_number
         if self.chapter_name:
-            return f'Глава {chapter_number}: {self.chapter_name}'
-        return f'Глава {chapter_number}'
+            return f'Глава {self.display_number}: {self.chapter_name}'
+        return f'Глава {self.display_number}'
 
 
 class TextTitleChapter(TitleChapter):

@@ -64,7 +64,7 @@ def collect_about_section(request, title_type, title_id):
         'genres': genres
     }
 
-    return context
+    return context, 'main/title_page_about.html'
 
 
 def collect_chapters_section(request, title_type, title_id):
@@ -87,7 +87,7 @@ def collect_chapters_section(request, title_type, title_id):
         'user_favorite': is_favorite
     }
 
-    return context
+    return context, 'main/title_page_chapters.html'
 
 
 def collect_comment_section(request, title_type, title_id):
@@ -110,7 +110,7 @@ def collect_comment_section(request, title_type, title_id):
     else:
         context = {}
 
-    return context
+    return context, 'main/title_page_comments.html'
 
 
 def title_page_view(request, title_id=None):
@@ -122,13 +122,13 @@ def title_page_view(request, title_id=None):
     assert section in ['about', 'chapters', 'comments']
 
     if section == 'about':
-        context = collect_about_section(request, title_type, title_id)
+        context, template = collect_about_section(request, title_type, title_id)
     elif section == 'chapters':
-        context = collect_chapters_section(request, title_type, title_id)
+        context, template = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
-        context = collect_comment_section(request, title_type, title_id)
+        context, template = collect_comment_section(request, title_type, title_id)
 
-    return render(request, 'main/title_page.html', context)
+    return render(request, template, context)
 
 
 @login_required

@@ -1,0 +1,48 @@
+{% extends 'main/title_page_base.html' %}
+{% load static %}
+{% block section %}
+  <!-- ABOUT SECTION -->
+  <div id="caption">
+    <div id="title_info">
+      <p class="highlighted_text">Описание</p>
+      <p>{{ title.title_description }}</p>
+
+      <p class="highlighted_text">Статус</p>
+      {% if title.title_is_ongoing %}
+        <p>Продолжается</p>
+      {% else %}
+        <p>Закончено</p>
+      {% endif %}
+
+      <p class="highlighted_text">Автор</p>
+      <p>{{ title.title_author }}</p>
+
+      <p class="highlighted_text">Год выпуска</p>
+      <p>{{ title.publication_year }}</p>
+    </div>
+    <div id="title_stats">
+      <p class="highlighted_text">Жанры</p>
+      {% for genre in genres %}
+        <p>{{ genre }}</p>
+      {% empty %}
+        <p>Жанры не добавлены</p>
+      {% endfor %}
+
+      <p class="highlighted_text">Теги</p>
+      {% for tag in tags %}
+        <p>{{ tag }}</p>
+      {% empty %}
+        <p>Тэги не добавлены</p>
+      {% endfor %}
+
+      <p class="highlighted_text">Оценка</p>
+      <p>Какая-то</p>
+
+      <p class="highlighted_text">Пользователей отметило любимым</p>
+      <p>{{ title.favorites_count }}</p>
+
+      <p class="highlighted_text">Просмотров</p>
+      <p>{{ title.views_count }}</p>
+    </div>
+  </div>
+{% endblock %}

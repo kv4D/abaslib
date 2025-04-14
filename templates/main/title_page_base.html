@@ -18,8 +18,7 @@
     <div id="main_content">
       <div id="title_head">
         <img id="cover" src="{{ title.title_cover.url }}" alt="Тут была обложка">
-        <h2>{{ title.title_name_rus }}</h2>
-        <h2>{{ title.title_name_eng }}</h2>
+        <h2>{{ title.title_name_rus }} <br> {{ title.title_name_eng }}</h2>
       </div>
       <div id="actions" class="button_group">
         {% if user.is_authenticated %}
@@ -38,7 +37,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                   <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
                 </svg>
-                Добавить в любимое
+                Добавить в избранное
               </button>
             </a>
           {% endif %}
@@ -49,7 +48,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
               </svg>
-              Добавить в любимое
+              Добавить в избранное
             </button>
           </a>
         {% endif %}
@@ -97,95 +96,9 @@
         </a>
       </div>
       <br />
-      <!-- ABOUT SECTION -->
-      {% if request.GET.section == 'about' %}
-        <div id="caption">
-          <div id="title_info">
-            <p class="highlighted_text">Описание</p>
-            <p>{{ title.title_description }}</p>
-    
-            <p class="highlighted_text">Статус</p>
-            {% if title.title_is_ongoing %}
-              <p>Продолжается</p>
-            {% else %}
-              <p>Закончено</p>
-            {% endif %}
-    
-            <p class="highlighted_text">Автор</p>
-            <p>{{ title.title_author }}</p>
-    
-            <p class="highlighted_text">Год выпуска</p>
-            <p>{{ title.publication_year }}</p>
-          </div>
-          <div id="title_stats">
-            <p class="highlighted_text">Жанры</p>
-            {% for genre in genres %}
-              <p>{{ genre }}</p>
-            {% empty %}
-              <p>Жанры не добавлены</p>
-            {% endfor %}
-
-            <p class="highlighted_text">Теги</p>
-            {% for tag in tags %}
-              <p>{{ tag }}</p>
-            {% empty %}
-              <p>Тэги не добавлены</p>
-            {% endfor %}
-
-            <p class="highlighted_text">Оценка</p>
-            <p>Какая-то</p>
-    
-            <p class="highlighted_text">Пользователей отметило любимым</p>
-            <p>{{ title.favorites_count }}</p>
-    
-            <p class="highlighted_text">Просмотров</p>
-            <p>{{ title.views_count }}</p>
-          </div>
-        </div>
-      <!-- CHAPTERS SECTION -->
-      {% elif request.GET.section == 'chapters' %}
-        {% if not chapters %}
-          <p>Кажется, главы еще не загрузили</p>
-        {% endif %}
-        <div id="chapters">
-          {% for chapter in chapters %}
-            {% if not chapter.is_empty %}
-              <div class="button_group">
-                {% if request.GET.title_type == 'graphic' %}
-                  <a href="">
-                    <button class="ref_button">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-                      </svg>
-                    </button>
-                  </a>
-                  <a href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}&page=1">
-                    <button class="ref_button">
-                      {{ chapter }}
-                    </button>
-                  </a>
-                {% else %}
-                  <a href="">
-                    <button class="ref_button">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-                      </svg>
-                    </button>
-                  </a>
-                  <a href="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}">
-                    <button class="ref_button">
-                      {{ chapter }}
-                    </button>
-                  </a>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-      <!-- COMMENTS SECTION -->
-      {% elif request.GET.section == 'comments' %}
-        <p>Здесь будут комментарии</p>
-      {% endif %}
+      {% block section %}
+      
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

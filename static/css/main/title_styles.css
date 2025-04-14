@@ -1,5 +1,10 @@
 #title_head {
     text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 0;
 }
 
 .container {
@@ -53,7 +58,7 @@
 }
 
 #cover {
-    width: 30%;
+    width: 35%;
     aspect-ratio: 2/3;
     object-fit: cover;
     border-radius: 5px;
