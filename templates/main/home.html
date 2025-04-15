@@ -79,23 +79,40 @@
     </div>
 
     <div id="side">
-      <h1>Разделы</h1>
-      <hr />
-      <a href="{% url 'main:home' %}">
-        <button class="ref_button activated">
-          Главная
-        </button>
-      </a>
-      <a href="{% url 'main:text_titles' %}">
-        <button class="ref_button">
-          Новеллы
-        </button>
-      </a>
-      <a href="{% url 'main:graphic_titles' %}">
-        <button class="ref_button">
-          Комиксы
-        </button>
-      </a>
+      <section>
+        <h1>Разделы</h1>
+        <hr />
+        <a href="{% url 'main:home' %}">
+          <button class="ref_button activated">
+            Главная
+          </button>
+        </a>
+        <a href="{% url 'main:text_titles' %}">
+          <button class="ref_button">
+            Новеллы
+          </button>
+        </a>
+        <a href="{% url 'main:graphic_titles' %}">
+          <button class="ref_button">
+            Комиксы
+          </button>
+        </a>
+      </section>
+      <section>
+        <h1>Фильтры</h1>
+        <hr />
+        <ul class="filter_list">
+          {% for genre in genres %}
+            <li>{{ genre }}</li>
+          {% endfor %}
+        </ul>
+
+        <ul class="filter_list">
+          {% for tag in tags %}
+            <li>{{ tag }}</li>
+          {% endfor %}
+        </ul>
+      </section>
     </div>
   </div>
 {% endblock %}

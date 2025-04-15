@@ -104,14 +104,12 @@ class GraphicTitleForm(forms.ModelForm):
     genres = forms.ModelMultipleChoiceField(
         queryset=TagGenre.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        label=_('Жанры'),
         required=False
     )
     
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        label=_('Теги'),
         required=False
     )
     
@@ -134,7 +132,9 @@ class GraphicTitleForm(forms.ModelForm):
             'title_is_ongoing': _('Тайтл все еще выходит'),
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
-            'title_cover': _('Обложка')
+            'title_cover': _('Обложка'),
+            'tags': _('Теги'),
+            'genres': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(

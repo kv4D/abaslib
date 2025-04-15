@@ -2,7 +2,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from metadata.models import TitleView, TitleFavorite, TitleGenre, TitleTag
+from metadata.models import TitleView, TitleFavorite, TitleGenre, \
+    TitleTag, Tag, TagGenre
 from titles.models import TextTitle, GraphicTitle
 from titles.utils import get_new_titles, get_updated_titles
 from . utils import redirect_to_title_page
@@ -14,6 +15,8 @@ def home_view(request):
     context = {
         'new_titles': get_new_titles(),
         'updated_titles': get_updated_titles(),
+        'genres': TagGenre.objects.all(),
+        'tags': Tag.objects.all()
         }
     return render(request, 'main/home.html', context)
 
