@@ -2,8 +2,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from metadata.models import TitleView, TitleFavorite, TitleGenre, \
     TitleTag, Tag, TagGenre
+from metadata.forms import FilterTagForm
 from titles.models import TextTitle, GraphicTitle
 from titles.utils import get_new_titles, get_updated_titles
 from . utils import redirect_to_title_page
@@ -12,31 +14,57 @@ from . utils import redirect_to_title_page
 # create views here.
 def home_view(request):
     """Renders website's home page"""
+    
     context = {
         'new_titles': get_new_titles(),
-        'updated_titles': get_updated_titles(),
-        'genres': TagGenre.objects.all(),
-        'tags': Tag.objects.all()
+        'updated_titles': get_updated_titles()
         }
     return render(request, 'main/home.html', context)
 
 
 def text_titles_view(request):
     """Renders page with text titles"""
+    form = FilterTagForm(request.GET)
+    text_titles = TextTitle.objects.all()
+    
+    if form.is_valid():
+        genres = form.cleaned_data.get('genres')
+        tags = form.cleaned_data.get('tags')
+        
+        if not genres and not tags:
+            text_titles = TextTitle.objects.all()
+        
+        if genres:
+            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres)
+        if tags:
+            text_titles = TextTitle.objects.filter(tags__tag__in=tags)
+    
     context = {
-        'text_titles': TextTitle.get_titles(),
-        'genres': TagGenre.objects.all(),
-        'tags': Tag.objects.all()
+        'text_titles': text_titles,
+        'form': form
     }
     return render(request, 'main/text_titles.html', context)
 
 
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
+    form = FilterTagForm(request.GET)
+    
+    if form.is_valid():
+        genres = form.cleaned_data.get('genres')
+        tags = form.cleaned_data.get('tags')
+        
+        if not genres and not tags:
+            graphic_titles = GraphicTitle.objects.all()
+        
+        if genres:
+            graphic_titles = GraphicTitle.objects.filter(genres__tag_genre__in=genres)
+        if tags:
+            graphic_titles = GraphicTitle.objects.filter(tags__tag__in=tags)
+            
     context = {
-        'graphic_titles': GraphicTitle.get_titles(),
-        'genres': TagGenre.objects.all(),
-        'tags': Tag.objects.all()
+        'graphic_titles': graphic_titles,
+        'form': form
     }
     return render(request, 'main/graphic_titles.html', context)
 
@@ -56,12 +84,11 @@ def collect_about_section(request, title_type, title_id):
     title.save()
     
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
-    print(is_favorite)
     
-    tags = TitleTag.get_all_title_tags(title)
+    tags = title.tags.all()
     tags = [relation.tag for relation in tags]
     
-    genres = TitleGenre.get_all_title_genres(title)
+    genres = title.genres.all()
     genres = [relation.tag_genre for relation in genres]
 
     context = {

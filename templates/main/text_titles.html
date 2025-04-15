@@ -25,3 +25,42 @@
     <a href="{% url 'main:graphic_titles' %}"><button class="ref_button">Комиксы</button></a>
   </section>
 {% endblock %}
+
+{% block filters %}
+  <section>
+    <h1>Фильтры</h1>
+    <a href="{% url 'main:text_titles' %}">
+      <button class="filter_button">
+        Сбросить фильтры
+      </button>
+    </a>
+    <button type="submit" form="filter_form" class="filter_button">
+      Применить фильтры
+    </button>
+    <form id="filter_form" action="{% url 'main:text_titles' %}" method="get">      
+      <h4>Жанры</h4>
+      <ul class="filter_list">
+        {% for checkbox in form.genres %}
+          <li>
+            <label>
+              {{ checkbox.tag }} 
+              <span class="filter_button">{{ checkbox.choice_label }}</span>
+            </label>
+          </li>
+        {% endfor %}
+      </ul>
+  
+      <h4>Тэги</h4>
+      <ul class="filter_list">
+        {% for checkbox in form.tags %}
+          <li>
+            <label>
+              {{ checkbox.tag }} 
+              <span class="filter_button">{{ checkbox.choice_label }}</span>
+            </label>
+          </li>
+        {% endfor %}
+      </ul>
+    </form>
+  </section>
+{% endblock %}

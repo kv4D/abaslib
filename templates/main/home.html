@@ -85,27 +85,11 @@
           <a href="{% url 'main:graphic_titles' %}"><button class="ref_button">Комиксы</button></a>
         </section>
       {% endblock %}
+      
+      {% block filters %}
+      
+      {% endblock %}
 
-      <section>
-        <h1>Фильтры</h1>
-        <h4>Жанры</h4>
-        <ul class="filter_list">
-          {% for genre in genres %}
-            <li>
-              <a href="{% url 'main:graphic_titles' %}"><button class="filter_button">{{ genre }}</button></a>
-            </li>
-          {% endfor %}
-        </ul>
-
-        <h4>Тэги</h4>
-        <ul class="filter_list">
-          {% for tag in tags %}
-            <li>
-              <a href="{% url 'main:graphic_titles' %}"><button class="filter_button">{{ tag }}</button></a>
-            </li>
-          {% endfor %}
-        </ul>
-      </section>
     </div>
   </div>
 {% endblock %}

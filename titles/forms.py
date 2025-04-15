@@ -9,13 +9,13 @@ class TextTitleForm(forms.ModelForm):
     """
     Form for text titles
     """
-    genres = forms.ModelMultipleChoiceField(
+    genres_field = forms.ModelMultipleChoiceField(
         queryset=TagGenre.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
     
-    tags = forms.ModelMultipleChoiceField(
+    tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
@@ -28,8 +28,8 @@ class TextTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
-                  'genres',
-                  'tags',
+                  'genres_field',
+                  'tags_field',
                   'publication_year',
                   'title_cover'
                   ]
@@ -41,8 +41,8 @@ class TextTitleForm(forms.ModelForm):
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
             'title_cover': _('Обложка'),
-            'tags': _('Теги'),
-            'genres': _('Жанры')
+            'tags_field': _('Теги'),
+            'genres_field': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -101,13 +101,13 @@ class GraphicTitleForm(forms.ModelForm):
     """
     Form for graphic titles
     """
-    genres = forms.ModelMultipleChoiceField(
+    genres_field = forms.ModelMultipleChoiceField(
         queryset=TagGenre.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
     
-    tags = forms.ModelMultipleChoiceField(
+    tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
@@ -120,8 +120,8 @@ class GraphicTitleForm(forms.ModelForm):
                   'title_author',
                   'title_is_ongoing',
                   'title_description',
-                  'genres',
-                  'tags',
+                  'genres_field',
+                  'tags_field',
                   'publication_year',
                   'title_cover'
                   ]
@@ -133,8 +133,8 @@ class GraphicTitleForm(forms.ModelForm):
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
             'title_cover': _('Обложка'),
-            'tags': _('Теги'),
-            'genres': _('Жанры')
+            'tags_field': _('Теги'),
+            'genres_field': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
