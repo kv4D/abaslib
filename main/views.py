@@ -84,7 +84,7 @@ def collect_about_section(request, title_type, title_id):
     title.save()
     
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
-    
+    print(is_favorite)
     tags = title.tags.all()
     tags = [relation.tag for relation in tags]
     
@@ -113,7 +113,7 @@ def collect_chapters_section(request, title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
         chapters = title.text_chapters.all()
 
-    is_favorite = TitleFavorite.get_favorite_status(request.user, title)
+    is_favorite = TitleFavorite.get_favorite_status(title, request.user)
 
     context = {
         'title': title,
@@ -134,7 +134,7 @@ def collect_comment_section(request, title_type, title_id):
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
 
-    is_favorite = TitleFavorite.get_favorite_status(request.user, title)
+    is_favorite = TitleFavorite.get_favorite_status(title, request.user)
 
     if title:
         context = {
@@ -186,7 +186,7 @@ def change_favorite_title_status(request, title_id=None):
         
     if TitleFavorite.get_favorite_status(title, user):
         user.remove_title_from_favorites(title)
-        TitleFavorite.objects.filter(
+        x, y = TitleFavorite.objects.filter(
             user=user, 
             content_type=content_type,
             object_id=title_id).delete()
@@ -194,7 +194,8 @@ def change_favorite_title_status(request, title_id=None):
         user.add_title_to_favorites(title)
         TitleFavorite.objects.create(
             user=user,
-            content_object=title
+            content_type=content_type,
+            object_id=title.id
         )
 
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))

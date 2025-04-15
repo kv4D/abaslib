@@ -20,7 +20,7 @@ class TitleFavorite(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        unique_together = ('user', 'content_type')
+        unique_together = ('user', 'content_type', 'object_id')
         verbose_name = _('Избранное')
         verbose_name_plural = _('Избранное')
     
@@ -42,7 +42,8 @@ class TitleFavorite(models.Model):
         try:
             status = TitleFavorite.objects.filter(
                 content_type=ContentType.objects.get_for_model(title),
-                user=user
+                user=user,
+                object_id=title.id
                 ).exists()
         except TypeError:
             # anonymous user, no status
@@ -68,7 +69,7 @@ class TitleView(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        unique_together = ('user', 'content_type')
+        unique_together = ('user', 'content_type', 'object_id')
         verbose_name = _('Просмотр')
         verbose_name_plural = _('Просмотры')
     

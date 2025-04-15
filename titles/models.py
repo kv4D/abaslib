@@ -89,6 +89,7 @@ class TextTitle(Title):
     class Meta:
         verbose_name = _('Новелла')
         verbose_name_plural = _('Новеллы')
+        ordering = ['added_at']
         constraints = [
                 models.CheckConstraint(
                     check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
@@ -140,6 +141,7 @@ class GraphicTitle(Title):
         )
 
     class Meta:
+        ordering = ['added_at']
         verbose_name = _('Комикс')
         verbose_name_plural = _('Комиксы')
         constraints = [

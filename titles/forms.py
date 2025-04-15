@@ -196,12 +196,16 @@ class TextTitleChapterForm(forms.ModelForm):
         model = TextTitleChapter
         fields = ['title',
                   'chapter_name',
+                  'display_number',
                   'chapter_number',
+                  'volume',
                   'text_content']
         labels = {
             'title': _('Тайтл'),
             'chapter_name': _('Название главы'),
-            'chapter_number': _('Номер главы'),
+            'display_number': _('Номер главы (для отображения)'),
+            'chapter_number': _('Номер главы (фактический)'),
+            'volume': _('Том главы'),
             'text_content': _('Содержание главы')
         }
         widgets = {
@@ -212,15 +216,24 @@ class TextTitleChapterForm(forms.ModelForm):
                     }
                 ),
             'chapter_number': forms.NumberInput(
-                attrs={
+                attrs={ 
+                    'placeholder': _('Фактический числовой номер главы'),
                     'class': 'form_input'
                     }
                 ),
-            'text_content': forms.ClearableFileInput(
+            'text_content': forms.ClearableFileInput(),
+            'volume': forms.TextInput(
                 attrs={
-
+                    'placeholder': _('Если томов нет или он один, оставьте пустым'),
+                    'class': 'form_input'
                 }
-            )
+            ),
+            'display_number': forms.TextInput(
+                attrs={
+                    'placeholder': _('Символы допускаются'),
+                    'class': 'form_input'
+                    }
+                ),
         }
 
     def __init__(self, *args, title=None, **kwargs):
@@ -238,11 +251,15 @@ class GraphicTitleChapterForm(forms.ModelForm):
         model = GraphicTitleChapter
         fields = ['title',
                   'chapter_name',
-                  'chapter_number']
+                  'display_number',
+                  'chapter_number',
+                  'volume',]
         labels = {
             'title': _('Тайтл'),
             'chapter_name': _('Название главы'),
-            'chapter_number': _('Номер главы')
+            'display_number': _('Номер главы (для отображения)'),
+            'chapter_number': _('Номер главы (фактический)'),
+            'volume': _('Том главы'),
         }
         widgets = {
             'chapter_name': forms.TextInput(
@@ -252,6 +269,19 @@ class GraphicTitleChapterForm(forms.ModelForm):
                 ),
             'chapter_number': forms.NumberInput(
                 attrs={
+                    'placeholder': _('Фактический числовой номер главы'),
+                    'class': 'form_input'
+                    }
+                ),
+                        'volume': forms.TextInput(
+                attrs={
+                    'placeholder': _('Если томов нет или он один, оставьте пустым'),
+                    'class': 'form_input'
+                }
+            ),
+            'display_number': forms.TextInput(
+                attrs={
+                    'placeholder': _('Символы допускаются'),
                     'class': 'form_input'
                     }
                 ),
