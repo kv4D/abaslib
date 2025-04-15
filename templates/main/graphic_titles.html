@@ -5,40 +5,23 @@
   ABASlib — Комиксы
 {% endblock %}
 
-{% block content %}
-  <div class="container">
-    <div id="main_content">
-      <h1>ABASlib</h1>
-      <hr />
-      <h4>Комиксы</h4>
-      <div class="titles">
-        {% for title in graphic_titles %}
-          <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
-              <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
-              <div class="title_name">{{ title.title_name_rus }}</div>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div id="side">
-      <h1>Разделы</h1>
-      <hr />
-      <a href="{% url 'main:home' %}">
-        <button class="ref_button">
-          Главная
-        </button>
+{% block titles %}
+  <h4>Комиксы</h4>
+  <div class="titles">
+    {% for title in graphic_titles %}
+      <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+        <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка" />
+        <div class="title_name">{{ title.title_name_rus }}</div>
       </a>
-      <a href="{% url 'main:text_titles' %}">
-        <button class="ref_button">
-          Новеллы
-        </button>
-      </a>
-      <a href="{% url 'main:graphic_titles' %}">
-        <button class="ref_button activated">
-          Комиксы
-        </button>
-      </a>
-    </div>
+    {% endfor %}
   </div>
+{% endblock %}
+
+{% block sections %}
+  <section>
+    <h1>Разделы</h1>
+    <a href="{% url 'main:home' %}"><button class="ref_button">Главная</button></a>
+    <a href="{% url 'main:text_titles' %}"><button class="ref_button">Новеллы</button></a>
+    <a href="{% url 'main:graphic_titles' %}"><button class="ref_button activated">Комиксы</button></a>
+  </section>
 {% endblock %}

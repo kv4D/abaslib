@@ -24,7 +24,9 @@ def home_view(request):
 def text_titles_view(request):
     """Renders page with text titles"""
     context = {
-        'text_titles': TextTitle.get_titles()
+        'text_titles': TextTitle.get_titles(),
+        'genres': TagGenre.objects.all(),
+        'tags': Tag.objects.all()
     }
     return render(request, 'main/text_titles.html', context)
 
@@ -32,7 +34,9 @@ def text_titles_view(request):
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
     context = {
-        'graphic_titles': GraphicTitle.get_titles()
+        'graphic_titles': GraphicTitle.get_titles(),
+        'genres': TagGenre.objects.all(),
+        'tags': Tag.objects.all()
     }
     return render(request, 'main/graphic_titles.html', context)
 
@@ -51,7 +55,8 @@ def collect_about_section(request, title_type, title_id):
     title.favorites_count = TitleFavorite.get_favorite_count(title)
     title.save()
     
-    is_favorite = TitleFavorite.get_favorite_status(request.user, title)
+    is_favorite = TitleFavorite.get_favorite_status(title, request.user)
+    print(is_favorite)
     
     tags = TitleTag.get_all_title_tags(title)
     tags = [relation.tag for relation in tags]
@@ -130,7 +135,7 @@ def title_page_view(request, title_id=None):
         context, template = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
         context, template = collect_comment_section(request, title_type, title_id)
-
+    
     return render(request, template, context)
 
 
@@ -152,7 +157,7 @@ def change_favorite_title_status(request, title_id=None):
         
     content_type = ContentType.objects.get_for_model(title)
         
-    if user.has_title_in_favorites(title):
+    if TitleFavorite.get_favorite_status(title, user):
         user.remove_title_from_favorites(title)
         TitleFavorite.objects.filter(
             user=user, 

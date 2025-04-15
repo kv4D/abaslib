@@ -40,11 +40,14 @@ class TitleFavorite(models.Model):
     def get_favorite_status(title, user):
         """Try to get favorite status"""
         try:
-            is_favorite = user.has_title_in_favorites(title)
-        except AttributeError:
-            # user is unauthorized
-            is_favorite = None
-        return is_favorite
+            status = TitleFavorite.objects.filter(
+                content_type=ContentType.objects.get_for_model(title),
+                user=user
+                ).exists()
+        except TypeError:
+            # anonymous user, no status
+            status = None
+        return status
     
 
 class TitleView(models.Model):
@@ -89,6 +92,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = _('Тэг')
         verbose_name_plural = _('Тэги')
+        ordering = ['tag_name']
         
     def __str__(self):
         return f"{self.tag_name}"
@@ -101,6 +105,7 @@ class TagGenre(models.Model):
     class Meta:
         verbose_name = _('Тэг-жанр')
         verbose_name_plural = _('Тэги-жанры')
+        ordering = ['tag_name']
     
     def __str__(self):
         return f"{self.tag_name}"

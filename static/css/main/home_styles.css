@@ -45,3 +45,18 @@
 #side .ref_button {
     width: 100%;
 }
+
+.filter_list {
+    list-style-type: none;
+    display: contents;
+}
+
+.filter_list li:not(:last-child) { 
+    margin-bottom: 5px;  
+}
+
+.filter_button {
+    border-radius: 9999px;
+    font-size: 0.8rem;
+}
+

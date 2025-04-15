@@ -77,3 +77,7 @@
 #title_info {
     width: 45%;
 }
+
+.activated:hover {
+    background-color: var(--bg-color-light);
+}

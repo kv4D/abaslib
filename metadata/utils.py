@@ -1,9 +1,10 @@
 """Functions for certain purposes within apps"""
+from itertools import chain
 from django.http import QueryDict
 from django.contrib.contenttypes.models import ContentType
 from titles.models import GraphicTitle, TextTitle
 from reader.utils import get_client_ip
-from metadata.models import TitleView
+from . models import TitleView
 
 
 def update_views(request: QueryDict, title: TextTitle | GraphicTitle):
