@@ -53,9 +53,9 @@
           </a>
         {% endif %}
           {% if title.title_type == 'graphic' %}
-            <a href="{% url 'reader:read_graphic' title.id %}?chapter_num=1&page=1">
+            <a href="{% url 'reader:start_read_graphic' title.id %}">
           {% else %}
-            <a href="{% url 'reader:read_text' title.id %}?chapter_num=1">
+            <a href="{% url 'reader:start_read_text' title.id %}">
           {% endif %}
           <button class="action_button ref_button">
             <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">

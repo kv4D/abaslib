@@ -1,5 +1,7 @@
 """Functions for certain purposes within apps"""
 from re import search
+from django.db import transaction
+from django.db.models import Max
 from itertools import chain
 from titles.models import GraphicTitlePage, TextTitle, GraphicTitle, \
     GraphicTitleChapter, TextTitleChapter
@@ -42,6 +44,19 @@ def get_updated_titles(return_amount: int = 5):
     return titles[:return_amount]
 
 
+def get_last_title_chapter(title):
+    """Get title's chapter with the greatest chapter number"""
+    if title.title_type == 'graphic':
+        chapter_number = title.graphic_chapters.aggregate(
+            Max('chapter_number')
+            )['chapter_number__max']
+    elif title.title_type == 'text':
+        chapter_number = title.text_chapters.aggregate(
+            Max('chapter_number')
+            )['chapter_number__max']
+        return chapter_number if chapter_number else 0
+
+
 def create_pages_from_list(images, chapter):
     """Create GraphicTitlePage objects with provided data"""
     if len(images) == 1:
@@ -53,12 +68,36 @@ def create_pages_from_list(images, chapter):
         )
     else:
         # assume that pages have numeration already
+        page_numbers = []
         for image in images:
             match = search(r'(\d+)', image.name)
-            page_number = int(match.group()) if match else 10_000
-
-            GraphicTitlePage.objects.create(
-                chapter = chapter,
-                image=image,
-                page_number=page_number
-            )
+            if match:
+                page_numbers.append(int(match.group()))
+        
+        if page_numbers and len(page_numbers) == len(images):
+            # there is some numeration
+            # create order 
+            sorted_images = sorted(images, 
+                            key=lambda image: int(search(r'(\d+)', image.name).group(1)))
+            
+            with transaction.atomic():
+                GraphicTitlePage.objects.bulk_create([
+                    GraphicTitlePage(
+                        chapter=chapter,
+                        image=image,
+                        page_number=number + 1
+                    )
+                    for number, image in enumerate(sorted_images)
+                ])
+        else:
+            # there is no proper numeration
+            # use upload order
+            with transaction.atomic():
+                GraphicTitlePage.objects.bulk_create([
+                    GraphicTitlePage(
+                        chapter=chapter,
+                        image=image,
+                        page_number=number+1
+                    )
+                    for number, image in enumerate(images)
+                ])

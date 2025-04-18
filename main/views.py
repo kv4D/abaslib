@@ -84,7 +84,7 @@ def collect_about_section(request, title_type, title_id):
     title.save()
     
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
-    print(is_favorite)
+    
     tags = title.tags.all()
     tags = [relation.tag for relation in tags]
     
@@ -186,7 +186,7 @@ def change_favorite_title_status(request, title_id=None):
         
     if TitleFavorite.get_favorite_status(title, user):
         user.remove_title_from_favorites(title)
-        x, y = TitleFavorite.objects.filter(
+        TitleFavorite.objects.filter(
             user=user, 
             content_type=content_type,
             object_id=title_id).delete()
@@ -194,8 +194,7 @@ def change_favorite_title_status(request, title_id=None):
         user.add_title_to_favorites(title)
         TitleFavorite.objects.create(
             user=user,
-            content_type=content_type,
-            object_id=title.id
+            content_object=title,
         )
 
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))

@@ -12,13 +12,15 @@ class TextTitleForm(forms.ModelForm):
     genres_field = forms.ModelMultipleChoiceField(
         queryset=TagGenre.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False
+        required=False,
+        label=_('Жанры')
     )
     
     tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False
+        required=False,
+        label=_('Теги')
     )
     
     class Meta:
@@ -41,8 +43,6 @@ class TextTitleForm(forms.ModelForm):
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
             'title_cover': _('Обложка'),
-            'tags_field': _('Теги'),
-            'genres_field': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -82,7 +82,7 @@ class TextTitleForm(forms.ModelForm):
                 ),
             'title_cover': forms.FileInput(
                 attrs={
-                    'class': 'form_input'
+                    'class': 'form_input cover'
                 }
             )
         }
@@ -90,9 +90,9 @@ class TextTitleForm(forms.ModelForm):
     def save(self, commit=True):
         title = super().save(commit=commit)
         if commit:
-            for genre in self.cleaned_data['genres']:
+            for genre in self.cleaned_data['genres_field']:
                 TitleGenre.objects.create(content_object=title, tag_genre=genre)
-            for tag in self.cleaned_data['tags']:
+            for tag in self.cleaned_data['tags_field']:
                 TitleTag.objects.create(content_object=title, tag=tag)
         return title
 
@@ -104,13 +104,15 @@ class GraphicTitleForm(forms.ModelForm):
     genres_field = forms.ModelMultipleChoiceField(
         queryset=TagGenre.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False
+        required=False,
+        label=_('Жанры')
     )
     
     tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False
+        required=False,
+        label=_('Теги'),
     )
     
     class Meta:
@@ -133,8 +135,6 @@ class GraphicTitleForm(forms.ModelForm):
             'title_description': _('Описание'),
             'publication_year': _('Год выпуска'),
             'title_cover': _('Обложка'),
-            'tags_field': _('Теги'),
-            'genres_field': _('Жанры')
         }
         widgets = {
             'title_name_rus': forms.TextInput(
@@ -174,7 +174,7 @@ class GraphicTitleForm(forms.ModelForm):
                 ),
             'title_cover': forms.FileInput(
                 attrs={
-                    'class': 'form_input'
+                    'class': 'form_input cover'
                 }
             )
         }    
@@ -182,9 +182,10 @@ class GraphicTitleForm(forms.ModelForm):
     def save(self, commit=True):
         title = super().save(commit=commit)
         if commit:
-            for genre in self.cleaned_data['genres']:
+            print(self.cleaned_data)
+            for genre in self.cleaned_data['genres_field']:
                 TitleGenre.objects.create(content_object=title, tag_genre=genre)
-            for tag in self.cleaned_data['tags']:
+            for tag in self.cleaned_data['tags_field']:
                 TitleTag.objects.create(content_object=title, tag=tag)
         return title
 
@@ -236,11 +237,13 @@ class TextTitleChapterForm(forms.ModelForm):
                 ),
         }
 
-    def __init__(self, *args, title=None, **kwargs):
+    def __init__(self, *args, title=None, chapter_number=None, **kwargs):
         super().__init__(*args, **kwargs)
         if title:
             self.fields['title'].initial = title
             self.fields['title'].widget = forms.HiddenInput()
+        if chapter_number:
+            self.fields['chapter_number'].initial = chapter_number
 
 
 class GraphicTitleChapterForm(forms.ModelForm):
@@ -287,11 +290,13 @@ class GraphicTitleChapterForm(forms.ModelForm):
                 ),
         }
 
-    def __init__(self, *args, title=None, **kwargs):
+    def __init__(self, *args, title=None, chapter_number=None, **kwargs):
         super().__init__(*args, **kwargs)
         if title:
             self.fields['title'].initial = title
             self.fields['title'].widget = forms.HiddenInput()
+        if chapter_number:
+            self.fields['chapter_number'].initial = chapter_number
 
 
 class MultipleFileInput(forms.ClearableFileInput):

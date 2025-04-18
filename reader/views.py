@@ -6,9 +6,37 @@ from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter, GraphicTitlePage
 from main.utils import redirect_to_title_page
 from metadata.utils import update_views
-from .models import TextTitleBookmark, GraphicTitleBookmark
-from .utils import process_chapter_switch
+from . models import TextTitleBookmark, GraphicTitleBookmark
+from . utils import process_chapter_switch
 
+
+def start_read_text_view(request, title_id):
+    """Start reading from the start"""
+    first_chapter = TextTitleChapter.objects.filter(
+        title=get_object_or_404(TextTitle, id=title_id)
+    ).first()
+    
+    if first_chapter is None:
+        return redirect_to_title_page(title_id, 'text')
+    
+    response = redirect('reader:read_text', title_id=title_id)
+    response['Location'] += f'?chapter_num={first_chapter.chapter_number}'
+    return response
+
+
+def start_read_graphic_view(request, title_id):
+    """Start reading from the start"""
+    first_chapter = GraphicTitleChapter.objects.filter(
+        title=get_object_or_404(GraphicTitle, id=title_id)
+    ).first()
+    
+    if first_chapter is None:
+        return redirect_to_title_page(title_id, 'graphic')
+    
+    response = redirect('reader:read_graphic', title_id=title_id)
+    response['Location'] += f'?chapter_num={first_chapter.chapter_number}&page=1'
+    return response
+    
 
 def read_text_title_view(request, title_id):
     """Render page with chapter's content"""

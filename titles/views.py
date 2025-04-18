@@ -4,7 +4,7 @@ from . models import TextTitle, GraphicTitle
 from . forms import TextTitleForm, GraphicTitleForm, \
                     TextTitleChapterForm, GraphicTitleChapterForm, \
                     GraphicTitlePagesForm
-from . utils import create_pages_from_list
+from . utils import create_pages_from_list, get_last_title_chapter
 from main.utils import redirect_to_title_page
 
 
@@ -42,12 +42,18 @@ def upload_text_chapter(request, title_id):
     title = get_object_or_404(TextTitle, id=title_id)
 
     if request.method == 'POST':
-        form = TextTitleChapterForm(request.POST, request.FILES, title=title)
+        chapter_number = get_last_title_chapter()
+        form = TextTitleChapterForm(request.POST, 
+                                    request.FILES, 
+                                    title=title,
+                                    chapter_number=chapter_number)
         if form.is_valid():
             form.save()
             return redirect_to_title_page(title_id, 'text')
     else:
-        form = TextTitleChapterForm(title=title)
+        chapter_number = get_last_title_chapter(title) + 1
+        form = TextTitleChapterForm(title=title,
+                                    chapter_number=chapter_number)
 
     context = {
         'form': form,
@@ -63,8 +69,10 @@ def upload_graphic_chapter(request, title_id):
     title = get_object_or_404(GraphicTitle, id=title_id)
 
     if request.method == 'POST':
-        chapter_form = GraphicTitleChapterForm(request.POST, title=title)
+        chapter_form = GraphicTitleChapterForm(request.POST, 
+                                               title=title)
         pages_form = GraphicTitlePagesForm(request.POST, request.FILES)
+        
 
         if chapter_form.is_valid() and pages_form.is_valid():
             chapter = chapter_form.save(commit=False)
@@ -76,7 +84,9 @@ def upload_graphic_chapter(request, title_id):
             create_pages_from_list(images, chapter)
             return redirect_to_title_page(title_id, 'graphic')
     else:
-        chapter_form = GraphicTitleChapterForm(title=title)
+        chapter_number = get_last_title_chapter(title) + 1
+        chapter_form = GraphicTitleChapterForm(title=title,
+                                               chapter_number=chapter_number)
         pages_form = GraphicTitlePagesForm()
 
     context = {
