@@ -53,20 +53,27 @@
     <div id="title_stats">
       <p class="highlighted_text">Жанры</p>
       {% for genre in genres %}
-        <p>{{ genre }}</p>
+        <p class="tag">{{ genre }}</p>
       {% empty %}
         <p>Жанры не добавлены</p>
       {% endfor %}
 
       <p class="highlighted_text">Теги</p>
       {% for tag in tags %}
-        <p>{{ tag }}</p>
+        <p class="tag">{{ tag }}</p>
       {% empty %}
         <p>Тэги не добавлены</p>
       {% endfor %}
 
       <p class="highlighted_text">Оценка</p>
-      <p>Какая-то</p>
+      {% if average_rate %}
+        <p>{{ average_rate }}</p>
+      {% else %}
+        <p>У тайтла еще нет оценок</p>
+      {% endif %}
+
+      <p class="highlighted_text">Количество оценок</p>
+      <p>{{ rates_count }}</p>
 
       <p class="highlighted_text">Пользователей добавило в избранное</p>
       <p>{{ title.favorites_count }}</p>

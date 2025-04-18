@@ -81,3 +81,7 @@
 .activated:hover {
     background-color: var(--bg-color-light);
 }
+
+.tag {
+    border: solid 2px;
+}

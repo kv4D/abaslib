@@ -1,6 +1,7 @@
 """Models for rating system"""
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
 
@@ -18,8 +19,8 @@ class TitleRating(models.Model):
             models.CheckConstraint(check=models.Q(rate__range=(1, 5)), name='rate in range 1 to 5'),
             models.UniqueConstraint(fields=['user', 'content_type'], name='rate only once')
         ]
-        verbose_name = 'Оценка тайтла'
-        verbose_name_plural = 'Оценки тайтлов'
+        verbose_name = _('Оценка тайтла')
+        verbose_name_plural = _('Оценки тайтлов')
         
     def __str__(self):
         return f'Оценки "{self.content_object}"'
@@ -30,7 +31,7 @@ class TitleRating(models.Model):
         avg = TitleRating.objects.filter(
             content_type=ContentType.objects.get_for_model(title),
             object_id=title.id
-        ).aggregate(models.Avg('rate'))
+        ).aggregate(models.Avg('rate'))['rate__avg']
         
         return avg
     

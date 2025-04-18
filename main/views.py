@@ -2,12 +2,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q
-from metadata.models import TitleView, TitleFavorite, TitleGenre, \
-    TitleTag, Tag, TagGenre
+from metadata.models import TitleView, TitleFavorite
 from metadata.forms import FilterTagForm
 from titles.models import TextTitle, GraphicTitle
 from titles.utils import get_new_titles, get_updated_titles
+from ratings.models import TitleRating
 from . utils import redirect_to_title_page
 
 
@@ -78,24 +77,27 @@ def collect_about_section(request, title_type, title_id):
         title = get_object_or_404(TextTitle, id=title_id)
         
     # collect and update stats
+    
+    # metadata
     title.views_count = TitleView.get_views_count(title)
     title.favorites_count = TitleFavorite.get_favorite_count(title)
     title.save()
-    
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
+    tags = [relation.tag for relation in title.tags.all()]
+    genres = [relation.tag_genre for relation in title.genres.all()]
     
-    tags = title.tags.all()
-    tags = [relation.tag for relation in tags]
-    
-    genres = title.genres.all()
-    genres = [relation.tag_genre for relation in genres]
+    # ratings
+    average_rate = TitleRating.get_average_rate(title)
+    rates_count = TitleRating.get_rates_count(title)
 
     context = {
         'title': title,
         'title_type': title_type,
         'user_favorite': is_favorite,
         'tags': tags,
-        'genres': genres
+        'genres': genres,
+        'average_rate': average_rate,
+        'rates_count': rates_count
     }
 
     return context, 'main/title_page_about.html'
