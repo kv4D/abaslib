@@ -31,16 +31,16 @@
 }
 
 .button_group a {
-    flex: 1; 
-    display: grid; 
+    flex: 1;
+    display: grid;
 }
 
 #chapters .button_group a:first-child {
-    flex: 0 0 10%; 
+    flex: 0 0 10%;
 }
 
 #chapters .button_group a:last-child {
-    flex: 0 0 90%; 
+    flex: 0 0 90%;
 }
 
 #chapters .ref_button {
@@ -53,7 +53,7 @@
 }
 
 .highlighted_text {
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
     font-size: larger;
 }
 
@@ -67,15 +67,17 @@
 #caption {
     display: flex;
     justify-content: space-between;
+    
 }
 
 #title_stats {
     width: 45%;
-    text-align: right;
+    text-align: center;
 }
 
 #title_info {
     width: 45%;
+    text-align: center;
 }
 
 .activated:hover {
@@ -84,4 +86,25 @@
 
 .tag {
     border: solid 2px;
+    border-radius: 9999px;
+    padding: 10px;
+}
+
+.rating-list li {
+    float: right;
+    padding: 10px 5px;
+}
+
+.rating-list li:hover,
+.rating-list li:hover~li {
+    color: var(--rating-color-hover);
+}
+
+.rating-list {
+    display: inline-block;
+    list-style: none;
+}
+
+.checked {
+    color: var(--rating-color-base);
 }

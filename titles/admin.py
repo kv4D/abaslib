@@ -7,6 +7,7 @@ from . models import TextTitle, GraphicTitle, \
                         TextTitleChapter, GraphicTitleChapter, \
                         GraphicTitlePage
 from metadata.models import TitleGenre, TitleTag
+from ratings.models import TitleRating
                         
 
 # modifying admin site fields to show
@@ -28,6 +29,12 @@ class TitleGenreInline(GenericTabularInline):
     ct_field = 'content_type'  
     ct_fk_field = 'object_id'  
     
+class TitleRatingInline(GenericTabularInline):
+    model = TitleRating
+    extra = 1
+    ct_field = 'content_type'  
+    ct_fk_field = 'object_id'  
+    
 class TitleTagInline(GenericTabularInline):
     model = TitleTag
     extra = 1
@@ -36,7 +43,7 @@ class TitleTagInline(GenericTabularInline):
     
 class TextTitleAdmin(admin.ModelAdmin):
     readonly_fields = ('title_cover_preview', 'added_at', 'views_count', 'favorites_count')
-    inlines = [TextTitleChapterInline, TitleGenreInline, TitleTagInline]
+    inlines = [TextTitleChapterInline, TitleGenreInline, TitleTagInline, TitleRatingInline]
     
     @admin.display(description=_('Превью обложки'))
     def title_cover_preview(self, title):

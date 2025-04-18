@@ -88,6 +88,7 @@ def collect_about_section(request, title_type, title_id):
     
     # ratings
     average_rate = TitleRating.get_average_rate(title)
+    user_rate = title.ratings.filter(user=request.user).first()
     rates_count = TitleRating.get_rates_count(title)
 
     context = {
@@ -97,7 +98,8 @@ def collect_about_section(request, title_type, title_id):
         'tags': tags,
         'genres': genres,
         'average_rate': average_rate,
-        'rates_count': rates_count
+        'rates_count': rates_count,
+        'user_rate': user_rate
     }
 
     return context, 'main/title_page_about.html'

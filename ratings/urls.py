@@ -20,4 +20,8 @@ from . import views
 
 app_name = 'ratings'
 
-urlpatterns = []
+urlpatterns = [
+    path('rate/<int:title_id>/<int:rating>/',
+         views.rate_title_view,
+         name='rate_title'),
+]

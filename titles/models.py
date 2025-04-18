@@ -69,6 +69,7 @@ class Title(models.Model):
     
     tags = GenericRelation('metadata.TitleTag')
     genres = GenericRelation('metadata.TitleGenre')
+    ratings = GenericRelation('ratings.TitleRating')
 
     class Meta:
         abstract = True
