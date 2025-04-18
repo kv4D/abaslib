@@ -50,6 +50,7 @@ def get_last_title_chapter(title):
         chapter_number = title.graphic_chapters.aggregate(
             Max('chapter_number')
             )['chapter_number__max']
+        return chapter_number if chapter_number else 0
     elif title.title_type == 'text':
         chapter_number = title.text_chapters.aggregate(
             Max('chapter_number')

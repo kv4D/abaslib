@@ -42,11 +42,9 @@ def upload_text_chapter(request, title_id):
     title = get_object_or_404(TextTitle, id=title_id)
 
     if request.method == 'POST':
-        chapter_number = get_last_title_chapter()
         form = TextTitleChapterForm(request.POST, 
                                     request.FILES, 
-                                    title=title,
-                                    chapter_number=chapter_number)
+                                    title=title)
         if form.is_valid():
             form.save()
             return redirect_to_title_page(title_id, 'text')
