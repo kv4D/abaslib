@@ -70,6 +70,10 @@ a:hover {
     color: var(--link-color-hover) !important;
 }
 
+.centered {
+    text-align: center;
+}
+
 footer,
 header,
 #main_content,

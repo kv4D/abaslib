@@ -35,9 +35,9 @@ def text_titles_view(request):
             text_titles = TextTitle.objects.all()
         
         if genres:
-            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres)
+            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres).distinct()
         if tags:
-            text_titles = TextTitle.objects.filter(tags__tag__in=tags)
+            text_titles = TextTitle.objects.filter(tags__tag__in=tags).distinct()
     
     context = {
         'text_titles': text_titles,
@@ -54,13 +54,12 @@ def graphic_titles_view(request):
         genres = form.cleaned_data.get('genres')
         tags = form.cleaned_data.get('tags')
         
-        if not genres and not tags:
-            graphic_titles = GraphicTitle.objects.all()
+        graphic_titles = GraphicTitle.objects.all()
         
         if genres:
-            graphic_titles = GraphicTitle.objects.filter(genres__tag_genre__in=genres)
+            graphic_titles = graphic_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
-            graphic_titles = GraphicTitle.objects.filter(tags__tag__in=tags)
+            graphic_titles = graphic_titles.filter(tags__tag__in=tags).distinct()
             
     context = {
         'graphic_titles': graphic_titles,
