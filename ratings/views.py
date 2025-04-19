@@ -5,9 +5,7 @@ from . models import TitleRating
 
 
 # Create your views here.
-def rate_title_view(request, title_id, rating):    
-    title_type = request.GET.get('title_type')
-
+def rate_title_view(request, title_type, title_id, rate):    
     assert title_type in ['text', 'graphic']
     
     if title_type == 'graphic':
@@ -21,7 +19,7 @@ def rate_title_view(request, title_id, rating):
     TitleRating.objects.update_or_create(
             content_type=content_type,
             object_id=title.id,
-            user=request.user, 
-            rate=rating)
+            user=request.user,
+            defaults={'rate': rate})
     
     return redirect(request.META.get('HTTP_REFERER'))

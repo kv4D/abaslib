@@ -21,7 +21,7 @@ from . import views
 app_name = 'ratings'
 
 urlpatterns = [
-    path('rate/<int:title_id>/<int:rating>/',
+    path('rate/<str:title_type>/<int:title_id>/<int:rate>/',
          views.rate_title_view,
          name='rate_title'),
 ]

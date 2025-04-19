@@ -82,16 +82,16 @@
         <span class="fa fa-star {% if average_rate > 3 %} checked {% endif %}"></span>
         <span class="fa fa-star {% if average_rate > 4 %} checked {% endif %}"></span>
         <ul class="btn btn-light list-inline rating-list">
-          <li onclick="rate(5, {{ post.id }})">
-              <i class="fa fa-star {% if user_rate > 4 %} checked {% endif %}" title="Rate 5"></i></li>
-          <li onclick="rate(4, {{ post.id }})">
-              <i class="fa fa-star {% if user_rate > 3 %} checked {% endif %}" title="Rate 4"></i></li>
-          <li onclick="rate(3, {{ post.id }})">
-              <i class="fa fa-star {% if user_rate > 2 %} checked {% endif %}" title="Rate 3"></i></li>
-          <li onclick="rate(2, {{ post.id }})">
-              <i class="fa fa-star {% if user_rate > 1 %} checked {% endif %}" title="Rate 2"></i></li>
-          <li onclick="rate(1, {{ post.id }})">
-              <i class="fa fa-star {% if user_rate > 0 %} checked {% endif %}" title="Rate 1"></i></li>
+          <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 5)">
+              <i class="fa fa-star {% if user_rate > 4 %} checked {% endif %}" title="Оценить на 5"></i></li>
+          <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 4)">
+              <i class="fa fa-star {% if user_rate > 3 %} checked {% endif %}" title="Оценить на 4"></i></li>
+          <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 3)">
+              <i class="fa fa-star {% if user_rate > 2 %} checked {% endif %}" title="Оценить на 3"></i></li>
+          <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 2)">
+              <i class="fa fa-star {% if user_rate > 1 %} checked {% endif %}" title="Оценить на 2"></i></li>
+          <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 1)">
+              <i class="fa fa-star {% if user_rate > 0 %} checked {% endif %}" title="Оценить на 5"></i></li>
         </ul>
       </div>
       
@@ -102,4 +102,8 @@
       <p>{{ title.views_count }}</p>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static "js/title_page_rate.js" %}"></script>
 {% endblock %}

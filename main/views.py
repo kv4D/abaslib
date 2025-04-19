@@ -89,6 +89,8 @@ def collect_about_section(request, title_type, title_id):
     # ratings
     average_rate = TitleRating.get_average_rate(title)
     user_rate = title.ratings.filter(user=request.user).first()
+    
+    user_rate = user_rate.rate if user_rate else 0
     rates_count = TitleRating.get_rates_count(title)
 
     context = {
