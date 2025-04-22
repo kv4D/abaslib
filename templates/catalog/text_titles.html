@@ -5,17 +5,6 @@
   ABASlib — Новеллы
 {% endblock %}
 
-{% block search %}
-  <form id="search" action="" method="get">
-    <input
-      id="search_input"
-      type="search"
-      name="search_field"
-      placeholder="Поиск"
-    />
-  </form>
-{% endblock %}
-
 {% block titles %}
   <h4>Новеллы</h4>
   {% if not text_titles %}
@@ -33,7 +22,7 @@
 
 {% block sections %}
   <section>
-    <h1>Разделы</h1>
+    <h2>Разделы</h2>
     <a href="{% url 'catalog:home' %}"><button class="ref_button">Главная</button></a>
     <a href="{% url 'catalog:all_titles' %}"><button class="ref_button">Все тайтлы</button></a>
     <a href="{% url 'catalog:text_titles' %}"><button class="ref_button activated">Новеллы</button></a>
@@ -41,9 +30,20 @@
   </section>
 {% endblock %}
 
-{% block filters %}
+{% block search %}
   <section>
-    <h1>Фильтры</h1>
+    <h2>Поиск</h2>
+    <input
+      id="search_input"
+      type="search"
+      name="search_field"
+      placeholder="Поиск"
+      form="filter_form"
+      value="{{ request.GET.search_field }}"
+    />
+  </section>
+  <section>
+    <h2>Фильтры</h2>
     <a href="{% url 'catalog:text_titles' %}">
       <button class="filter_button">
         Сбросить фильтры

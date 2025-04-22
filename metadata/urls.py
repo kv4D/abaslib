@@ -20,4 +20,9 @@ from . import views
 
 app_name = 'metadata'
 
-urlpatterns = []
+urlpatterns = [
+    path('title/<int:title_id>/add-to-favorites/',
+        views.change_favorite_title_status,
+        name='change_favorite_status'
+        ),
+]

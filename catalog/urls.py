@@ -31,10 +31,6 @@ urlpatterns = [
         views.title_page_view,
         name='title_page'
         ),
-    path('title/<int:title_id>/add-to-favorites/',
-        views.change_favorite_title_status,
-        name='change_favorite_status'
-        ),
     path('about_rights/',
         TemplateView.as_view(template_name="main/about_rights.html"),
         name='about_rights'

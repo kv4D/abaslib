@@ -10,10 +10,6 @@
 {% endblock %}
 
 {% block header %}
-  {% block search %}
-
-  {% endblock %}
-
   <div class="button_group">
     {% if user.is_authenticated %}
       <div class="custom_select">
@@ -91,7 +87,7 @@
         </section>
       {% endblock %}
       
-      {% block filters %}
+      {% block search %}
       
       {% endblock %}
 

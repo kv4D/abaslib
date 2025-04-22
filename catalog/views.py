@@ -3,6 +3,7 @@ from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from metadata.models import TitleView, TitleFavorite
 from metadata.forms import FilterTagForm
 from titles.models import TextTitle, GraphicTitle
@@ -25,19 +26,34 @@ def home_view(request):
 def all_titles_view(request):
     """Renders page with all titles"""
     filter_form = FilterTagForm(request.GET)
+    search_query = request.GET.get('search_query', None)
+    
     text_titles = TextTitle.objects.all()
     graphic_titles = GraphicTitle.objects.all()
     
+    # apply search query
+    if search_query:
+        print('whta')
+        text_titles = text_titles.filter(
+            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_eng__icontains=search_query)
+        )
+        graphic_titles = graphic_titles.filter(
+            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_eng__icontains=search_query)
+        )
+    
+    # apply filters
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
         tags = filter_form.cleaned_data.get('tags')
         
         if genres:
-            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres).distinct()
-            graphic_titles = GraphicTitle.objects.filter(genres__tag_genre__in=genres).distinct()
+            text_titles = text_titles.filter(genres__tag_genre__in=genres).distinct()
+            graphic_titles = graphic_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
-            text_titles = TextTitle.objects.filter(tags__tag__in=tags).distinct()
-            graphic_titles = GraphicTitle.objects.filter(tags__tag__in=tags).distinct()
+            text_titles = text_titles.filter(tags__tag__in=tags).distinct()
+            graphic_titles = graphic_titles.filter(tags__tag__in=tags).distinct()
             
     titles = sorted(
         chain(text_titles, graphic_titles),
@@ -55,16 +71,25 @@ def all_titles_view(request):
 def text_titles_view(request):
     """Renders page with text titles"""
     filter_form = FilterTagForm(request.GET)
+    search_query = request.GET.get('query')
+    
     text_titles = TextTitle.objects.all()
+    
+    # apply search query
+    if search_query:
+        text_titles = text_titles.filter(
+            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_eng__icontains=search_query)
+        )
     
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
         tags = filter_form.cleaned_data.get('tags')
         
         if genres:
-            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres).distinct()
+            text_titles = text_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
-            text_titles = TextTitle.objects.filter(tags__tag__in=tags).distinct()
+            text_titles = text_titles.filter(tags__tag__in=tags).distinct()
     
     context = {
         'text_titles': text_titles,
@@ -76,7 +101,16 @@ def text_titles_view(request):
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
     filter_form = FilterTagForm(request.GET)
+    search_query = request.GET.get('query')
+    
     graphic_titles = GraphicTitle.objects.all()
+    
+    # apply search query
+    if search_query:
+        graphic_titles = graphic_titles.filter(
+            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_eng__icontains=search_query)
+        )
     
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
