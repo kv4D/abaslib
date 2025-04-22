@@ -1,4 +1,5 @@
 """Views for 'main' app, pages with content"""
+from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -21,17 +22,44 @@ def home_view(request):
     return render(request, 'main/home.html', context)
 
 
+def all_titles_view(request):
+    """Renders page with all titles"""
+    filter_form = FilterTagForm(request.GET)
+    text_titles = TextTitle.objects.all()
+    graphic_titles = GraphicTitle.objects.all()
+    
+    if filter_form.is_valid():
+        genres = filter_form.cleaned_data.get('genres')
+        tags = filter_form.cleaned_data.get('tags')
+        
+        if genres:
+            text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres).distinct()
+            graphic_titles = GraphicTitle.objects.filter(genres__tag_genre__in=genres).distinct()
+        if tags:
+            text_titles = TextTitle.objects.filter(tags__tag__in=tags).distinct()
+            graphic_titles = GraphicTitle.objects.filter(tags__tag__in=tags).distinct()
+            
+    titles = sorted(
+        chain(text_titles, graphic_titles),
+        key=lambda title: title.added_at,
+        reverse=True
+    )
+            
+    context = {
+        'titles': titles,
+        'filter_form': filter_form
+    }
+    return render(request, 'main/all_titles.html', context)
+
+
 def text_titles_view(request):
     """Renders page with text titles"""
-    form = FilterTagForm(request.GET)
+    filter_form = FilterTagForm(request.GET)
     text_titles = TextTitle.objects.all()
     
-    if form.is_valid():
-        genres = form.cleaned_data.get('genres')
-        tags = form.cleaned_data.get('tags')
-        
-        if not genres and not tags:
-            text_titles = TextTitle.objects.all()
+    if filter_form.is_valid():
+        genres = filter_form.cleaned_data.get('genres')
+        tags = filter_form.cleaned_data.get('tags')
         
         if genres:
             text_titles = TextTitle.objects.filter(genres__tag_genre__in=genres).distinct()
@@ -40,20 +68,19 @@ def text_titles_view(request):
     
     context = {
         'text_titles': text_titles,
-        'form': form
+        'filter_form': filter_form
     }
     return render(request, 'main/text_titles.html', context)
 
 
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
-    form = FilterTagForm(request.GET)
+    filter_form = FilterTagForm(request.GET)
+    graphic_titles = GraphicTitle.objects.all()
     
-    if form.is_valid():
-        genres = form.cleaned_data.get('genres')
-        tags = form.cleaned_data.get('tags')
-        
-        graphic_titles = GraphicTitle.objects.all()
+    if filter_form.is_valid():
+        genres = filter_form.cleaned_data.get('genres')
+        tags = filter_form.cleaned_data.get('tags')
         
         if genres:
             graphic_titles = graphic_titles.filter(genres__tag_genre__in=genres).distinct()
@@ -62,7 +89,7 @@ def graphic_titles_view(request):
             
     context = {
         'graphic_titles': graphic_titles,
-        'form': form
+        'filter_form': filter_form
     }
     return render(request, 'main/graphic_titles.html', context)
 

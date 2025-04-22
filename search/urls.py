@@ -1,5 +1,5 @@
 """
-URL configuration for abaslib project.
+URL configuration for users app.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -14,21 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+from . import views
+
+
+app_name = 'search'
 
 urlpatterns = [
-    path('ab4sl1b-admin-page/', admin.site.urls),
-    path('', include('reader.urls')),
-    path('', include('main.urls')),
-    path('', include('titles.urls')),
-    path('', include('ratings.urls')),
-    path('', include('metadata.urls')),
-    path('', include('users.urls')),
-    path('', include('search.urls'))
+    path('search/',
+         views.search_by_title_name_view,
+         name='search_by_name'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -234,12 +234,15 @@ select {
 
 input,
 textarea {
-    padding: 10px 10px;
     margin: 8px;
+    padding: 5px 5px;
+    line-height:140%;
     box-sizing: content-box;
     border-radius: 5px;
     font-family: inherit;
     font-size: inherit;
+    color: var(--text-color-base);
+    background-color: var(--bg-color-dark);
 }
 
 textarea {

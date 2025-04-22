@@ -24,6 +24,7 @@
   <section>
     <h1>Разделы</h1>
     <a href="{% url 'main:home' %}"><button class="ref_button">Главная</button></a>
+    <a href="{% url 'main:all_titles' %}"><button class="ref_button">Все тайтлы</button></a>
     <a href="{% url 'main:text_titles' %}"><button class="ref_button">Новеллы</button></a>
     <a href="{% url 'main:graphic_titles' %}"><button class="ref_button activated">Комиксы</button></a>
   </section>
@@ -43,7 +44,7 @@
     <form id="filter_form" action="{% url 'main:graphic_titles' %}" method="get">      
       <h4>Жанры</h4>
       <ul class="filter_list">
-        {% for checkbox in form.genres %}
+        {% for checkbox in filter_form.genres %}
           <li>
             <label>
               {{ checkbox.tag }} 
@@ -55,7 +56,7 @@
   
       <h4>Тэги</h4>
       <ul class="filter_list">
-        {% for checkbox in form.tags %}
+        {% for checkbox in filter_form.tags %}
           <li>
             <label>
               {{ checkbox.tag }} 

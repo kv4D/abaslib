@@ -40,6 +40,11 @@ urlpatterns = [
         name='change_favorite_status'
         ),
     path(
+        'titles/',
+        views.all_titles_view,
+        name='all_titles'
+        ),
+    path(
         'text/',
         views.text_titles_view,
         name='text_titles'
