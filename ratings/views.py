@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 from titles.models import GraphicTitle, TextTitle
 from . models import TitleRating
 
 
-# Create your views here.
+@login_required(login_url="users:login")
 def rate_title_view(request, title_type, title_id, rate):    
     assert title_type in ['text', 'graphic']
     

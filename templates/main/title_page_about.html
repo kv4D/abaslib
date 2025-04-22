@@ -69,18 +69,33 @@
 
 
       <p class="highlighted_text">Оценка</p>
-      <div class="card-title">
+ 
         {% if average_rate %}
-          <p>{{ average_rate }}</p>
+          <p>{{ average_rate }} / {{ rates_count }}</p>
         {% else %}
           <p>У тайтла еще нет оценок</p>
         {% endif %}
-        <p>Количество оценок: {{ rates_count }}</p>
-        <span class="fa fa-star {% if average_rate > 0 %} checked {% endif %}"></span>
-        <span class="fa fa-star {% if average_rate > 1 %} checked {% endif %}"></span>
-        <span class="fa fa-star {% if average_rate > 2 %} checked {% endif %}"></span>
-        <span class="fa fa-star {% if average_rate > 3 %} checked {% endif %}"></span>
-        <span class="fa fa-star {% if average_rate > 4 %} checked {% endif %}"></span>
+        <p style="display: flex; flex-direction: row; gap: 10px;">
+          <span class="fa fa-star {% if average_rate > 0 %} checked {% endif %}"></span>
+          <span class="fa fa-star {% if average_rate > 1 %} checked {% endif %}"></span>
+          <span class="fa fa-star {% if average_rate > 2 %} checked {% endif %}"></span>
+          <span class="fa fa-star {% if average_rate > 3 %} checked {% endif %}"></span>
+          <span class="fa fa-star {% if average_rate > 4 %} checked {% endif %}"></span>
+        </p>
+
+        <div style="display: flex; flex-direction: row; gap: 10px;">
+          <span onclick="rate('{{ title.title_type }}', {{ title.id }}, 5)">
+              <i class="fa fa-star {% if user_rate > 4 %} checked {% endif %}" title="Оценить на 5"></i></span>
+          <span onclick="rate('{{ title.title_type }}', {{ title.id }}, 4)">
+              <i class="fa fa-star {% if user_rate > 3 %} checked {% endif %}" title="Оценить на 4"></i></span>
+          <span onclick="rate('{{ title.title_type }}', {{ title.id }}, 3)">
+              <i class="fa fa-star {% if user_rate > 2 %} checked {% endif %}" title="Оценить на 3"></i></span>
+          <span onclick="rate('{{ title.title_type }}', {{ title.id }}, 2)">
+              <i class="fa fa-star {% if user_rate > 1 %} checked {% endif %}" title="Оценить на 2"></i></span>
+          <span onclick="rate('{{ title.title_type }}', {{ title.id }}, 1)">
+              <i class="fa fa-star {% if user_rate > 0 %} checked {% endif %}" title="Оценить на 5"></i></span>
+        </div>
+
         <ul class="btn btn-light list-inline rating-list">
           <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 5)">
               <i class="fa fa-star {% if user_rate > 4 %} checked {% endif %}" title="Оценить на 5"></i></li>
@@ -93,7 +108,6 @@
           <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 1)">
               <i class="fa fa-star {% if user_rate > 0 %} checked {% endif %}" title="Оценить на 5"></i></li>
         </ul>
-      </div>
       
       <p class="highlighted_text">Пользователей добавило в избранное</p>
       <p>{{ title.favorites_count }}</p>

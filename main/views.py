@@ -88,7 +88,10 @@ def collect_about_section(request, title_type, title_id):
     
     # ratings
     average_rate = TitleRating.get_average_rate(title)
-    user_rate = title.ratings.filter(user=request.user).first()
+    if request.user.is_authenticated:
+        user_rate = title.ratings.filter(user=request.user).first()
+    else:
+        user_rate = 0
     
     user_rate = user_rate.rate if user_rate else 0
     rates_count = TitleRating.get_rates_count(title)
@@ -171,7 +174,7 @@ def title_page_view(request, title_id=None):
     return render(request, template, context)
 
 
-@login_required
+@login_required(login_url="users:login")
 def change_favorite_title_status(request, title_id=None):
     """
     Changes 'favorite' status of title for users when they press the button

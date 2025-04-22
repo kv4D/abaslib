@@ -17,7 +17,7 @@ class TitleRating(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(check=models.Q(rate__range=(1, 5)), name='rate in range 1 to 5'),
-            models.UniqueConstraint(fields=['user', 'content_type'], name='rate only once')
+            models.UniqueConstraint(fields=['user', 'content_type', 'object_id'], name='rate only once')
         ]
         verbose_name = _('Оценка тайтла')
         verbose_name_plural = _('Оценки тайтлов')
