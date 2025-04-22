@@ -1,18 +1,29 @@
-{% extends 'main/home.html' %}
+{% extends 'catalog/home.html' %}
 {% load static %}
 
 {% block title %}
-  ABASlib — Комиксы
+  ABASlib — Всё и сразу
+{% endblock %}
+
+{% block search %}
+  <form id="search" action="" method="get">
+    <input
+      id="search_input"
+      type="search"
+      name="search_field"
+      placeholder="Поиск"
+    />
+  </form>
 {% endblock %}
 
 {% block titles %}
-  <h4>Комиксы</h4>
-  {% if not graphic_titles %}
+  <h4>Тайтлы</h4>
+  {% if not titles %}
     <p class="highlighted_text centered">Подходящие тайтлы не найдены</p>
   {% endif %}
   <div class="titles">
-    {% for title in graphic_titles %}
-      <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'main:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+    {% for title in titles %}
+      <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
         <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка" />
         <div class="title_name">{{ title.title_name_rus }}</div>
       </a>
@@ -23,17 +34,17 @@
 {% block sections %}
   <section>
     <h1>Разделы</h1>
-    <a href="{% url 'main:home' %}"><button class="ref_button">Главная</button></a>
-    <a href="{% url 'main:all_titles' %}"><button class="ref_button">Все тайтлы</button></a>
-    <a href="{% url 'main:text_titles' %}"><button class="ref_button">Новеллы</button></a>
-    <a href="{% url 'main:graphic_titles' %}"><button class="ref_button activated">Комиксы</button></a>
+    <a href="{% url 'catalog:home' %}"><button class="ref_button">Главная</button></a>
+    <a href="{% url 'catalog:all_titles' %}"><button class="ref_button activated">Все тайтлы</button></a>
+    <a href="{% url 'catalog:text_titles' %}"><button class="ref_button">Новеллы</button></a>
+    <a href="{% url 'catalog:graphic_titles' %}"><button class="ref_button">Комиксы</button></a>
   </section>
 {% endblock %}
 
 {% block filters %}
   <section>
     <h1>Фильтры</h1>
-    <a href="{% url 'main:graphic_titles' %}">
+    <a href="{% url 'catalog:all_titles' %}">
       <button class="filter_button">
         Сбросить фильтры
       </button>
@@ -41,7 +52,7 @@
     <button type="submit" form="filter_form" class="filter_button">
       Применить фильтры
     </button>
-    <form id="filter_form" action="{% url 'main:graphic_titles' %}" method="get">      
+    <form id="filter_form" action="{% url 'catalog:all_titles' %}" method="get">      
       <h4>Жанры</h4>
       <ul class="filter_list">
         {% for checkbox in filter_form.genres %}

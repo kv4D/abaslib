@@ -5,7 +5,7 @@ from . forms import TextTitleForm, GraphicTitleForm, \
                     TextTitleChapterForm, GraphicTitleChapterForm, \
                     GraphicTitlePagesForm
 from . utils import create_pages_from_list, get_last_title_chapter
-from main.utils import redirect_to_title_page
+from catalog.utils import redirect_to_title_page
 
 
 @login_required
@@ -25,7 +25,7 @@ def upload_title_view(request):
         form = form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('main:home')
+            return redirect('catalog:home')
     else:
         form = form()
 

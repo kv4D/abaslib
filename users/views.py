@@ -33,14 +33,14 @@ def user_profile_view(request):
 def register_user_view(request):
     """Registers user and redirects to homepage"""
     if request.user.is_authenticated:
-        return redirect('main:home')
+        return redirect('catalog:home')
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('main:home')
+            return redirect('catalog:home')
     else:
         form = RegisterForm()
     context = {
@@ -52,7 +52,7 @@ def register_user_view(request):
 def login_user_view(request):
     """Tries to login user with input data"""
     if request.user.is_authenticated:
-        return redirect('main:home')
+        return redirect('catalog:home')
 
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -62,7 +62,7 @@ def login_user_view(request):
             user = authenticate(request, username=username_received, password=password_received)
             if user:
                 login(request, user)
-                return redirect('main:home')
+                return redirect('catalog:home')
     else:
         form = LoginForm()
     context = {
@@ -74,4 +74,4 @@ def login_user_view(request):
 def logout_user_view(request):
     """Logs out authorized user"""
     logout(request)
-    return redirect('main:home')
+    return redirect('catalog:home')

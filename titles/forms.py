@@ -1,4 +1,4 @@
-"""Contains forms for 'main' app"""
+"""Contains forms for 'titles' app"""
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \

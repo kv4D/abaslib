@@ -6,6 +6,7 @@
     --font-family-base: Roboto mono, monospace;
     /* Color vars */
     --text-color-base: #EFEFEF;
+    --text-color-pale: #EFEFEFBD;
     --text-color-bright: #BA181B;
     --link-color-hover: #FF090D;
     --rating-color-base: #F5A614;

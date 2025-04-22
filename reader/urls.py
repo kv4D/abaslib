@@ -21,16 +21,16 @@ from . import views
 app_name = 'reader'
 
 urlpatterns = [
-    path('title/<int:title_id>/read/type=txt/',
+    path('title/<int:title_id>/read/type=t/',
          views.read_text_title_view,
          name='read_text'),
-    path('title/<int:title_id>/read/type=grp/',
+    path('title/<int:title_id>/read/type=g/',
          views.read_graphic_title_view,
          name='read_graphic'),
-    path('title/<int:title_id>/read/type=txt/start/',
+    path('title/<int:title_id>/read/type=t/start/',
          views.start_read_text_view,
          name='start_read_text'),
-    path('title/<int:title_id>/read/type=grp/start/',
+    path('title/<int:title_id>/read/type=g/start/',
          views.start_read_graphic_view,
          name='start_read_graphic'),
     path('title/<int:title_id>/read/manage_bookmark/<int:chapter_id>/',

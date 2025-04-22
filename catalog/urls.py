@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from . import views
 
 
-app_name = 'main'
+app_name = 'catalog'
 
 urlpatterns = [
     path('',
@@ -31,26 +31,26 @@ urlpatterns = [
         views.title_page_view,
         name='title_page'
         ),
-    path('about_rights/',
-        TemplateView.as_view(template_name="main/about_rights.html"),
-        name='about_rights'
-        ),
     path('title/<int:title_id>/add-to-favorites/',
         views.change_favorite_title_status,
         name='change_favorite_status'
         ),
+    path('about_rights/',
+        TemplateView.as_view(template_name="main/about_rights.html"),
+        name='about_rights'
+        ),
     path(
-        'titles/',
+        'titles/all/',
         views.all_titles_view,
         name='all_titles'
         ),
     path(
-        'text/',
+        'titles/text/',
         views.text_titles_view,
         name='text_titles'
         ),
     path(
-        'graphic/',
+        'titles/graphic/',
         views.graphic_titles_view,
         name='graphic_titles'
         )

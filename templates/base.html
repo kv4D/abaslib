@@ -1,4 +1,4 @@
-<!-- Base for html files in "main" app -->
+<!-- Base for html files -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -27,7 +27,7 @@
     <header>
       <div id="header_container">
         <div id="site_icon">
-          <a href="{% url 'main:home' %}">
+          <a href="{% url 'catalog:home' %}">
             <button class="ref_button">
               <img id="icon" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib
             </button>
@@ -51,7 +51,7 @@
         {% block footer %}
 
         {% endblock %}
-        <a href="{% url 'main:about_rights' %}"><button class="ref_button">Для правообладателей</button></a>
+        <a href="{% url 'catalog:about_rights' %}"><button class="ref_button">Для правообладателей</button></a>
       </div>
     </footer>
     

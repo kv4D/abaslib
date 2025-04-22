@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
     GraphicTitleChapter, GraphicTitlePage
-from main.utils import redirect_to_title_page
+from catalog.utils import redirect_to_title_page
 from metadata.utils import update_views
 from . models import TextTitleBookmark, GraphicTitleBookmark
 from . utils import process_chapter_switch

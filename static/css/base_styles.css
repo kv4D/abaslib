@@ -245,6 +245,11 @@ textarea {
     background-color: var(--bg-color-dark);
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-color-pale)
+}
+
 textarea {
     resize: none;
 }

@@ -1,4 +1,4 @@
-"""Views for 'main' app, pages with content"""
+"""Views for 'catalog' app, pages with content"""
 from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -19,7 +19,7 @@ def home_view(request):
         'new_titles': get_new_titles(),
         'updated_titles': get_updated_titles()
         }
-    return render(request, 'main/home.html', context)
+    return render(request, 'catalog/home.html', context)
 
 
 def all_titles_view(request):
@@ -49,7 +49,7 @@ def all_titles_view(request):
         'titles': titles,
         'filter_form': filter_form
     }
-    return render(request, 'main/all_titles.html', context)
+    return render(request, 'catalog/all_titles.html', context)
 
 
 def text_titles_view(request):
@@ -70,7 +70,7 @@ def text_titles_view(request):
         'text_titles': text_titles,
         'filter_form': filter_form
     }
-    return render(request, 'main/text_titles.html', context)
+    return render(request, 'catalog/text_titles.html', context)
 
 
 def graphic_titles_view(request):
@@ -91,7 +91,7 @@ def graphic_titles_view(request):
         'graphic_titles': graphic_titles,
         'filter_form': filter_form
     }
-    return render(request, 'main/graphic_titles.html', context)
+    return render(request, 'catalog/graphic_titles.html', context)
 
 
 def collect_about_section(request, title_type, title_id):
@@ -134,7 +134,7 @@ def collect_about_section(request, title_type, title_id):
         'user_rate': user_rate
     }
 
-    return context, 'main/title_page_about.html'
+    return context, 'catalog/title_page_about.html'
 
 
 def collect_chapters_section(request, title_type, title_id):
@@ -157,7 +157,7 @@ def collect_chapters_section(request, title_type, title_id):
         'user_favorite': is_favorite
     }
 
-    return context, 'main/title_page_chapters.html'
+    return context, 'catalog/title_page_chapters.html'
 
 
 def collect_comment_section(request, title_type, title_id):
@@ -180,7 +180,7 @@ def collect_comment_section(request, title_type, title_id):
     else:
         context = {}
 
-    return context, 'main/title_page_comments.html'
+    return context, 'catalog/title_page_comments.html'
 
 
 def title_page_view(request, title_id=None):

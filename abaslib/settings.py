@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # Internal apps
     'users',
     'reader',
-    'main',
+    'catalog',
     'titles',
     'metadata',
     'ratings',
