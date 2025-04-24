@@ -36,21 +36,21 @@
   <input
     id="search_input"
     type="search"
-    name="search_field"
+    name="search_query"
     placeholder="Поиск"
     form="filter_form"
-    value="{{ request.GET.search_field }}"
+    value="{{ request.GET.search_query }}"
   />
 </section>
 <section>
   <h2>Фильтры</h2>
   <a href="{% url 'catalog:text_titles' %}">
     <button class="filter_button">
-      Сбросить фильтры
+      Сбросить
     </button>
   </a>
   <button type="submit" form="filter_form" class="filter_button">
-    Применить фильтры
+    Применить
   </button>
   <form id="filter_form" action="{% url 'catalog:graphic_titles' %}" method="get">      
     <h4>Жанры</h4>

@@ -71,7 +71,7 @@ def all_titles_view(request):
 def text_titles_view(request):
     """Renders page with text titles"""
     filter_form = FilterTagForm(request.GET)
-    search_query = request.GET.get('query')
+    search_query = request.GET.get('search_query', None)
     
     text_titles = TextTitle.objects.all()
     
@@ -101,7 +101,7 @@ def text_titles_view(request):
 def graphic_titles_view(request):
     """Renders page with graphic titles"""
     filter_form = FilterTagForm(request.GET)
-    search_query = request.GET.get('query')
+    search_query = request.GET.get('search_query', None)
     
     graphic_titles = GraphicTitle.objects.all()
     

@@ -156,7 +156,7 @@ footer {
 }
 
 button {
-    transition-duration: 0.2s;
+    transition-duration: 0.4s;
     padding: 10px 20px;
     border: 2px solid;
     display: flex;
@@ -184,6 +184,7 @@ button:active {
 }
 
 select {
+    transition-duration: 0.4s;
     font-family: inherit;
     text-align: center;
     appearance: none;
@@ -216,6 +217,7 @@ select {
     border: none;
     height: 3rem;
     gap: 10px;
+    margin: 0;
 }
 
 .ref_button:hover {
@@ -235,10 +237,11 @@ select {
 input,
 textarea {
     margin: 8px;
-    padding: 5px 5px;
+    padding: 10px;
     line-height:140%;
     box-sizing: content-box;
     border-radius: 5px;
+    border: 2px solid;
     font-family: inherit;
     font-size: inherit;
     color: var(--text-color-base);

@@ -96,6 +96,8 @@
               <i class="fa fa-star {% if user_rate > 0 %} checked {% endif %}" title="Оценить на 5"></i></span>
         </div>
 
+        <p>Ваша оценка</p>
+
         <ul class="btn btn-light list-inline rating-list">
           <li onclick="rate('{{ title.title_type }}', {{ title.id }}, 5)">
               <i class="fa fa-star {% if user_rate > 4 %} checked {% endif %}" title="Оценить на 5"></i></li>
