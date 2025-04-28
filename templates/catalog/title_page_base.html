@@ -12,6 +12,7 @@
 
 {% block redact_options %}
   <option value="{% url 'titles:upload_chapter' title.id %}?title_type={{ title_type }}">Добавить главу</option>
+  <option value="{% url 'titles:update_title' title.id %}?title_type={{ title_type }}">Редактировать тайтл</option>
 {% endblock %}
 
 {% block content %}

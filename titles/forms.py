@@ -15,14 +15,14 @@ class TextTitleForm(forms.ModelForm):
         required=False,
         label=_('Жанры')
     )
-    
+
     tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
         label=_('Теги')
     )
-    
+
     class Meta:
         model = TextTitle
         fields = ['title_name_rus',
@@ -86,10 +86,25 @@ class TextTitleForm(forms.ModelForm):
                 }
             )
         }
-    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['genres_field'].initial = [
+                genre.tag_genre for genre in
+                TitleGenre.objects.filter(content_object=self.instance)
+            ]
+            self.fields['tags_field'].initial = [
+                tag.tag for tag in
+                TitleTag.objects.filter(content_object=self.instance)
+            ]
+
     def save(self, commit=True):
         title = super().save(commit=commit)
         if commit:
+            TitleGenre.objects.filter(content_object=title).delete()
+            TitleTag.objects.filter(content_object=title).delete()
+
             for genre in self.cleaned_data['genres_field']:
                 TitleGenre.objects.create(content_object=title, tag_genre=genre)
             for tag in self.cleaned_data['tags_field']:
@@ -107,14 +122,14 @@ class GraphicTitleForm(forms.ModelForm):
         required=False,
         label=_('Жанры')
     )
-    
+
     tags_field = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
         label=_('Теги'),
     )
-    
+
     class Meta:
         model = GraphicTitle
         fields = ['title_name_rus',
@@ -177,12 +192,24 @@ class GraphicTitleForm(forms.ModelForm):
                     'class': 'form_input cover'
                 }
             )
-        }    
-        
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['genres_field'].initial = [
+                genre.tag_genre for genre in self.instance.genres.all()
+            ]
+            self.fields['tags_field'].initial = [
+                tag.tag for tag in self.instance.tags.all()
+            ]
+
     def save(self, commit=True):
         title = super().save(commit=commit)
         if commit:
-            print(self.cleaned_data)
+            title.genres.all().delete()
+            title.tags.all().delete()
+
             for genre in self.cleaned_data['genres_field']:
                 TitleGenre.objects.create(content_object=title, tag_genre=genre)
             for tag in self.cleaned_data['tags_field']:
@@ -217,7 +244,7 @@ class TextTitleChapterForm(forms.ModelForm):
                     }
                 ),
             'chapter_number': forms.NumberInput(
-                attrs={ 
+                attrs={
                     'placeholder': _('Фактический числовой номер главы'),
                     'class': 'form_input'
                     }
