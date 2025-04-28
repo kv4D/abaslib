@@ -1,9 +1,7 @@
 """Contains forms for 'metadata' app"""
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from titles.models import TextTitle, GraphicTitle, TextTitleChapter, \
-    GraphicTitleChapter
-from . models import Tag, TagGenre, TitleGenre, TitleTag
+from . models import Tag, TagGenre
 
 
 class FilterTagForm(forms.Form):

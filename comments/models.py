@@ -17,7 +17,7 @@ class Comment(models.Model):
                                     verbose_name=_('Добавлено'))
 
     class Meta:
-        ordering = ['added_at']
+        ordering = ['-added_at']
         verbose_name = _('Комментарий')
         verbose_name_plural = _('Комментарии')
         

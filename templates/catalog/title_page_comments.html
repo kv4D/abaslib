@@ -28,5 +28,24 @@
 
 {% block section %}
   <!-- COMMENTS SECTION -->
-  <p>Здесь будут комментарии</p>
+  <form method="post">
+    {% csrf_token %}
+    <div id="input">
+      {{ comment_form.as_table }}
+      <button name="submit">Отправить</button>
+    </div>
+  </form>
+  <br />
+  <section id="comments">
+    <p class="highlighted_text">Комментарии</p>
+    {% for comment in comments %}
+      <div class="comment">
+        <p class="highlighted_text">{{ comment.user }}</p>
+        <p>{{ comment.text }}</p>
+      </div>
+    {% empty %}
+      <p>Ваш комментарий может стать первым!</p>
+    {% endfor %}
+  </section>
+
 {% endblock %}

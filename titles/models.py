@@ -65,8 +65,8 @@ class Title(models.Model):
 
     favorites_count = models.PositiveIntegerField(default=0,
                                                   verbose_name=_('Количество людей, добавивших в избранное'))
+
     favorites = GenericRelation('metadata.TitleFavorite')
-    
     tags = GenericRelation('metadata.TitleTag', related_query_name='tags')
     genres = GenericRelation('metadata.TitleGenre', related_query_name='genres')
     ratings = GenericRelation('ratings.TitleRating', related_query_name='ratings')

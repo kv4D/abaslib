@@ -9,13 +9,14 @@ from metadata.forms import FilterTagForm
 from titles.models import TextTitle, GraphicTitle
 from titles.utils import get_new_titles, get_updated_titles
 from ratings.models import TitleRating
+from comments.forms import CommentForm
 from . utils import redirect_to_title_page
 
 
 # create views here.
 def home_view(request):
     """Renders website's home page"""
-    
+
     context = {
         'new_titles': get_new_titles(),
         'updated_titles': get_updated_titles()
@@ -27,40 +28,40 @@ def all_titles_view(request):
     """Renders page with all titles"""
     filter_form = FilterTagForm(request.GET)
     search_query = request.GET.get('search_query', None)
-    
+
     text_titles = TextTitle.objects.all()
     graphic_titles = GraphicTitle.objects.all()
-    
+
     # apply search query
     if search_query:
         print('whta')
         text_titles = text_titles.filter(
-            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_rus__icontains=search_query) |
             Q(title_name_eng__icontains=search_query)
         )
         graphic_titles = graphic_titles.filter(
-            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_rus__icontains=search_query) |
             Q(title_name_eng__icontains=search_query)
         )
-    
+
     # apply filters
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
         tags = filter_form.cleaned_data.get('tags')
-        
+
         if genres:
             text_titles = text_titles.filter(genres__tag_genre__in=genres).distinct()
             graphic_titles = graphic_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
             text_titles = text_titles.filter(tags__tag__in=tags).distinct()
             graphic_titles = graphic_titles.filter(tags__tag__in=tags).distinct()
-            
+
     titles = sorted(
         chain(text_titles, graphic_titles),
         key=lambda title: title.added_at,
         reverse=True
     )
-            
+
     context = {
         'titles': titles,
         'filter_form': filter_form
@@ -72,25 +73,25 @@ def text_titles_view(request):
     """Renders page with text titles"""
     filter_form = FilterTagForm(request.GET)
     search_query = request.GET.get('search_query', None)
-    
+
     text_titles = TextTitle.objects.all()
-    
+
     # apply search query
     if search_query:
         text_titles = text_titles.filter(
-            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_rus__icontains=search_query) |
             Q(title_name_eng__icontains=search_query)
         )
-    
+
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
         tags = filter_form.cleaned_data.get('tags')
-        
+
         if genres:
             text_titles = text_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
             text_titles = text_titles.filter(tags__tag__in=tags).distinct()
-    
+
     context = {
         'text_titles': text_titles,
         'filter_form': filter_form
@@ -102,25 +103,25 @@ def graphic_titles_view(request):
     """Renders page with graphic titles"""
     filter_form = FilterTagForm(request.GET)
     search_query = request.GET.get('search_query', None)
-    
+
     graphic_titles = GraphicTitle.objects.all()
-    
+
     # apply search query
     if search_query:
         graphic_titles = graphic_titles.filter(
-            Q(title_name_rus__icontains=search_query) | 
+            Q(title_name_rus__icontains=search_query) |
             Q(title_name_eng__icontains=search_query)
         )
-    
+
     if filter_form.is_valid():
         genres = filter_form.cleaned_data.get('genres')
         tags = filter_form.cleaned_data.get('tags')
-        
+
         if genres:
             graphic_titles = graphic_titles.filter(genres__tag_genre__in=genres).distinct()
         if tags:
             graphic_titles = graphic_titles.filter(tags__tag__in=tags).distinct()
-            
+
     context = {
         'graphic_titles': graphic_titles,
         'filter_form': filter_form
@@ -136,9 +137,9 @@ def collect_about_section(request, title_type, title_id):
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-        
+
     # collect and update stats
-    
+
     # metadata
     title.views_count = TitleView.get_views_count(title)
     title.favorites_count = TitleFavorite.get_favorite_count(title)
@@ -146,14 +147,14 @@ def collect_about_section(request, title_type, title_id):
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
     tags = [relation.tag for relation in title.tags.all()]
     genres = [relation.tag_genre for relation in title.genres.all()]
-    
+
     # ratings
     average_rate = TitleRating.get_average_rate(title)
     if request.user.is_authenticated:
         user_rate = title.ratings.filter(user=request.user).first()
     else:
         user_rate = 0
-    
+
     user_rate = user_rate.rate if user_rate else 0
     rates_count = TitleRating.get_rates_count(title)
 
@@ -205,11 +206,23 @@ def collect_comment_section(request, title_type, title_id):
 
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
 
+    comments = title.comments.all()
+
+    if request.method == 'POST':
+        user = request.user
+        text = request.POST.get('text')
+        title.comments.create(text=text, user=user)
+
+    comment_form = CommentForm()
+
     if title:
+        print(type(comment_form), 1, comments)
         context = {
             'title': title,
             'title_type': title_type,
-            'user_favorite': is_favorite
+            'user_favorite': is_favorite,
+            'comments': comments,
+            'comment_form': comment_form
         }
     else:
         context = {}
@@ -231,7 +244,7 @@ def title_page_view(request, title_id=None):
         context, template = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
         context, template = collect_comment_section(request, title_type, title_id)
-    
+
     return render(request, template, context)
 
 
@@ -250,20 +263,12 @@ def change_favorite_title_status(request, title_id=None):
         title = get_object_or_404(GraphicTitle, id=title_id)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
-        
-    content_type = ContentType.objects.get_for_model(title)
-        
+
     if TitleFavorite.get_favorite_status(title, user):
         user.remove_title_from_favorites(title)
-        TitleFavorite.objects.filter(
-            user=user, 
-            content_type=content_type,
-            object_id=title_id).delete()
+        title.favorites.filter(user=user).delete()
     else:
         user.add_title_to_favorites(title)
-        TitleFavorite.objects.create(
-            user=user,
-            content_object=title,
-        )
+        title.favorites.create(user=user)
 
     return redirect_to_title_page(title_id, title_type, request.GET.get('section'))

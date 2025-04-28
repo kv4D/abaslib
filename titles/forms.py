@@ -25,16 +25,17 @@ class TextTitleForm(forms.ModelForm):
 
     class Meta:
         model = TextTitle
-        fields = ['title_name_rus',
-                  'title_name_eng',
-                  'title_author',
-                  'title_is_ongoing',
-                  'title_description',
-                  'genres_field',
-                  'tags_field',
-                  'publication_year',
-                  'title_cover'
-                  ]
+        fields = [
+            'title_name_rus',
+            'title_name_eng',
+            'title_author',
+            'title_is_ongoing',
+            'title_description',
+            'genres_field',
+            'tags_field',
+            'publication_year',
+            'title_cover'
+            ]
         labels = {
             'title_name_rus': _('Название тайтла'),
             'title_name_eng': _('Название тайтла (английский, опционально)'),
