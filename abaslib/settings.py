@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'titles',
     'metadata',
     'ratings',
+    'comments',
     # External apps
     'crispy_forms',
     "crispy_bootstrap4",

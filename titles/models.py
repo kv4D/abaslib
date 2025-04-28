@@ -70,6 +70,7 @@ class Title(models.Model):
     tags = GenericRelation('metadata.TitleTag', related_query_name='tags')
     genres = GenericRelation('metadata.TitleGenre', related_query_name='genres')
     ratings = GenericRelation('ratings.TitleRating', related_query_name='ratings')
+    comments = GenericRelation('comments.Comment', related_query_name='comments')
 
     class Meta:
         abstract = True
