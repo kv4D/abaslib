@@ -30,10 +30,11 @@
   <!-- COMMENTS SECTION -->
   <form method="post">
     {% csrf_token %}
-    <div id="input">
-      {{ comment_form.as_table }}
-      <button name="submit">Отправить</button>
-    </div>
+    <section id="comment_input">
+      {{ comment_form.text.label_tag }}
+      {{ comment_form.text }}
+      <button id="submit_comment" name="submit">Отправить</button>
+    </section>
   </form>
   <br />
   <section id="comments">
@@ -42,6 +43,7 @@
       <div class="comment">
         <p class="highlighted_text">{{ comment.user }}</p>
         <p>{{ comment.text }}</p>
+        <p>{{ comment.added_at|time  }} {{ comment.added_at|date:"d.m.Y" }}</p>
       </div>
     {% empty %}
       <p>Ваш комментарий может стать первым!</p>

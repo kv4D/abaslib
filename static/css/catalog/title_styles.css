@@ -108,3 +108,17 @@
 .checked {
     color: var(--rating-color-base);
 }
+
+div.comment {
+    border-bottom: solid 2px var(--text-color-base);
+    padding: 10px;
+    margin: 10px;
+}
+
+#comment_input {
+    display: grid;
+}
+
+#submit_comment {
+    width: fit-content;
+}
