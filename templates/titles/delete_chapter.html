@@ -26,10 +26,9 @@
         {% csrf_token %}
         <div id="input">
           <h1>Выберите главу и подтвердите удаление</h1>
-          <h2>{{ title.title_name }}</h2>
           <hr />
           <br />
-          {{ form.as_table }}
+          {{ form.as_p }}
           <br />
           <button name="submit">Удалить главу</button>
         </div>

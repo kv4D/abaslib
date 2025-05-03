@@ -349,3 +349,21 @@ class GraphicTitlePagesForm(forms.Form):
     images = MultipleFileField(label=_('Выберите страницы (не забудьте пронумеровать файлы)'),
                                required=True
                                )
+
+
+class ChapterSelectForm(forms.Form):
+    """Form for selecting chapter"""
+    chapter = forms.ModelChoiceField(
+        queryset=None,
+        widget=forms.Select,
+        required=False,
+        label=_('Главы тайтла')
+    )
+    
+    def __init__(self, *args, title=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if title:
+            if title.title_type == 'text':
+                self.fields['chapter'].queryset = title.text_chapters.all()
+            elif title.title_type == 'graphic':
+                self.fields['chapter'].queryset = title.graphic_chapters.all()

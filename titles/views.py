@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from . models import TextTitle, GraphicTitle
 from . forms import TextTitleForm, GraphicTitleForm, \
                     TextTitleChapterForm, GraphicTitleChapterForm, \
-                    GraphicTitlePagesForm
+                    GraphicTitlePagesForm, ChapterSelectForm
 from . utils import create_pages_from_list, get_last_title_chapter
 from catalog.utils import redirect_to_title_page
 
@@ -51,9 +51,18 @@ def delete_chapter_view(request, title_id):
     elif title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapters = title.graphic_chapters.all()
+    
+    if request.method == 'POST':
+        chapter_id = request.POST.get('chapter')
+        chapters.filter(id=chapter_id).delete()
+        return redirect_to_title_page(title_id, title.title_type)
+    
+    form = ChapterSelectForm(title=title)
+    
     context = {
         'title': title,
-        'chapters': chapters
+        'chapters': chapters, 
+        'form': form
     }
 
     return render(request, 'titles/delete_chapter.html', context)
