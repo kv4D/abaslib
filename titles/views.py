@@ -39,6 +39,31 @@ def update_title_view(request, title_id):
 
 
 @login_required
+def delete_chapter_view(request, title_id):
+    """Deletes one certain chapter"""
+    title_type = request.GET.get('title_type')
+
+    assert title_type in ['text', 'graphic']
+
+    if title_type == 'text':
+        title = get_object_or_404(TextTitle, id=title_id)
+        chapters = title.text_chapters.all()
+    elif title_type == 'graphic':
+        title = get_object_or_404(GraphicTitle, id=title_id)
+        chapters = title.graphic_chapters.all()
+    context = {
+        'title': title,
+        'chapters': chapters
+    }
+
+    return render(request, 'titles/delete_chapter.html', context)
+    
+@login_required
+def delete_title_view(request, title_id):
+    """Deletes one certain title"""
+
+
+@login_required
 def upload_title_view(request):
     """Uploads title with provided info"""
     # there can be 'graphic' or 'text' content type

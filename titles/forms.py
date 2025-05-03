@@ -92,12 +92,10 @@ class TextTitleForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             self.fields['genres_field'].initial = [
-                genre.tag_genre for genre in
-                TitleGenre.objects.filter(content_object=self.instance)
+                genre.tag_genre for genre in self.instance.genres.all()
             ]
             self.fields['tags_field'].initial = [
-                tag.tag for tag in
-                TitleTag.objects.filter(content_object=self.instance)
+                tag.tag for tag in self.instance.tags.all()
             ]
 
     def save(self, commit=True):

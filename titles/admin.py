@@ -68,13 +68,17 @@ class GraphicTitleAdmin(admin.ModelAdmin):
             )
         
 class TextTitleChapterAdmin(admin.ModelAdmin):
+    list_display = ('title', 'chapter_name', 'chapter_number', 'display_number')
+    list_filter = ('title', 'display_number')
     readonly_fields = ('added_at',)
     
 class GraphicTitleChapterAdmin(admin.ModelAdmin):
+    list_display = ('title', 'chapter_name', 'chapter_number', 'display_number')
+    list_filter = ('title', 'display_number')
     readonly_fields = ('added_at',)
     inlines = [GraphicTitlePageInline]
 
-# Register your models here.
+
 admin.site.register(TextTitle, TextTitleAdmin)
 admin.site.register(GraphicTitle, GraphicTitleAdmin)
 admin.site.register(TextTitleChapter, TextTitleChapterAdmin)

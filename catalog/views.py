@@ -160,7 +160,6 @@ def collect_about_section(request, title_type, title_id):
 
     context = {
         'title': title,
-        'title_type': title_type,
         'user_favorite': is_favorite,
         'tags': tags,
         'genres': genres,
@@ -188,7 +187,6 @@ def collect_chapters_section(request, title_type, title_id):
     context = {
         'title': title,
         'chapters': chapters,
-        'title_type': title_type,
         'user_favorite': is_favorite
     }
 
@@ -219,7 +217,6 @@ def collect_comment_section(request, title_type, title_id):
         print(type(comment_form), 1, comments)
         context = {
             'title': title,
-            'title_type': title_type,
             'user_favorite': is_favorite,
             'comments': comments,
             'comment_form': comment_form

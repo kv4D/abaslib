@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-  ABASlib - Редактирование тайтла
+  ABASlib - Удаление главы
 {% endblock %}
 
 {% block styles %}
@@ -22,16 +22,16 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'titles:update_title' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
+      <form action="{% url 'titles:delete_chapter' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div id="input">
-          <h1>Заполните поля</h1>
+          <h1>Выберите главу и подтвердите удаление</h1>
           <h2>{{ title.title_name }}</h2>
           <hr />
           <br />
           {{ form.as_table }}
           <br />
-          <button name="submit">Подтвердить изменения</button>
+          <button name="submit">Удалить главу</button>
         </div>
       </form>
       <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
@@ -39,7 +39,6 @@
       </a>
     </div>
     <div id="side">
-      <h1>Превью обложки</h1>
       <img id="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка">
     </div>
   </div>

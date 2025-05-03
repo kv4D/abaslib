@@ -27,6 +27,11 @@ urlpatterns = [
         name='upload_title'
         ),
     path(
+        'delete_title/title=<int:title_id>/',
+        views.delete_title_view,
+        name='delete_title'
+        ),   
+    path(
         'update_title/title=<int:title_id>/',
         views.update_title_view,
         name='update_title'
@@ -35,5 +40,10 @@ urlpatterns = [
         'upload_chapter/title=<int:title_id>/',
         views.upload_chapter_view,
         name='upload_chapter'
+        ),
+    path(
+        'delete_chapter/title=<int:title_id>/',
+        views.delete_chapter_view,
+        name='delete_chapter'
         ),
 ]

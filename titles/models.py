@@ -98,6 +98,10 @@ class TextTitle(Title):
                     name='0 < publication year <= current year (text)'
                 )
             ]
+        indexes = [
+            models.Index(fields=['-added_at']),
+            models.Index(fields=['publication_year'])
+            ]
 
     def get_path(self):
         """Returns path to title"""
@@ -125,6 +129,10 @@ class TextTitle(Title):
     def title_type(self):
         """Returns title type"""
         return 'text'
+    
+    @property
+    def has_chapters(self):
+        return self.text_chapters.count() != 0
 
     @staticmethod
     def get_titles(return_amount = None):
@@ -151,6 +159,10 @@ class GraphicTitle(Title):
                     check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
                     name='0 < publication year <= current year (graphic)'
                 )
+            ]
+        indexes = [
+            models.Index(fields=['-added_at']),
+            models.Index(fields=['publication_year'])
             ]
 
     def get_path(self):
@@ -185,6 +197,10 @@ class GraphicTitle(Title):
         """Returns title type"""
         return 'graphic'
 
+    @property
+    def has_chapters(self):
+        return self.graphic_chapters.count() != 0
+    
     @staticmethod
     def get_titles(return_amount = None):
         """Get first 'return_amount' graphic titles"""
