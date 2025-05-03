@@ -91,7 +91,7 @@ class TextTitle(Title):
     class Meta:
         verbose_name = _('Новелла')
         verbose_name_plural = _('Новеллы')
-        ordering = ['added_at']
+        ordering = ['-added_at']
         constraints = [
                 models.CheckConstraint(
                     check=models.Q(publication_year__lte=timezone.now().year) & models.Q(publication_year__gt=0),
@@ -135,10 +135,9 @@ class TextTitle(Title):
         return self.text_chapters.count() != 0
 
     @staticmethod
-    def get_titles(return_amount = None):
+    def get_titles(return_amount=None):
         """Get first 'return_amount' text titles"""
-        # from new to old
-        return TextTitle.objects.all()[:return_amount:-1]
+        return TextTitle.objects.all()[:return_amount]
 
 
 class GraphicTitle(Title):
@@ -151,7 +150,7 @@ class GraphicTitle(Title):
         )
 
     class Meta:
-        ordering = ['added_at']
+        ordering = ['-added_at']
         verbose_name = _('Комикс')
         verbose_name_plural = _('Комиксы')
         constraints = [
@@ -202,10 +201,9 @@ class GraphicTitle(Title):
         return self.graphic_chapters.count() != 0
     
     @staticmethod
-    def get_titles(return_amount = None):
+    def get_titles(return_amount=None):
         """Get first 'return_amount' graphic titles"""
-        # from new to old
-        return GraphicTitle.objects.all()[:return_amount:-1]
+        return GraphicTitle.objects.all()[:return_amount]
 
 
 class TitleChapter(models.Model):

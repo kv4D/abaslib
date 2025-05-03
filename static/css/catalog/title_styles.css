@@ -35,12 +35,37 @@
     display: grid;
 }
 
-#chapters .button_group a:first-child {
-    flex: 0 0 10%;
+a.bookmark {
+    border-right: solid 2px;
 }
 
-#chapters .button_group a:last-child {
+a.bookmark:hover {
+    border-color: var(--text-color-base);
+}
+
+a.bookmark .ref_button:hover {
+    background-color: var(--bg-color-light);
+}
+
+a.chapter_button {
     flex: 0 0 90%;
+}
+
+a.chapter_button .ref_button {
+    justify-content: space-between;
+}
+
+a.chapter_button .ref_button p {
+    margin: 2px;
+}
+
+.chapter_info {
+    text-align: left;
+}
+
+.timestamp {
+    justify-content: right;
+    font-size: 0.8rem;
 }
 
 #chapters .ref_button {

@@ -210,11 +210,11 @@ def collect_comment_section(request, title_type, title_id):
         user = request.user
         text = request.POST.get('text')
         title.comments.create(text=text, user=user)
+        return redirect_to_title_page(title_id, title.title_type)
 
     comment_form = CommentForm()
 
     if title:
-        print(type(comment_form), 1, comments)
         context = {
             'title': title,
             'user_favorite': is_favorite,

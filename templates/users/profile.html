@@ -6,6 +6,7 @@
 {% endblock %}
 {% block styles %}
   <link rel="stylesheet" href="{% static 'css/users/profile_styles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/catalog/home_styles.css' %}" />
 {% endblock %}
 
 {% block header %}
@@ -25,7 +26,6 @@
       <img id="profile_image" src="{{ user.user_avatar.url }}" alt="Здесь был аватар" />
       <h1>Пользователь {{ user.username }}</h1>
       <hr />
-      <h2>Сведения</h2>
       <div class="info">
         <p class="highlighted_text">Прочитанных тайтлов:</p>
         <p>{{ user.titles_read_amount }}</p>
@@ -34,12 +34,15 @@
         <p class="highlighted_text">Ты с нами с:</p>
         <p>{{ user.date_joined|date:'d/m/Y' }}</p>
       </div>
-      <p>{{ user.email }}</p>
       <hr />
       <h2>Избранное</h2>
-      <div id="titles">
+      <p>Количество избранного: {{ favorite_titles|length }}</p>
+      <div class="titles">
         {% for title in favorite_titles %}
-          <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about"><button class="ref_button">{{ title.title_name_rus }}</button></a>
+          <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+            <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка" />
+            <div class="title_name">{{ title.title_name_rus }}</div>
+          </a>
         {% endfor %}
       </div>
     </div>
