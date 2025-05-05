@@ -40,10 +40,12 @@
   <section id="comments">
     <p class="highlighted_text">Комментарии</p>
     {% for comment in comments %}
-      <div class="comment">
-        <p class="highlighted_text">{{ comment.user }}</p>
-        <p>{{ comment.text }}</p>
-        <p>{{ comment.added_at|time  }} {{ comment.added_at|date:"d.m.Y" }}</p>
+      <div class="comment{% if comment.user == user %} user_comment{% endif %}">
+        <a href="" class="user_ref highlighted_text">
+          <img class="user_pic" src="{{ comment.user.user_avatar.url }}" alt="Здесь был аватар" />{{ comment.user }}
+        </a>
+        <p class="comment_text">{{ comment.text }}</p>
+        <p class="timestamp">{{ comment.added_at|time  }} {{ comment.added_at|date:"d.m.Y" }}</p>
       </div>
     {% empty %}
       <p>Ваш комментарий может стать первым!</p>

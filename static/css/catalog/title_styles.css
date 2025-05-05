@@ -147,3 +147,30 @@ div.comment {
 #submit_comment {
     width: fit-content;
 }
+
+.comment {
+    height: fit-content;
+    background-color: var(--bg-comment-base);
+}
+
+.comment.user_comment {
+    background-color: var(--bg-comment-user);
+}
+
+.comment p {
+    margin: 0;
+}
+
+.comment .comment_text {
+    margin-top: 1rem;
+}
+
+.comment .timestamp {
+    margin-top: 1rem;
+}
+
+.user_ref {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

@@ -1,8 +1,7 @@
 """Views for 'catalog' app, pages with content"""
 from itertools import chain
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from metadata.models import TitleView, TitleFavorite
 from metadata.forms import FilterTagForm
@@ -168,7 +167,7 @@ def collect_about_section(request, title_type, title_id):
         'user_rate': user_rate
     }
 
-    return context, 'catalog/title_page_about.html'
+    return render(request, 'catalog/title_page_about.html', context)
 
 
 def collect_chapters_section(request, title_type, title_id):
@@ -190,7 +189,7 @@ def collect_chapters_section(request, title_type, title_id):
         'user_favorite': is_favorite
     }
 
-    return context, 'catalog/title_page_chapters.html'
+    return render(request, 'catalog/title_page_chapters.html', context)
 
 
 def collect_comment_section(request, title_type, title_id):
@@ -210,7 +209,7 @@ def collect_comment_section(request, title_type, title_id):
         user = request.user
         text = request.POST.get('text')
         title.comments.create(text=text, user=user)
-        return redirect_to_title_page(title_id, title.title_type)
+        return redirect_to_title_page(title_id, title.title_type, 'comments')
 
     comment_form = CommentForm()
 
@@ -224,7 +223,7 @@ def collect_comment_section(request, title_type, title_id):
     else:
         context = {}
 
-    return context, 'catalog/title_page_comments.html'
+    return render(request, 'catalog/title_page_comments.html', context)
 
 
 def title_page_view(request, title_id=None):
@@ -236,13 +235,13 @@ def title_page_view(request, title_id=None):
     assert section in ['about', 'chapters', 'comments']
 
     if section == 'about':
-        context, template = collect_about_section(request, title_type, title_id)
+        response = collect_about_section(request, title_type, title_id)
     elif section == 'chapters':
-        context, template = collect_chapters_section(request, title_type, title_id)
+        response = collect_chapters_section(request, title_type, title_id)
     elif section == 'comments':
-        context, template = collect_comment_section(request, title_type, title_id)
+        response = collect_comment_section(request, title_type, title_id)
 
-    return render(request, template, context)
+    return response
 
 
 @login_required(login_url="users:login")

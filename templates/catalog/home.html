@@ -24,7 +24,7 @@
       </div>
       <a id="profile_link" href="{% url 'users:profile' %}">
         <button class="ref_button">
-          <img id="user_pic" src="{{ user.user_avatar.url }}" />
+          <img class="user_pic" src="{{ user.user_avatar.url }}" />
           {{ user.username }}
         </button>
       </a>
