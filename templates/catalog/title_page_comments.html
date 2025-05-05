@@ -41,7 +41,11 @@
     <p class="highlighted_text">Комментарии</p>
     {% for comment in comments %}
       <div class="comment{% if comment.user == user %} user_comment{% endif %}">
-        <a href="" class="user_ref highlighted_text">
+        {% if comment.user == user %}
+          <a href="{% url 'users:profile' %}" class="user_ref highlighted_text">
+        {% else %}
+          <a href="{% url 'users:another_profile' comment.user.id %}" class="user_ref highlighted_text">
+        {% endif %}
           <img class="user_pic" src="{{ comment.user.user_avatar.url }}" alt="Здесь был аватар" />{{ comment.user }}
         </a>
         <p class="comment_text">{{ comment.text }}</p>

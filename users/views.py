@@ -1,7 +1,7 @@
 """Views for user control and handling"""
 from itertools import chain
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from . forms import RegisterForm, LoginForm
 
@@ -23,11 +23,32 @@ def user_profile_view(request):
     )
 
     context = {
-        'user': user,
         'favorite_titles': favorite_titles
     }
 
     return render(request, 'users/profile.html', context)
+
+
+def another_user_profile_view(request, user_id):
+    """Shows another user profile page and it's info"""
+    user = get_user_model().objects.filter(pk=user_id).first()
+    
+    text_titles = user.favorite_text_titles.all()
+    graphic_titles = user.favorite_graphic_titles.all()
+
+    # unite titles and sort by date added
+    favorite_titles = sorted(
+        chain(text_titles, graphic_titles),
+        key=lambda title: title.added_at,
+        reverse=True
+    )
+    
+    context = {
+        'another_user': user,
+        'favorite_titles': favorite_titles
+    }
+    
+    return render(request, 'users/another_profile.html', context)
 
 
 def register_user_view(request):
