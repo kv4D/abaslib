@@ -156,6 +156,7 @@ def collect_about_section(request, title_type, title_id):
 
     user_rate = user_rate.rate if user_rate else 0
     rates_count = TitleRating.get_rates_count(title)
+    star_rates_values = [(i, i + 1) for i in range(0, 5)]
 
     context = {
         'title': title,
@@ -164,7 +165,8 @@ def collect_about_section(request, title_type, title_id):
         'genres': genres,
         'average_rate': average_rate,
         'rates_count': rates_count,
-        'user_rate': user_rate
+        'user_rate': user_rate,
+        'star_rates_values': star_rates_values
     }
 
     return render(request, 'catalog/title_page_about.html', context)
