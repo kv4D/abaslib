@@ -35,11 +35,17 @@
     {% for chapter in chapters %}
       {% if not chapter.is_empty %}
         <div class="button_group">
-          <a href="" class="bookmark">
+          <a href="{% url 'reader:manage_bookmark' title.id chapter.id %}?title_type={{ title.title_type }}" class="bookmark">
             <button class="ref_button">
-              <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-              </svg>
+              {% if bookmark.chapter == chapter %}            
+                <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                  <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+                </svg>
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                </svg>
+              {% endif %}
             </button>
           </a>
           {% if title.title_type == 'graphic' %}
@@ -53,7 +59,7 @@
                   <p>{{ chapter.chapter_name }}</p>
                 </div>
                 <div>
-                  <p class="timestamp">Добавлено:<br />{{ chapter.added_at|date:"d.m.Y" }}</p>
+                  <p class="timestamp">Добавлено<br />{{ chapter.added_at|date:"d.m.Y" }}</p>
                 </div>
               </button>
             </a>

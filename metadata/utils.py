@@ -3,8 +3,17 @@ from itertools import chain
 from django.http import QueryDict
 from django.contrib.contenttypes.models import ContentType
 from titles.models import GraphicTitle, TextTitle
-from reader.utils import get_client_ip
 from . models import TitleView
+
+
+def get_client_ip(request):
+    """Get request's IP"""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 def update_views(request: QueryDict, title: TextTitle | GraphicTitle):

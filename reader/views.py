@@ -125,14 +125,25 @@ def read_graphic_title_view(request, title_id):
 
 @login_required
 def open_bookmark_view(request, title_id):
-    """Start reading on the active bookmark"""
+    """Start reading from the active bookmark"""
     user = request.user
     title_type = request.GET.get('title_type')
 
     if title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
+        bookmark = TextTitleBookmark.objects.filter(user=user, title=title).first()
+        
+        response = redirect('reader:read_text', title_id=title_id)
+        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number}'
+        return response
     elif title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        bookmark = GraphicTitleBookmark.objects.filter(user=user, title=title).first()
+    
+        print(bookmark)
+        response = redirect('reader:read_graphic', title_id=title_id)
+        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number}&page={bookmark.page.page_number}'
+        return response
 
 
 
@@ -141,22 +152,34 @@ def manage_bookmark_view(request, title_id, chapter_id):
     """Make a bookmark on this title's chapter"""
     user = request.user
     title_type = request.GET.get('title_type')
-
     assert title_type in ['text', 'graphic']
 
     if title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
         chapter = get_object_or_404(TextTitleChapter, id=chapter_id)
-        bookmark, is_created = TextTitleBookmark.objects.get_or_create(
+        
+        TextTitleBookmark.objects.update_or_create(
             user=user,
-            chapter=chapter,
-            title=title
+            title=title,
+            defaults={
+                'chapter': chapter,
+            }
         )
+        
     elif title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
-        chapter = get_object_or_404(GraphicTitleChapter, id=chapter_id)
-        bookmark, is_created = GraphicTitleBookmark.objects.get_or_create(
+        chapter = get_object_or_404(GraphicTitleChapter, id=chapter_id)        
+        
+        page_number = request.GET.get('page_number', 1)
+        page = GraphicTitlePage.objects.filter(chapter=chapter, page_number=page_number).first()
+        
+        GraphicTitleBookmark.objects.update_or_create(
             user=user,
-            chapter=chapter,
-            title=title
+            title=title,
+            defaults={
+                'chapter': chapter,
+                'page': page
+            }
         )
+
+    return redirect(request.META.get('HTTP_REFERER'))

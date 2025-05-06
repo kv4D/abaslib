@@ -1,16 +1,8 @@
 """Functions for certain purposes within apps"""
 from django.http import QueryDict
 from titles.models import GraphicTitle, GraphicTitleChapter
+from .models import TextTitleBookmark, GraphicTitleBookmark
 
-
-def get_client_ip(request):
-    """Get request's IP"""
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
 
 def process_chapter_switch(page_number,
                            chapter: GraphicTitleChapter,

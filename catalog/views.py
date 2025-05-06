@@ -9,7 +9,8 @@ from titles.models import TextTitle, GraphicTitle
 from titles.utils import get_new_titles, get_updated_titles
 from ratings.models import TitleRating
 from comments.forms import CommentForm
-from . utils import redirect_to_title_page
+from reader.models import TextTitleBookmark, GraphicTitleBookmark
+from .utils import redirect_to_title_page
 
 
 # create views here.
@@ -134,11 +135,11 @@ def collect_about_section(request, title_type, title_id):
 
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
+        bookmark = GraphicTitleBookmark.get_user_bookmark_for_title(request.user, title)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
 
     # collect and update stats
-
     # metadata
     title.views_count = TitleView.get_views_count(title)
     title.favorites_count = TitleFavorite.get_favorite_count(title)
@@ -153,10 +154,10 @@ def collect_about_section(request, title_type, title_id):
         user_rate = title.ratings.filter(user=request.user).first()
     else:
         user_rate = 0
-
     user_rate = user_rate.rate if user_rate else 0
     rates_count = TitleRating.get_rates_count(title)
     star_rates_values = [(i, i + 1) for i in range(0, 5)]
+    
 
     context = {
         'title': title,
@@ -179,16 +180,19 @@ def collect_chapters_section(request, title_type, title_id):
     if title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         chapters = title.graphic_chapters.all()
+        bookmark = GraphicTitleBookmark.get_user_bookmark_for_title(request.user, title)
     elif title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
         chapters = title.text_chapters.all()
+        bookmark = TextTitleBookmark.get_user_bookmark_for_title(request.user, title)
 
     is_favorite = TitleFavorite.get_favorite_status(title, request.user)
 
     context = {
         'title': title,
         'chapters': chapters,
-        'user_favorite': is_favorite
+        'user_favorite': is_favorite,
+        'bookmark': bookmark
     }
 
     return render(request, 'catalog/title_page_chapters.html', context)
