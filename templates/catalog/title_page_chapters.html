@@ -35,32 +35,18 @@
     {% for chapter in chapters %}
       {% if not chapter.is_empty %}
         <div class="button_group">
+          <a href="" class="bookmark">
+            <button class="ref_button">
+              <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+              </svg>
+            </button>
+          </a>
           {% if title.title_type == 'graphic' %}
-            <a href="" class="bookmark">
-              <button class="ref_button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                </svg>
-              </button>
-            </a>
             <a href="{% url 'reader:read_graphic' title.id %}?chapter_num={{ chapter.chapter_number }}&page=1" class="chapter_button">
-              <button class="ref_button">
-                <div class="chapter_info">
-                  <p><b>Глава {{ chapter.display_number }}</b></p>
-                  <p>{{ chapter.chapter_name }}</p>
-                </div>
-                <p class="timestamp">Добавлено:<br />{{ chapter.added_at|date:"d.m.Y" }}</p>
-              </button>
-            </a>
           {% elif title.title_type == 'text' %}
-            <a href="" class="bookmark">
-              <button class="ref_button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                </svg>
-              </button>
-            </a>
             <a href="{% url 'reader:read_text' title.id %}?chapter_num={{ chapter.chapter_number }}" class="chapter_button">
+          {% endif %}
               <button class="ref_button">
                 <div class="chapter_info">
                   <p><b>Глава {{ chapter.display_number }}</b></p>
@@ -71,7 +57,6 @@
                 </div>
               </button>
             </a>
-          {% endif %}
         </div>
       {% endif %}
     {% endfor %}

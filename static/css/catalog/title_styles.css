@@ -115,25 +115,6 @@ a.chapter_button .ref_button p {
     padding: 10px;
 }
 
-.rating-list li {
-    float: right;
-    padding: 10px 5px;
-}
-
-.rating-list li:hover,
-.rating-list li:hover~li {
-    color: var(--rating-color-hover);
-}
-
-.rating-list {
-    display: inline-block;
-    list-style: none;
-}
-
-.checked {
-    color: var(--rating-color-base);
-}
-
 div.comment {
     border-bottom: solid 2px var(--text-color-base);
     padding: 10px;
@@ -188,40 +169,24 @@ div.comment {
     height: 1.5rem;
     width: 1.5rem;
     fill: var(--rating-color-base);
-    transition: fill 0.3s;
+    transition: fill 0.2s;
 }
 
 .rating_stars label.checked svg {
     fill: var(--rating-color-hover);
 }
 
-.rating_stars .star {
-    padding-right: 0;
-    margin-right: -22px;
-    width: 22px;
-    overflow: hidden;
-    z-index: 2;
-}
-.rating_stars.to_rate input:checked ~ label svg {
-    fill: var(--rating-color-base);
-}
-
 .rating_stars.to_rate .rating-group:hover label svg {
     fill: var(--rating-color-hover);
 }
 
-.rating_stars.to_rate .rating-group input:hover ~ label svg {
+.rating_stars.to_rate .rating-group label:hover ~ label svg {
     fill: var(--rating-color-base);
 }
 
 .rating_stars.to_rate label {
     margin: 0;
     cursor: pointer;
-}
-
-.rating_stars.to_rate input {
-    position: absolute;
-    left: -9999px;
 }
 
 #delete_rate_button {
