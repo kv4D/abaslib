@@ -24,4 +24,7 @@ urlpatterns = [
     path('rate/<str:title_type>/<int:title_id>/<int:rate>/',
          views.rate_title_view,
          name='rate_title'),
+    path('rate/<str:title_type>/<int:title_id>/',
+         views.delete_rate_title_view,
+         name='delete_rate'),
 ]

@@ -185,14 +185,14 @@ div.comment {
 
 .rating_stars label svg {
     margin: 2px;
-    height: 2rem;
-    width: 2rem;
-    fill: var(--text-color-base);
+    height: 1.5rem;
+    width: 1.5rem;
+    fill: var(--rating-color-base);
     transition: fill 0.3s;
 }
 
 .rating_stars label.checked svg {
-    fill: var(--rating-color-base)
+    fill: var(--rating-color-hover);
 }
 
 .rating_stars .star {
@@ -203,15 +203,15 @@ div.comment {
     z-index: 2;
 }
 .rating_stars.to_rate input:checked ~ label svg {
-    fill: #ffffff;
+    fill: var(--rating-color-base);
 }
 
 .rating_stars.to_rate .rating-group:hover label svg {
-    fill: #d86e0b;
+    fill: var(--rating-color-hover);
 }
 
 .rating_stars.to_rate .rating-group input:hover ~ label svg {
-    fill: #ffffff;
+    fill: var(--rating-color-base);
 }
 
 .rating_stars.to_rate label {
@@ -222,4 +222,11 @@ div.comment {
 .rating_stars.to_rate input {
     position: absolute;
     left: -9999px;
+}
+
+#delete_rate_button {
+    display: inline-flex;
+    text-align: center;
+    gap: 10px;
+    font-size: 0.8rem;
 }
