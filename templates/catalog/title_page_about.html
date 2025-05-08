@@ -135,6 +135,9 @@
 
       <p class="highlighted_text">Просмотров</p>
       <p>{{ title.views_count }}</p>
+
+      <p class="highlighted_text">Добавлено</p>
+      <p>{{ title.added_at|time }} {{ title.added_at|date:"d.m.Y" }}</p>
     </div>
   </div>
 {% endblock %}

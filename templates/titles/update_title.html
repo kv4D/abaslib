@@ -25,9 +25,9 @@
       <form action="{% url 'titles:update_title' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div id="input">
-          <h1>Заполните поля</h1>
-          <h2>{{ title.title_name }}</h2>
+          <h1>Внесите изменения</h1>
           <hr />
+          <h2>{{ title.title_name_rus }}</h2>
           <br />
           {{ form.as_table }}
           <br />

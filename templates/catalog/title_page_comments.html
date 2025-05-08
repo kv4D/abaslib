@@ -30,8 +30,8 @@
   <!-- COMMENTS SECTION -->
   <form method="post">
     {% csrf_token %}
+    {{ comment_form.text.label_tag }}
     <section id="comment_input">
-      {{ comment_form.text.label_tag }}
       {{ comment_form.text }}
       <button id="submit_comment" name="submit">Отправить</button>
     </section>
