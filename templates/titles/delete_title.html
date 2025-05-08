@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-  ABASlib - Удаление главы
+  ABASlib - Удаление {{ title }}
 {% endblock %}
 
 {% block styles %}
@@ -22,19 +22,18 @@
 {% block content %}
   <div class="container">
     <div id="main_content">
-      <form action="{% url 'titles:delete_chapter' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
+      <form action="{% url 'titles:delete_title' title.id %}?title_type={{ title.title_type }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div id="input">
-          <h1>Выберите главу и подтвердите удаление</h1>
+          <h1>ВНИМАНИЕ: Вы собираетесь удалить тайтл и все его главы</h1>
+          <h2>{{ title }}</h2>
           <hr />
-          <br />
-          {{ form.as_p }}
           <br />
           <div class="button_group">
             <a class="a-button" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
               Отмена
             </a>
-            <button name="submit">Удалить главу</button>
+            <button name="submit">Удалить тайтл</button>
           </div>
         </div>
       </form>

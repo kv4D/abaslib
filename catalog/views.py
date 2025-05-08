@@ -33,7 +33,6 @@ def all_titles_view(request):
 
     # apply search query
     if search_query:
-        print('whta')
         text_titles = text_titles.filter(
             Q(title_name_rus__icontains=search_query) |
             Q(title_name_eng__icontains=search_query)

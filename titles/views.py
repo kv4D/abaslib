@@ -67,9 +67,32 @@ def delete_chapter_view(request, title_id):
 
     return render(request, 'titles/delete_chapter.html', context)
     
+    
 @login_required
 def delete_title_view(request, title_id):
     """Deletes one certain title"""
+        # there can be 'graphic' or 'text' content type
+    title_type = request.GET.get('title_type')
+
+    assert title_type in ['text', 'graphic']
+        
+    if request.method == 'POST':
+        if title_type == 'text':
+            TextTitle.objects.filter(id=title_id).delete()
+        elif title_type == 'graphic':
+            GraphicTitle.objects.filter(id=title_id).delete()
+        return redirect('catalog:home')
+    
+    if title_type == 'text':
+        title = TextTitle.objects.filter(id=title_id).first()
+    elif title_type == 'graphic':
+        title = GraphicTitle.objects.filter(id=title_id).first()
+    
+    context = {
+        'title': title
+    }
+    
+    return render(request, 'titles/delete_title.html', context)
 
 
 @login_required
