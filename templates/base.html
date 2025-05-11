@@ -25,17 +25,17 @@
 
   <body>
     <header>
-      <div id="header_container">
-        <div id="site_icon">
-          <a href="{% url 'catalog:home' %}">
-            <button class="ref_button">
-              <img id="icon" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib
-            </button>
+      <div id="header-container">
+        <div id="site-icon">
+          <a class="a-button block-button" href="{% url 'catalog:home' %}">
+            <img id="icon" src="{% static 'images/favicon/android-chrome-192x192.png' %}" />ABASlib
           </a>
         </div>
-        {% block header %}
-
-        {% endblock %}
+        <div id="header-buttons">
+          {% block header %}
+  
+          {% endblock %}
+        </div>
       </div>
     </header>
 
@@ -44,14 +44,19 @@
     {% endblock %}
 
     <footer>
-      <div id="footer_container">
+      <div id="footer-container">
         <p>
           2025 - {% now 'Y' %}
         </p>
-        {% block footer %}
-
-        {% endblock %}
-        <a href="{% url 'catalog:about_rights' %}"><button class="ref_button">Для правообладателей</button></a>
+        <div>
+        <div>
+          {% block footer %}
+  
+          {% endblock %}
+        </div>
+        <a class="a-button block-button" href="{% url 'catalog:about_rights' %}">
+          Для правообладателей
+        </a>
       </div>
     </footer>
     
