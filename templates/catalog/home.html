@@ -10,10 +10,10 @@
 {% endblock %}
 
 {% block header %}
-  <div class="button_group">
+  <div class="button-group">
     {% if user.is_authenticated %}
-      <div class="custom_select">
-        <select name="redact_options" onchange="location = this.value" class="ref_button">
+      <div class="custom-select">
+        <select name="redact_options" onchange="location = this.value" class="block-button">
           <option selected hidden disabled>Меню</option>
           <option value="{% url 'titles:upload_title' %}?title_type=text">Добавить тайтл (текст)</option>
           <option value="{% url 'titles:upload_title' %}?title_type=graphic">Добавить тайтл (графика)</option>
@@ -22,28 +22,22 @@
           {% endblock %}
         </select>
       </div>
-      <a id="profile_link" href="{% url 'users:profile' %}">
-        <button class="ref_button">
-          <img class="user_pic" src="{{ user.user_avatar.url }}" />
-          {{ user.username }}
-        </button>
+      <a id="profile-link" class="a-button block-button" href="{% url 'users:profile' %}">
+        <img class="user-pic" src="{{ user.user_avatar.url }}" />
+        {{ user.username }}
       </a>
-      <a id="logout_link" href="{% url 'users:logout' %}">
-        <button class="ref_button">
-          <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
-            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
-          </svg>Выход
-        </button>
+      <a id="logout-link" class="a-button block-button" href="{% url 'users:logout' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+          <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+        </svg>Выход
       </a>
     {% else %}
-      <a id="login_link" href="{% url 'users:login' %}">
-        <button class="ref_button">
-          <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-          </svg>Авторизация
-        </button>
+      <a id="login-link" class="a-button block-button" href="{% url 'users:login' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+          <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+        </svg>Авторизация
       </a>
     {% endif %}
   </div>
@@ -51,25 +45,25 @@
 
 {% block content %}
   <div class="container">
-    <div id="main_content">
+    <div id="main-content">
       <h1>ABASlib</h1>
       <hr />
       {% block titles %}
         <h4>Недавно добавлено</h4>
         <div class="titles">
           {% for title in new_titles %}
-            <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+            <a title="{{ title.title_name_rus }}" class="title-card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
               <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка" />
-              <div class="title_name">{{ title.title_name_rus }}</div>
+              <div class="title-name">{{ title.title_name_rus }}</div>
             </a>
           {% endfor %}
         </div>
         <h4>Обновления</h4>
         <div class="titles">
           {% for title in updated_titles %}
-            <a title="{{ title.title_name_rus }}" class="title_card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+            <a title="{{ title.title_name_rus }}" class="title-card" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
               <img class="cover" src="{{ title.title_cover.url }}" alt="Здесь была обложка" />
-              <div class="title_name">{{ title.title_name_rus }}</div>
+              <div class="title-name">{{ title.title_name_rus }}</div>
             </a>
           {% endfor %}
         </div>
@@ -79,11 +73,11 @@
     <div id="side">
       {% block sections %}
         <section>
-          <h1>Разделы</h1>
-          <a href="{% url 'catalog:home' %}"><button class="ref_button activated">Главная</button></a>
-          <a href="{% url 'catalog:all_titles' %}"><button class="ref_button">Все тайтлы</button></a>
-          <a href="{% url 'catalog:text_titles' %}"><button class="ref_button">Новеллы</button></a>
-          <a href="{% url 'catalog:graphic_titles' %}"><button class="ref_button">Комиксы</button></a>
+          <h2>Разделы</h2>
+          <a class="a-button block-button activated" href="{% url 'catalog:home' %}">Главная</a>
+          <a class="a-button block-button" href="{% url 'catalog:all_titles' %}">Все тайтлы</a>
+          <a class="a-button block-button" href="{% url 'catalog:text_titles' %}">Новеллы</a>
+          <a class="a-button block-button" href="{% url 'catalog:graphic_titles' %}">Комиксы</a>
         </section>
       {% endblock %}
       

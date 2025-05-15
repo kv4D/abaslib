@@ -2,53 +2,50 @@
 {% load static %}
 
 {% block sections %}
-  <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
-    <button class="ref_button">
-      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-      </svg>О тайтле
-    </button>
+  <a class="a-button block-button" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=about">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+    </svg>О тайтле
   </a>
-  <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters">
-    <button class="ref_button">
-      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-journal" viewBox="0 0 16 16">
-        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
-        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
-      </svg>Главы
-    </button>
+  <a class="a-button block-button" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-journal" viewBox="0 0 16 16">
+      <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+      <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+    </svg>Главы
   </a>
-  <button class="ref_button activated">
-    <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
+  <p class="a-button block-button activated">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
       <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
       <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
     </svg>Комментарии
-  </button>
+  </p>
 {% endblock %}
 
 {% block section %}
   <!-- COMMENTS SECTION -->
+   <br>
   <form method="post">
     {% csrf_token %}
     {{ comment_form.text.label_tag }}
-    <section id="comment_input">
+    <section id="comment-input">
       {{ comment_form.text }}
-      <button id="submit_comment" name="submit">Отправить</button>
+      <button id="submit-comment" name="submit">Отправить</button>
     </section>
   </form>
   <br />
   <section id="comments">
-    <p class="highlighted_text">Комментарии</p>
+    <p class="highlighted">Комментарии</p>
     {% for comment in comments %}
-      <div class="comment{% if comment.user == user %} user_comment{% endif %}">
+      <div class="comment{% if comment.user == user %} user-comment{% endif %}">
         {% if comment.user == user %}
-          <a href="{% url 'users:profile' %}" class="user_ref highlighted_text">
+          <a href="{% url 'users:profile' %}" class="user-ref highlighted">
         {% else %}
-          <a href="{% url 'users:another_profile' comment.user.id %}" class="user_ref highlighted_text">
+          <a href="{% url 'users:another_profile' comment.user.id %}" class="user-ref highlighted">
         {% endif %}
-          <img class="user_pic" src="{{ comment.user.user_avatar.url }}" alt="Здесь был аватар" />{{ comment.user }}
+          <img class="user-pic" src="{{ comment.user.user_avatar.url }}" alt="Здесь был аватар" />{{ comment.user }}
         </a>
-        <p class="comment_text">{{ comment.text }}</p>
+        <p class="comment-text">{{ comment.text }}</p>
         <p class="timestamp">{{ comment.added_at|time  }} {{ comment.added_at|date:"d.m.Y" }}</p>
       </div>
     {% empty %}

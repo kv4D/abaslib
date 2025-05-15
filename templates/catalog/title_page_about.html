@@ -2,72 +2,68 @@
 {% load static %}
 
 {% block sections %}
-  <button class="ref_button activated">
-    <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+  <p class="a-button block-button activated">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
       <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
     </svg>О тайтле
-  </button>
+  </p>
 
-  <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters">
-    <button class="ref_button">
-      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-journal" viewBox="0 0 16 16">
-        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
-        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
-      </svg>Главы
-    </button>
+  <a class="a-button block-button" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=chapters">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-journal" viewBox="0 0 16 16">
+      <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+      <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+    </svg>Главы
   </a>
-  <a href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=comments">
-    <button class="ref_button">
-      <svg xmlns="http://www.w3.org/2000/svg" class="button_icon" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
-        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
-      </svg>Комментарии
-    </button>
+  <a class="a-button block-button" href="{% url 'catalog:title_page' title.id %}?title_type={{ title.title_type }}&section=comments">
+    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="currentColor" class="bi bi-chat-square-text" viewBox="0 0 16 16">
+      <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+      <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+    </svg>Комментарии
   </a>
 {% endblock %}
 
 {% block section %}
   <!-- ABOUT SECTION -->
   <div id="caption">
-    <div id="title_info">
-      <p class="highlighted_text">Описание</p>
+    <div id="title-info">
+      <p class="highlighted">Описание</p>
       <p>{{ title.title_description }}</p>
 
-      <p class="highlighted_text">Статус</p>
+      <p class="highlighted">Статус</p>
       {% if title.title_is_ongoing %}
         <p>Продолжается</p>
       {% else %}
         <p>Закончено</p>
       {% endif %}
 
-      <p class="highlighted_text">Автор</p>
+      <p class="highlighted">Автор</p>
       <p>{{ title.title_author }}</p>
 
-      <p class="highlighted_text">Год выпуска</p>
+      <p class="highlighted">Год выпуска</p>
       <p>{{ title.publication_year }}</p>
     </div>
-    <div id="title_stats">
-      <p class="highlighted_text">Жанры</p>
+    <div id="title-stats">
+      <p class="highlighted">Жанры</p>
       <p>
         {% for genre in genres %}
-          <span class="tag">{{ genre }}</span>
+          <span class="">{{ genre }}</span>
         {% empty %}
           Жанры не добавлены
         {% endfor %}
       </p>
 
-      <p class="highlighted_text">Теги</p>
+      <p class="highlighted">Теги</p>
       <p>
         {% for tag in tags %}
-          <span class="tag">{{ tag }}</span>
+          <span class="">{{ tag }}</span>
         {% empty %}
           Тэги не добавлены
         {% endfor %}
       </p>
 
-      <p class="highlighted_text">Оценка</p>
-      <div class="rating_stars">
+      <p class="highlighted">Оценка</p>
+      <div class="rating-stars">
         <div class="rating-group">
           {% for values in star_rates_values %}
             {% if average_rate >= values.1 %}
@@ -108,8 +104,8 @@
         <p>У тайтла еще нет оценок</p>
       {% endif %}
 
-      <p class="highlighted_text">Ваша оценка</p>
-      <div class="rating_stars to_rate">
+      <p class="highlighted">Ваша оценка</p>
+      <div class="rating-stars to-rate">
         <div class="rating-group">
           {% for values in star_rates_values %}
             <label class="{% if user_rate > values.0 %}checked{% endif %}" onclick="rate('{{ title.title_type }}', {{ title.id }}, {{ forloop.counter }})">
@@ -122,7 +118,7 @@
       </div>
 
       {% if user_rate %}
-        <a id="delete_rate_button" href="{% url 'ratings:delete_rate' title.title_type title.id%}">
+        <a id="delete-rate-button" href="{% url 'ratings:delete_rate' title.title_type title.id%}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
@@ -130,13 +126,13 @@
         </a>
       {% endif %}
 
-      <p class="highlighted_text">Пользователей добавило в избранное</p>
+      <p class="highlighted">Пользователей добавило в избранное</p>
       <p>{{ title.favorites_count }}</p>
 
-      <p class="highlighted_text">Просмотров</p>
+      <p class="highlighted">Просмотров</p>
       <p>{{ title.views_count }}</p>
 
-      <p class="highlighted_text">Добавлено</p>
+      <p class="highlighted">Добавлено</p>
       <p>{{ title.added_at|time }} {{ title.added_at|date:"d.m.Y" }}</p>
     </div>
   </div>

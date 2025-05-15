@@ -4,7 +4,7 @@
     gap:15px;
 }
 
-.title_card {
+.title-card {
     transition-duration: 0.4s;
     display: flex;
     flex-direction: column;
@@ -12,7 +12,7 @@
     padding: 10px;
 }
 
-.title_card:hover {
+.title-card:hover {
     background-color: var(--ref-button-color-hover);
 }
 
@@ -23,7 +23,7 @@
     border-radius: 5px;
 }
 
-.title_name {
+.title-name {
     margin-top: 8px;
     padding: 0 5px;
     overflow: hidden; 
@@ -38,20 +38,21 @@
     max-height: fit-content;
 }
 
-#side .ref_button {
-    width: 100%;
+#side .block-button,
+#side input {
+    width: auto;
 }
 
-.filter_list {
+.filter-list {
     list-style-type: none;
     display: contents;
 }
 
-.filter_list li:not(:last-child) { 
+.filter-list li:not(:last-child) { 
     margin-bottom: 5px;  
 }
 
-.filter_button {
+.filter-button {
     border-radius: 9999px;
     font-size: 0.8rem;
 }

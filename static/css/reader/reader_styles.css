@@ -3,11 +3,11 @@ pre {
     line-height: 30px;
 }
 
-#chapter_text {
+#chapter-text {
     width: 50%;
 }
 
-.img_container {
+.img-container {
     width: 100%;
     max-width: 1600px;
     display: flex;
@@ -17,7 +17,7 @@ pre {
     z-index: 1;
 }
 
-#page_image {
+#page-image {
     max-width: 100%;
     max-height: none;
     width: auto;
@@ -26,16 +26,16 @@ pre {
     z-index: 1;
 }
 
-#chapter_selector {
+#chapter-selector {
     width: 200px;
 }
 
-#page_selector {
+#page-selector {
     width: 80px;
 }
 
-#previous_page,
-#next_page {
+#previous-page,
+#next-page {
     position: absolute;
     top: 0;
     height: 100%;
@@ -43,26 +43,26 @@ pre {
     z-index: 2;
 }
 
-#previous_page {
+#previous-page {
     left: 0;
 }
 
-#next_page {
+#next-page {
     right: 0;
 }
 
-.button_group a {
+.button-group a {
     width: 50%;
 }
 
-#back_button {
+#back-button {
     white-space: normal;
     overflow: hidden; 
     text-overflow: ellipsis; 
     max-width: 100%;
 }
 
-#title_name {
+#title-name {
     display: -webkit-box; 
     -webkit-line-clamp: 2; 
     line-clamp: 2;

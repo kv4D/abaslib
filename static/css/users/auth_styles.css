@@ -1,4 +1,4 @@
-.auth_buttons {
+.auth-buttons {
     flex: 2;
     text-align: center;
     margin: auto;
@@ -9,7 +9,7 @@
     min-width: fit-content;
 }
 
-.auth_buttons a{
+.auth-buttons a{
     font-size: 1.3rem;
 }
 
@@ -19,7 +19,7 @@
     align-self: center;
 }
 
-#main_content {
+#main-content {
     flex: 4;
     display: flex;
     flex-wrap: nowrap;
@@ -36,7 +36,7 @@ input {
     width: 50%;
 }
 
-.input_block {
+.input-block {
     margin: 20px;
 }
 
@@ -56,7 +56,7 @@ input {
     margin: 0;
 }
 
-.submit_button {
+.submit-button {
     transition-duration: 0.1s;
     border: 1px solid;
     font-family: inherit; 
@@ -69,11 +69,11 @@ input {
     margin-top: 20px;
 }
 
-.submit_button:hover {
+.submit-button:hover {
     background-color: #0B090A; 
     color: var(--text-color-base);
 }
 
-.submit_button:active {
+.submit-button:active {
     color: var(--text-color-base);
 }
