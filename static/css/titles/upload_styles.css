@@ -32,3 +32,11 @@ input::-webkit-inner-spin-button {
   border-color: var(--text-color-bright);
   width: 80%;
 }
+
+.button_group {
+  gap: 10px;
+}
+
+#main_content {
+  height: fit-content;
+}
