@@ -134,15 +134,14 @@ def open_bookmark_view(request, title_id):
         bookmark = TextTitleBookmark.objects.filter(user=user, title=title).first()
         
         response = redirect('reader:read_text', title_id=title_id)
-        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number}'
+        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number if bookmark else 1}'
         return response
     elif title_type == 'graphic':
         title = get_object_or_404(GraphicTitle, id=title_id)
         bookmark = GraphicTitleBookmark.objects.filter(user=user, title=title).first()
     
-        print(bookmark)
         response = redirect('reader:read_graphic', title_id=title_id)
-        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number}&page={bookmark.page.page_number}'
+        response['Location'] += f'?chapter_num={bookmark.chapter.chapter_number if bookmark else 1}&page={bookmark.page.page_number if bookmark else 1}'
         return response
 
 
@@ -153,7 +152,7 @@ def manage_bookmark_view(request, title_id, chapter_id):
     user = request.user
     title_type = request.GET.get('title_type')
     assert title_type in ['text', 'graphic']
-
+    print(1)
     if title_type == 'text':
         title = get_object_or_404(TextTitle, id=title_id)
         chapter = get_object_or_404(TextTitleChapter, id=chapter_id)
